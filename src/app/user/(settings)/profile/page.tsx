@@ -1,22 +1,26 @@
 "use client";
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
-import SkillTagList from "@/src/components/ui/skillTag/skillTag";
-import StyledNavLink from "@/src/components/ui/links/NavLinks";
-import CarouselMatched from "@/src/components/carousels/CarouselMatched";
-import { IUser } from "../../../../models/user.model";
-import { OurAlertsText } from "@/src/lib/utils/ourAlertsText";
-import { getUserById } from "../../../api/users";
-import { FooterMain } from '@/src/components/footer/FooterMain';
-import { FaLinkedin, FaGithubSquare, FaBehanceSquare } from "react-icons/fa";
-import { getMyCommunityDescription } from "@/src/lib/utils/ourCommunityDescription";
+import SkillTag from "@/src/shared/ui/atoms/tags/SkillTag";
+import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
+import CarouselMatched from "@/src/shared/ui/organisms/carousels/CarouselMatched";
+import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
+import ButtonFeature from "@/src/shared/ui/atoms/buttons/ButtonFeature";
+import ModalUser from "@/src/shared/ui/organisms/modals/ModalUser";
+import { getGitHubUser } from "@/src/lib/utils/getGitHubUser";
+import { getCurrentUserId } from "@/src/lib/utils/getCurrentUserId";
+import { IUser } from "../../../../core/models/users/users.model";
+import { getUserById, putUserByUser } from "../../../api/users/users";
+import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
+import { FaLinkedin, FaGithubSquare, FaBehanceSquare, FaEdit } from "react-icons/fa";
+import { getMyCommunityInfo } from "@/src/lib/utils/getCommunityInfo";
+import { getGitHubRepos } from "@/src/app/api/github/github";
 import { GrStatusGoodSmall } from "react-icons/gr";
-import { Urbanist } from "next/font/google";
+import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { toast } from "react-toastify";
 
-const urbanist = Urbanist({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
-});
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Container = styled.div`
   width: 100%;
@@ -31,8 +35,6 @@ const PageContainer = styled.div`
   display: flex;
 `;
 
-// -------------------------------------------------------------------------------------------------
-
 const ProfileContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -44,9 +46,6 @@ const ProfileContainer = styled.div`
   align-items: center;
 
   & span{
-    font-style: normal;
-    font-family: ${urbanist.style.fontFamily};
-    
     & p{
       color: ${({ theme }) => theme.colors.textSecondary};
     }
@@ -67,6 +66,7 @@ const Header = styled.div`
   position: relative;
   border-radius: 10px;
   width: 100%;
+  min-height: 120px;
 `;
 
 const UserInfo = styled.div`
@@ -88,16 +88,18 @@ const MainInfo = styled.div`
 const UserName = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textDark};
+  text-transform: capitalize;
+  color: ${({ theme }) => theme.colors.textBlack};
   margin: 0;
 `;
 
 const UserTitle = styled.h2`
   display: flex;
   align-items: center;
+  text-transform: capitalize;
   gap: 10px;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textDark};
+  color: ${({ theme }) => theme.colors.textBlack};
   font-weight: 400;
   margin-top: 0;
   
@@ -108,13 +110,13 @@ const UserTitle = styled.h2`
 `;
 
 const ProfileImage = styled.div<{ urlImage: string }>`
-  background-image: url(${(props) => props.urlImage != " " ? props.urlImage : "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"}); 
+  background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
   height: 4rem;
-  border-radius: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
 
   @media (max-width: 769px) {
       display: none;
@@ -123,13 +125,13 @@ const ProfileImage = styled.div<{ urlImage: string }>`
 
 const ProfileImageMobile = styled.div<{ urlImage: string }>`
   display: none;
-  background-image: url(${(props) => props.urlImage != " " ? props.urlImage : "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"}); 
+  background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;
   width: 100%;
-  height: 14.5rem;
+  height: 18rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
@@ -145,15 +147,20 @@ const Skills = styled.div`
   flex-wrap: wrap;
   height: 100%;
   margin-top: 1rem;
+  width: 285px;
 
   & div{
     padding: 0;
   }
 
   & p{
-    color: ${({ theme }) => theme.colors.textDark};
-    border: 1px solid ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textBlack};
+    border: 1px solid ${({ theme }) => theme.colors.textDark};
   }
+
+  @media (max-width: 768px) {
+      width: 100%;
+    }
 `;
 
 const UserDescription = styled.div`
@@ -162,8 +169,10 @@ const UserDescription = styled.div`
   padding-bottom: 0.5rem;
   min-height: 29rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
-  gap: 1rem;
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
       min-height: 15.5rem;
@@ -179,7 +188,7 @@ const H3 = styled.h3`
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textBlack};
 `;
 
 const P = styled.p`
@@ -226,8 +235,6 @@ const State = styled.span`
   gap: 3px;
   align-items: center;
   justify-content: center;
-  font-style: normal;
-  font-family: ${urbanist.style.fontFamily};
 `;
 
 const ContactInfo = styled.div`
@@ -261,13 +268,13 @@ const MediaContainer = styled.div`
 `;
 
 const MediaContent = styled.div`
-overflow: hidden;
-display: flex;
-flex-direction: column;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-height: 7.5rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
 
   @media (max-width: 768px) {
     min-height: 10.5rem;
@@ -279,24 +286,76 @@ const SocialButtons = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   padding: 1rem;
+
+    .disabled-social-link {
+    opacity: 0.5;
+    background-color: ${({ theme }) => theme.colors.bgTertiary};
+    pointer-events: none;
+  }
 `;
 
 const SocialButton = styled.div`
   border-radius: 5px;
   padding: 0.3rem 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
   font-weight: 500;
   word-wrap: break-word;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.textDark};
+  color: ${({ theme }) => theme.colors.textBlack};
 
   a {
     padding: 0;
-    color: ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textBlack};
     font-size: 0.9rem
+  }
+`;
+
+const StatsContainer = styled.div`
+  display: flex;
+  justify-content: start; 
+  flex-wrap: wrap;
+  gap: 1rem;          
+  margin: 4px;
+  margin-top: 0;
+`;
+
+const StatsImage = styled.img`
+  max-width: auto;
+  height: 120px;
+  border-radius: 10px;
+
+    @media (max-width: 380px) {
+    height: 108px;
+    }
+
+    @media (max-width: 350px) {
+    height: 98px;
+    }
+`;
+
+const EditButton = styled(ButtonFeature)`
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: ${({ theme }) => theme.colors.textBlack};
+  font-size: 2rem;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.6s ease-in-out;
+
+  & svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  :hover{
+    transition: 0.6s ease-in-out;
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 `;
 
@@ -305,135 +364,319 @@ const UserProfile = () => {
   const [userData, setUserData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [idNumber, setIdNumber] = useState<number | null>(null);
 
-  // Comprobamos si estamos en el cliente
+  const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [isModalUserOpen, setIsModalUserOpen] = useState<boolean>(false);
+
+  const handleCloseModal = () => {
+    setIsModalUserOpen(false);
+  };
+
+  const handleEditClick = () => {
+    setIsModalUserOpen(true);
+  };
+
+  // Fetch para obtener datos de usuario
+  const fetchUserData = async () => {
+    const currentUserId = getCurrentUserId();
+
+    if (!currentUserId) {
+      setError("ID de usuario no encontrado.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const data = await getUserById(currentUserId);
+      setUserData(data);
+
+      const checkImageUrl = (url: string) => {
+        const img = new Image();
+        img.src = url;
+        img.onerror = () => {
+          // Si la imagen da error, se usa la imagen por defecto
+          setImageUrl("/img/default-picture-full.webp");
+        };
+        img.onload = () => {
+          // Si la imagen carga correctamente, se usa la URL
+          setImageUrl(url);
+        };
+      };
+
+      if (data.urlImage && validateImageUrl(data.urlImage)) {
+        checkImageUrl(data.urlImage);
+      } else {
+        setImageUrl("/img/default-picture-full.webp");
+      }
+
+      setLoading(false);
+    } catch (err) {
+      setError("No se pudo obtener los datos del usuario.");
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  // useEffect para ejecutar el fecth de datos del usuario
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const idString = localStorage.getItem('userId');
-      const idNumber = idString ? parseInt(idString, 10) : null;
-      setIdNumber(idNumber); // Establecemos el id en el estado
+    if (globalThis.window !== undefined) {
+      fetchUserData();
     }
   }, []);
 
-  // Fetch para obtener datos de usuario
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!idNumber) return;
+  // Función para actualizar usuario
+  const handleUpdateUser = async (userToUpdate: IUser) => {
+    try {
+      console.log("Datos que se están enviando:", userToUpdate);
+      const response = await putUserByUser(userToUpdate, userToUpdate.id!);
 
-      try {
-        const data = await getUserById(idNumber); // Usamos la función de users.ts
-        setUserData(data); // Guardamos los datos del usuario
-        setLoading(false);
-      } catch (err) {
-        setError(err as string); // Manejo de errores
-        setLoading(false);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error updating user:", errorData.details?.text || 'No se proporcionaron detalles del error');
+        toast.error("Error al actualizar el usuario.");
+        return;
       }
-    };
-
-    if (idNumber) {
-      fetchUserData();
+      toast.success("¡Usuario actualizado exitosamente!");
+      await fetchUserData();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      toast.error("Error al actualizar el usuario.");
     }
-  }, [idNumber]);
+  };
 
   const stateBtnColor = (state: string) => {
-    if (state === "Activo") return "#247755";
+    if (state === "Activo") return "#2F966B";
     else if (state === "Inactivo") return "#CF3B00";
     else return "#707070";
   }
 
+  const isGitHub = getGitHubUser(userData?.urlGithub?.toString()).isSuccess
+  const UsernameGitHub = getGitHubUser(userData?.urlGithub?.toString()).user
+
+  const abilitiesArray =
+    typeof userData?.abilities === 'string'
+      ? userData.abilities.split(',').map((ability: string) => ability.trim())
+      : [];
+
+  // Fetch para verificar los lenguages en repositorios del usuario
+  useEffect(() => {
+    const getLanguages = async () => {
+      if (!UsernameGitHub) return;
+
+      try {
+        const repos = await getGitHubRepos(userData!.urlGithub!);
+        const langs = repos.reduce<string[]>((acc, repo) => {
+          if (repo.language && !acc.includes(repo.language)) acc.push(repo.language);
+          return acc;
+        }, []);
+        setLanguages(langs);
+      } catch (error) {
+        console.error("Error en repos:", error);
+      }
+    };
+
+    getLanguages();
+  }, [UsernameGitHub, userData]);
+
   // Muestra loading, error o los datos del usuario
-  if (loading) {
-    return <OurAlertsText>Cargando...</OurAlertsText>;
-  }
+  if (loading) return (
+    <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
+      <Container>
+        <PageContainer >
+          <ProfileContainer>
+            <ProfileImageMobile urlImage={""}>
+              <Skeleton height={"100%"} width={"100%"} borderRadius={10} />
+            </ProfileImageMobile>
 
-  if (error) {
-    return <OurAlertsText>Error: {error}</OurAlertsText>;
-  }
+            <Header style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
+              <UserInfo>
+                <MainInfo>
+                  <ProfileImage urlImage="" style={{ border: "none" }}>
+                    <Skeleton width={64} height={64} />
+                  </ProfileImage>
+                  <div>
+                    <Skeleton width={200} height={25} />
+                    <Skeleton width={120} height={18} />
+                  </div>
+                </MainInfo>
+              </UserInfo>
+            </Header>
 
-  const abilitiesArray = typeof userData!.abilities === 'string'
-    ? userData!.abilities.split(',').map((ability: string) => ability.trim())
-    : [];
-
-  return (
-    <Container>
-      <PageContainer >
-        <ProfileContainer>
-          <ProfileImageMobile urlImage={userData!.urlImage} />
-          <Header>
-            <UserInfo>
-              <MainInfo>
-                <ProfileImage urlImage={userData!.urlImage} />
-                <div>
-                  <UserName>Tú, {userData!.name} {userData!.lastName}</UserName>
-                  <UserTitle>
-                    {userData!.jobTitle}
-                    <State color={stateBtnColor(userData!.nameStateUser as string)}><GrStatusGoodSmall />{userData!.nameStateUser}</State>
-                  </UserTitle>
-                </div>
-              </MainInfo>
-            </UserInfo>
-          </Header>
-          <DivUserDetails>
             <DivContent>
-              <MediaContainer>
-                <MediaContent>
-                  <H3>Enlaces Externos</H3>
-                  <SocialButtons>
-                    <SocialButton>
-                      <FaLinkedin />
-                      <StyledNavLink target="_blank" href={userData?.urlLinkedin as string} label="LinkedIn" />
-                    </SocialButton>
-                    <SocialButton>
-                      <FaGithubSquare />
-                      <StyledNavLink target="_blank" href={userData?.urlGithub as string} label="GitHub" />
-                    </SocialButton>
-                    <SocialButton>
-                      <FaBehanceSquare />
-                      <StyledNavLink target="_blank" href={userData?.urlBehance as string} label="Adobe Behance" />
-                    </SocialButton>
-                  </SocialButtons>
-                </MediaContent>
-                <MediaContent>
-                  <H3>Cultura</H3>
-                  <P>{getMyCommunityDescription(userData!.category)}</P>
-                </MediaContent>
-                <MediaContent>
-                  <H3>Conexiones</H3>
-                  <CarouselMatched userId={userData!.id} />
-                </MediaContent>
+              <MediaContainer style={{ minHeight: "100%" }}>
+                <Skeleton height={"10vw"} borderRadius={10} />
+                <Skeleton height={"10vw"} borderRadius={10} />
               </MediaContainer>
-              <UserDescription>
-                <H3>Descripción</H3>
-                <P>{userData!.description}</P>
-                <ContactInfo>
-                  <h3>Comunidad</h3>
-                  <span>{userData!.category}</span>
-                </ContactInfo>
-                <ContactInfo>
-                  <h3>Email</h3>
-                  <span>{userData!.email}</span>
-                </ContactInfo>
-                <ContactInfo>
-                  <h3>Teléfono</h3>
-                  <span>{userData!.phoneNumber}</span>
-                </ContactInfo>
-                <ContactInfo>
-                  <h3>Generación</h3>
-                  <span>{userData!.birthdate!.slice(0, 4)}</span>
-                </ContactInfo>
+
+              <UserDescription style={{ border: "none", minHeight: "100%" }}>
+                <Skeleton width={100} height={20} style={{ marginBottom: "1rem" }} />
+                <Skeleton count={4} height={15} style={{ marginBottom: "0.5rem" }} />
+                <Skeleton width={100} height={20} style={{ marginBottom: "0.25rem" }} />
+                <Skeleton width={160} height={15} style={{ marginBottom: "0.25rem" }} />
+                <Skeleton width={100} height={20} style={{ marginBottom: "0.25rem" }} />
+                <Skeleton width={160} height={15} style={{ marginBottom: "0.25rem" }} />
+                <Skeleton width={100} height={20} style={{ marginBottom: "0.25rem" }} />
+                <Skeleton width={160} height={15} />
               </UserDescription>
             </DivContent>
-          </DivUserDetails>
-          <Skills>
-            <SkillTagList skillsArray={abilitiesArray} />
-          </Skills>
+
+            <Skills style={{ gap: "0.25rem", marginTop: "0" }}>
+              <Skeleton width={80} height={25} borderRadius={20} />
+              <Skeleton width={80} height={25} borderRadius={20} style={{ marginLeft: "1rem" }} />
+              <Skeleton width={60} height={25} borderRadius={20} />
+            </Skills>
+          </ProfileContainer>
+        </PageContainer >
+        <FooterMain />
+      </Container >
+    </SkeletonTheme>
+  );
+
+  if (error) return (
+    <Container>
+      <PageContainer >
+        <ProfileContainer style={{ width: '100%' }}>
+          <NoContentContainer error={error} />
         </ProfileContainer>
       </PageContainer >
       <FooterMain />
     </Container >
   );
+
+  console.log(userData)
+
+  return (
+    <>
+      <Container>
+        <PageContainer >
+          <ProfileContainer>
+            <ProfileImageMobile urlImage={imageUrl} />
+            <Header>
+              <UserInfo>
+                <MainInfo>
+                  <ProfileImage urlImage={imageUrl} />
+                  <div>
+                    <UserName>Tú, {userData!.name} {userData!.lastName}</UserName>
+                    <UserTitle>
+                      {userData!.jobTitle}
+                      <State color={stateBtnColor(userData!.nameStateUser!)}>
+                        <GrStatusGoodSmall /> {userData!.nameStateUser!}
+                      </State>
+                    </UserTitle>
+                  </div>
+                </MainInfo>
+              </UserInfo>
+              <EditButton type={"button"} onClick={handleEditClick}><FaEdit /></EditButton>
+            </Header>
+            <DivUserDetails>
+              <DivContent>
+                <MediaContainer>
+                  <MediaContent>
+                    <H3>Enlaces Externos</H3>
+                    <SocialButtons>
+                      <SocialButton
+                        className={userData?.urlLinkedin ? "" : "disabled-social-link"}
+                      >
+                        <FaLinkedin />
+                        <NavLink
+                          target="_blank"
+                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          href={userData?.urlLinkedin ? userData.urlLinkedin : "#"}
+                          label="LinkedIn"
+                        />
+                      </SocialButton>
+
+                      <SocialButton
+                        className={userData?.urlGithub ? "" : "disabled-social-link"}
+                      >
+                        <FaGithubSquare />
+                        <NavLink
+                          target="_blank"
+                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          href={userData?.urlGithub ? userData.urlGithub : "#"}
+                          label="GitHub"
+                        />
+                      </SocialButton>
+
+                      <SocialButton
+                        className={userData?.urlBehance ? "" : "disabled-social-link"}
+                      >
+                        <FaBehanceSquare />
+                        <NavLink
+                          target="_blank"
+                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          href={userData?.urlBehance ? userData.urlBehance : "#"}
+                          label="Adobe Behance"
+                        />
+                      </SocialButton>
+                    </SocialButtons>
+
+                    {isGitHub && (
+                      <StatsContainer>
+                        <StatsImage
+                          src={`https://github-readme-stats.vercel.app/api?username=${UsernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
+                          alt={`${UsernameGitHub}-stats`}
+                        />
+                        {(languages.length !== 0) && (
+                          <StatsImage
+                            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${UsernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
+                            alt={`${UsernameGitHub}-top-langs`}
+                          />
+                        )}
+                      </StatsContainer>
+                    )}
+                  </MediaContent>
+                  <MediaContent>
+                    <H3>Cultura</H3>
+                    <P>{getMyCommunityInfo(userData!.category)}</P>
+                  </MediaContent>
+                  <MediaContent>
+                    <H3>Conexiones</H3>
+                    <CarouselMatched userId={userData!.id} />
+                  </MediaContent>
+                </MediaContainer>
+                <UserDescription style={{ minHeight: isGitHub ? '35.5rem' : '29rem' }}>
+                  <H3>Descripción</H3>
+                  <P>{userData!.description}</P>
+                  <ContactInfo>
+                    <h3>Comunidad</h3>
+                    <span>{userData!.category}</span>
+                  </ContactInfo>
+                  <ContactInfo>
+                    <h3>Email</h3>
+                    <span>{userData!.email}</span>
+                  </ContactInfo>
+                  <ContactInfo>
+                    <h3>Teléfono</h3>
+                    <span>{userData!.phoneNumber}</span>
+                  </ContactInfo>
+                  <ContactInfo>
+                    <h3>Generación</h3>
+                    <span>{userData!.birthdate!.slice(0, 4)}</span>
+                  </ContactInfo>
+                </UserDescription>
+              </DivContent>
+            </DivUserDetails>
+            <Skills>
+              <SkillTag page={'profile'} skillsArray={abilitiesArray} />
+            </Skills>
+          </ProfileContainer>
+        </PageContainer >
+        <FooterMain />
+      </Container >
+
+      {isModalUserOpen && (
+        <ModalUser
+          onUpdateData={handleUpdateUser}
+          dataToEdit={userData}
+          setDataToEdit={setUserData}
+          isOpen={isModalUserOpen}
+          onClose={handleCloseModal}
+        />
+      )}
+    </>
+  );
 };
 
 export default UserProfile;
-
