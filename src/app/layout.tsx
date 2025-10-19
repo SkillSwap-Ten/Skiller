@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   creator: "SkillSwap Team",
   publisher: "SkillSwap Team",
   category: 'Digital Networking',
+    verification: {
+    google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
+  },
   keywords: [
     "Skill", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer",
     "Community", "Improve", "Marketing", "Virtual", "Online", "Code", "Design", "Art", "Media", "Strenghts", "Medellín", "Trabajo", "Colombia", "TypeScript",
