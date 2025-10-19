@@ -1,14 +1,22 @@
 "use client";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import CarouselHome from "../../components/carousels/CarouselHome";
+import CarouselHome from "../../shared/ui/organisms/carousels/CarouselHome";
+import ButtonTag from "@/src/shared/ui/atoms/tags/ButtonTag";
 import Image from "next/image";
 import hands_swap from "../../../public/img/hands-swap.webp";
-import { FooterUser } from "@/src/components/footer/FooterUser";
+import { FooterUser } from "@/src/shared/ui/organisms/footer/FooterUser";
 import { MdOutlineReplay } from "react-icons/md";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { IoPlay } from "react-icons/io5";
 import { IoMdPause } from "react-icons/io";
+import { Baskervville } from "next/font/google";
+
+const baskervville = Baskervville({
+    weight: '400',
+    subsets: ['latin'],
+    style: 'normal'
+});
 
 // ---------------------- Estilos para el contenedor principal ---------------------
 const HomeContainer = styled.div`
@@ -37,6 +45,13 @@ const Logo = styled.h1`
   @media (max-width: 768px) {
     padding: 20px 0;
   }
+`;
+
+// Estilos para texto en itálica
+const Italic = styled.span`
+  font-weight: normal;
+  font-style: italic;
+  font-family: ${baskervville.style.fontFamily};
 `;
 
 // Estilos para el texto principal
@@ -397,27 +412,6 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const TagButton = styled.button`
-  background-color: transparent;
-  padding: 10px 15px;
-  border: 1px solid ${({ theme }) => theme.colors.bgBanner};
-  border-radius: 5px;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 0.8rem;
-  transition: 1s;
-
-  @media (max-width: 768px) {
-    font-size: 0.7rem;
-    padding: 8px 12px;
-  }
-
-  &:hover {
-    transform: scale(1.1);
-    background-color: ${({ theme }) => theme.colors.bgBanner};
-    transition: 1s;
-  }
-`;
-
 //--------------------- estilos para section 4 ---------------------
 
 const ContainerDiscover = styled.div`
@@ -567,7 +561,7 @@ const ControlsButton = styled.button`
 `;
 
 const VideoContainer = styled.div`
-  background: ${({ theme }) => theme.colors.bgQuaternary};
+  background: ${({ theme }) => theme.colors.bgTertiary};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -787,7 +781,7 @@ const Home = () => {
       <MainText>
         <Slogan>
           <h2>
-            <span>looking</span>
+            <Italic>looking</Italic>
             <br></br>FOR SKILL
           </h2>
         </Slogan>
@@ -795,16 +789,16 @@ const Home = () => {
           <h2>
             INTERCAMBIO
             <br></br>
-            <span>experiencia</span>
+            <Italic>experiencia</Italic>
             <br></br>
-            <span>destreza</span>
+            <Italic>destreza</Italic>
           </h2>
         </Catchphrase>
       </MainText>
       <CarouselHome />
       <VideoContainer>
         <h2>
-          COMUNIDAD <span>skill 10&apos;</span>{" "}
+          COMUNIDAD <Italic>skill 10&apos;</Italic>{" "}
         </h2>
         <h4>Elige como conectar con los profesionales de tu interés.</h4>
         <br />
@@ -866,9 +860,9 @@ const Home = () => {
               en JavaScript?
             </Message>
             <ButtonGroup>
-              <TagButton>Design</TagButton>
-              <TagButton>Adobe</TagButton>
-              <TagButton>Branding</TagButton>
+              <ButtonTag label={"Design"}></ButtonTag>
+              <ButtonTag label={"Adobe"}></ButtonTag>
+              <ButtonTag label={"Branding"}></ButtonTag>
             </ButtonGroup>
           </ProfileBoxStart>
         </Section1>
@@ -883,9 +877,9 @@ const Home = () => {
               Redes Sociales.
             </Message>
             <ButtonGroup>
-              <TagButton>Coding</TagButton>
-              <TagButton>HTML</TagButton>
-              <TagButton>JavaScript</TagButton>
+              <ButtonTag label={"Coding"}></ButtonTag>
+              <ButtonTag label={"HTML"}></ButtonTag>
+              <ButtonTag label={"JavaScript"}></ButtonTag>
             </ButtonGroup>
           </ProfileBoxMiddle>
         </Section2>
@@ -897,8 +891,8 @@ const Home = () => {
               Coding contigo.
             </Message>
             <ButtonGroup>
-              <TagButton>Entretenimiento</TagButton>
-              <TagButton>Manejo Redes</TagButton>
+              <ButtonTag label={"Entretenimiento"}></ButtonTag>
+              <ButtonTag label={"Manejo Redes"}></ButtonTag>
             </ButtonGroup>
           </ProfileBoxEnd>
         </Section3>

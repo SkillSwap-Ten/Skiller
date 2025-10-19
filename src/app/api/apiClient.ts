@@ -1,8 +1,14 @@
-const BASE_URL = 'https://skillswapriwi.azurewebsites.net/api';
+import { getAuthData } from "@/src/lib/utils/getAuthData";
+
+const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL as string;
 
 const apiClient = async (endpoint: string, options: RequestInit = {}) => {
-    const token = localStorage.getItem('authToken');
-    
+    const token = getAuthData('token');
+
+    if (token === null) {
+        throw new Error("Token no disponible");
+    }
+
     const headers: Record<string, string> = {};
 
     if (token) {
@@ -18,20 +24,19 @@ const apiClient = async (endpoint: string, options: RequestInit = {}) => {
         body: options.body ? options.body : undefined,
     };
 
-    const response = await fetch(`${BASE_URL}/${endpoint}`, config);
+    const response = await fetch(`${BASE_API_URL}/${endpoint}`, config);
 
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({})); // Manejar si el JSON está vacío
+        const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'API request failed');
     }
 
-    // Verifica si el cuerpo de la respuesta no está vacío
     const responseText = await response.text();
     if (responseText) {
-        return JSON.parse(responseText);  // Solo parsear si hay contenido
+        return JSON.parse(responseText);
     }
 
-    return {};  // Devolver un objeto vacío si no hay contenido en la respuesta
+    return {};
 };
 
 export default apiClient;

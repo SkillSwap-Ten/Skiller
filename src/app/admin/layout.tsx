@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import { NavbarAdmin } from '../../components/navbar/NavbarAdmin';
 import styled from 'styled-components';
-import { Logobar } from '@/src/components/logobar/Logobar';
+import { NavbarAdmin } from '../../shared/ui/organisms/navbar/NavbarAdmin';
+import { Logobar } from '@/src/shared/ui/molecules/logobar/Logobar';
 
 const LayoutContainer = styled.div`
     display: flex;

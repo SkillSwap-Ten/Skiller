@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { FooterMain } from "@/src/shared/ui/organisms/footer/FooterMain";
 import styled from "styled-components";
-import LoginPage from "../../../components/auth/login/Login";
-import RegisterPage from "../../../components/auth/register/Register";
-import StyledNavLink from "@/src/components/ui/links/NavLinks";
-import { FooterMain } from "@/src/components/footer/FooterMain";
-import ModalPasswordRecovery from "@/src/components/modals/ModalForgotPassword";
+import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
+import ModalResetPassword from "@/src/shared/ui/organisms/modals/ModalResetPassword";
+import LoginPage from "@/src/features/auth/components/Login";
+import RegisterPage from "@/src/features/auth/components/Register";
 
 // Texto de cambio
 const TextWrapper = styled.div`
@@ -18,6 +18,10 @@ const TextWrapper = styled.div`
   flex-direction: column;
   text-align: start;
   z-index: 100;
+
+  & span {
+    background-color: ${({ theme }) => theme.colors.bgPrimary};
+  }
 
   @media (max-width: 1070px) {
     right: 10%;
@@ -38,10 +42,6 @@ const SkillSwapText = styled(motion.h1)`
   margin: 0;
   line-height: 1.2;
   text-transform: uppercase;
-
-  & span{
-    font-style: normal;
-  }
 `;
 
 // Contenedor principal
@@ -82,7 +82,8 @@ const MotionDiv = styled(motion.div)`
 // Contenedor de la capa superpuesta
 const OverlayContainer = styled.div`
   position: absolute;
-  border: none;
+  border: 5px solid ${({ theme }) => theme.colors.bgPrimary};
+  border-left: none;
   left: 50%;
   width: 50%;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
@@ -197,10 +198,10 @@ const SwitchButton = styled.button`
   }
 `;
 
-const ForgotPasswordButton = styled.button`
+const ResetPasswordButton = styled.button`
   background: none;
   border: none;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.textWhite};
   opacity: 0.7;
   text-decoration: underline;
   cursor: pointer;
@@ -213,12 +214,18 @@ const ForgotPasswordButton = styled.button`
 `;
 
 export default function AuthPage() {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
+  const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState(false);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModalResetPassword = () => setIsModalResetPasswordOpen(true);
+  const closeModalResetPassword = () => setIsModalResetPasswordOpen(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  useEffect(() => {
+    const currentPage = localStorage.getItem("currentPage");
+    if (currentPage === "REGISTRO") {
+      setIsRegister(true);
+    }
+  }, []);
 
   return (
     <>
@@ -226,7 +233,7 @@ export default function AuthPage() {
         {/* Framer Motion wrapper for form animations */}
         <motion.div
           initial={false}
-          animate={isSignUp ? { x: "-50%" } : { x: "0%" }}
+          animate={isRegister ? { x: "-50%" } : { x: "0%" }}
           transition={{ duration: 1 }}
           style={{
             width: "200%",
@@ -236,23 +243,23 @@ export default function AuthPage() {
           {/* Formulario de Iniciar Sesión */}
           <MotionDiv
             initial={false}
-            animate={isSignUp ? { x: "200%" } : { x: "0%" }}
-            transition={{ duration: 1 }}
-            style={{ width: "50%" }}
+            animate={isRegister ? { x: "200%" } : { x: "0%" }}
+            transition={{ duration: 1.2 }}
+            style={isRegister ? { width: "50%", visibility: "hidden" } : { width: "50%", visibility: "visible" }}
           >
-            <LoginPage forgotPassword={
-              <ForgotPasswordButton type="button" onClick={openModal}>
+            <LoginPage resetPasswordProp={
+              <ResetPasswordButton type="button" onClick={openModalResetPassword}>
                 ¿Olvidaste tu contraseña?
-              </ForgotPasswordButton>
+              </ResetPasswordButton>
             } />
           </MotionDiv>
 
           {/* Formulario de Registrarse */}
           <MotionDiv
             initial={false}
-            animate={isSignUp ? { x: "0%" } : { x: "200%" }}
-            transition={{ duration: 1 }}
-            style={{ width: "50%" }}
+            animate={isRegister ? { x: "0%" } : { x: "200%" }}
+            transition={{ duration: 1.2 }}
+            style={isRegister ? { width: "50%", visibility: "visible" } : { width: "50%", visibility: "hidden" }}
           >
             <RegisterPage />
           </MotionDiv>
@@ -273,28 +280,30 @@ export default function AuthPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
             >
-              <span>➜</span> SWAP
+              ➜ SWAP
             </SkillSwapText>
-            <SkillSwapText
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-            >
-              SKILL SWAP
-            </SkillSwapText>
+            <span>
+              <SkillSwapText
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1 }}
+              >
+                SKILL SWAP
+              </SkillSwapText>
+            </span>
           </TextWrapper>
           <OverlayPanel>
             <Div>
-              {isSignUp ? (
+              {isRegister ? (
                 <H1>
-                  <SwitchButton onClick={() => setIsSignUp(false)}>
-                    <StyledNavLink href="/auth" label="INICIAR SESIÓN" />
+                  <SwitchButton onClick={() => setIsRegister(false)}>
+                    <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="INICIAR SESIÓN" />
                   </SwitchButton>
                 </H1>
               ) : (
                 <H1>
-                  <SwitchButton onClick={() => setIsSignUp(true)}>
-                    <StyledNavLink href="/auth" label="REGISTRO" />
+                  <SwitchButton onClick={() => setIsRegister(true)}>
+                    <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="REGISTRO" />
                   </SwitchButton>
                 </H1>
               )}
@@ -302,7 +311,7 @@ export default function AuthPage() {
           </OverlayPanel>
         </OverlayContainer>
       </Container>
-      <ModalPasswordRecovery isOpen={isModalOpen} onClose={closeModal} />
+      <ModalResetPassword isOpen={isModalResetPasswordOpen} onClose={closeModalResetPassword} />
       <FooterMain />
     </>
   );

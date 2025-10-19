@@ -1,18 +1,24 @@
 "use client";
 import styled from "styled-components";
-import ModalConfirm from "@/src/components/modals/ModalConfirm";
-import WidgetContainer from "../../../../components/containers/WidgetContainer/WidgetContainer";
+import ModalConfirm from "@/src/shared/ui/organisms/modals/ModalConfirm";
+import CarouselMatched from "@/src/shared/ui/organisms/carousels/CarouselMatched";
+import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
 import { useEffect, useState } from "react";
-import { getUserById, toggleUserAccountState } from "../../../api/users";
-import { FooterMain } from '@/src/components/footer/FooterMain';
+import { getUserById, putUserAccountState } from "../../../api/users/users";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { getAuthData } from "@/src/lib/utils/getAuthData";
+import { getRequestMetricsByUserId } from "@/src/app/api/requests/requests";
+import { IRequestMetrics } from "@/src/core/models/requests/requests.model";
+import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 import { toast } from "react-toastify";
 import { GrStatusGoodSmall } from "react-icons/gr";
-import { Urbanist } from "next/font/google";
 
-const urbanist = Urbanist({ 
-    subsets: ["latin"], 
-    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"] 
-});
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+// We register the elements from ChartJS for the Bar Chart
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 //Container for the whole page.tsx
 const PageContainer = styled.section`
@@ -37,7 +43,7 @@ const PageContainer = styled.section`
     width: 100%;
     font-weight: 500;
     font-size: 18px;
-    color: ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textBlack};
   }
 
   & p {
@@ -70,6 +76,7 @@ const Banner = styled.article`
   position: relative;
   border-radius: 10px;
   width: 100%;
+  min-height: 120px;
 `;
 
 const BannerBody = styled.div`
@@ -100,6 +107,17 @@ const PageBody = styled.div`
   gap: 20px;
 `;
 
+const WidgetContainer = styled.article`
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-radius: 10px;
+  gap: 4px;
+`
+
 //Containers for Widgets and Aside
 const WidgetBody = styled.div`
   padding: 1.5rem 2rem;
@@ -107,12 +125,37 @@ const WidgetBody = styled.div`
   min-width: 220px;
   display: flex;
   flex-direction: column;
+
+  & canvas{
+    width: 100% !important;
+    height: 100% !important;
+  }
 `;
 
 const P = styled.p`
-    font-size: 0.9rem !important;
-    max-width: 300px !important;
-    hyphens: unset;
+  font-size: 0.9rem !important;
+  max-width: 300px !important;
+  hyphens: unset;
+`;
+
+const DoubleDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+
+  & article {
+    width: 50%;
+  }
+
+  @media (max-width: 769px) {
+    flex-direction: column;
+
+    & article {
+      width: 100% !important;
+    }
+  }
 `;
 
 const DivDeactivateAccount = styled.div`
@@ -162,11 +205,10 @@ const ButtonDeactivate = styled.button<({ color: string }) >`
 `;
 
 const AccountStateTag = styled.div<({ color: string }) >`
-  width: 100px;
+  width: 80px;
   text-align: center;
   border-radius: 50px;
-  margin: 10px 0;
-  padding: 2px;
+  padding: 4px;
   font-size: 12px;
   font-weight: bold;
   color: ${(props) => props.color};
@@ -176,51 +218,57 @@ const AccountStateTag = styled.div<({ color: string }) >`
   align-items: center;
   justify-content: center;
   font-style: normal;
-  font-family: ${urbanist.style.fontFamily};
 `;
 
 const UserInfo = () => {
   const [accountState, setAccountState] = useState<string | null>(null);
+  const [metricsData, setMetricsData] = useState<IRequestMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchAccountState = async () => {
-      if (typeof window !== 'undefined') {
-        const idString = localStorage.getItem("userId");
-        const idNumber = idString ? parseInt(idString, 10) : null;
+    if (globalThis.window !== undefined) {
+      const fetchAccountState = async () => {
+        const currentUserId = getAuthData('id');
 
-        if (!idNumber) {
-          setError("Error: ID de usuario no encontrado");
+        if (!currentUserId) {
+          setError("ID de usuario no encontrado.");
           setLoading(false);
           return;
         }
 
         try {
-          const data = await getUserById(idNumber);
-          setAccountState(data.nameStateUser ?? "Estado desconocido");
+          const dataInfo = await getUserById(currentUserId);
+          setAccountState(dataInfo.nameStateUser ?? "Estado desconocido");
+
+          const dataMetrics = await getRequestMetricsByUserId(currentUserId);
+          
+          if (dataMetrics) {
+            setMetricsData(dataMetrics);
+          }
         } catch (err) {
-          setError(err as string);
+          setError("Error al obtener información del usuario.");
+          console.error(err);
         } finally {
           setLoading(false);
         }
       };
+
+      fetchAccountState();
     }
-    fetchAccountState();
   }, []);
 
   const handleToggleAccountState = async () => {
-    if (typeof window !== 'undefined') {
-      const idString = localStorage.getItem("userId");
-      const idNumber = idString ? parseInt(idString, 10) : null;
+    if (globalThis.window !== undefined) {
+      const currentUserId = getAuthData('id');
 
-      if (!idNumber) return;
+      if (!currentUserId) return;
 
       const newAction = accountState === "Activo" ? "deshabilitar" : "habilitar";
 
       try {
-        const data = await toggleUserAccountState(idNumber, newAction);
+        const data = await putUserAccountState(currentUserId, newAction);
         setAccountState(data);
         toast.success(`Se logró ${newAction} tu cuenta con éxito.`);
       } catch (err) {
@@ -242,6 +290,109 @@ const UserInfo = () => {
     else return "#707070";
   }
 
+  // Datos para el gráfico de barras (Bar Chart)
+  const barData = {
+    labels: ["Aceptadas", "Pendientes", "Canceladas", "Enviadas"],
+    datasets: [
+      {
+        label: "Conteo de Solicitudes",
+        data: [
+          metricsData?.solicitudes.conteoAceptadas,
+          metricsData?.solicitudes.conteoPendientes,
+          metricsData?.solicitudes.conteoCanceladas,
+          metricsData?.solicitudes.conteoEnviadas,
+        ],
+        backgroundColor: [
+          "#f6f1d6",
+          "#eade8e",
+          "#f0bca0",
+          "#e48080",
+        ],
+        borderRadius: 10,
+      },
+    ],
+  };
+
+  const barOptions = {
+    responsive: true,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+        beginAtZero: true,
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'line',
+        },
+      },
+    },
+  };
+
+  // Muestra loading, error o los datos del usuario
+  if (loading) return (
+    <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
+      <Container>
+        <PageContainer >
+          <PageContent>
+            <Banner style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
+              <BannerBody>
+                <h1>Info</h1>
+              </BannerBody>
+            </Banner>
+            <PageBody>
+              <DoubleDiv>
+                <WidgetContainer style={{ display: 'block' }}>
+                  <Skeleton height={200} style={{ width: "100%" }} />
+                </WidgetContainer>
+                <WidgetContainer style={{ display: 'block' }}>
+                  <Skeleton height={200} style={{ width: "100%" }} />
+                </WidgetContainer>
+              </DoubleDiv>
+              <Skeleton height={320} style={{ width: "100%" }} />
+            </PageBody>
+          </PageContent>
+        </PageContainer >
+        <FooterMain />
+      </Container >
+    </SkeletonTheme>
+  );
+
+  if (error) return (
+    <Container>
+      <PageContainer >
+        <PageContent style={{ width: '100%' }}>
+          <Banner style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
+            <BannerBody>
+              <h1>Info</h1>
+            </BannerBody>
+          </Banner>
+          <PageBody>
+            <DoubleDiv>
+              <WidgetContainer>
+                <NoContentContainer error={error} />
+              </WidgetContainer>
+              <WidgetContainer>
+                <NoContentContainer error={error} />
+              </WidgetContainer>
+            </DoubleDiv>
+            <NoContentContainer error={error} />
+          </PageBody>
+        </PageContent>
+      </PageContainer >
+      <FooterMain />
+    </Container >
+  );
+
   // Render del componente
   return (
     <Container>
@@ -261,6 +412,22 @@ const UserInfo = () => {
             </BannerBody>
           </Banner>
           <PageBody>
+            <DoubleDiv>
+              <WidgetContainer>
+                <WidgetBody style={{ paddingBottom: 0, marginBottom: 0 }}>
+                  <h3>Actividad</h3>
+                  <p>
+                    Observa aquí los detalles estadísticos de tus solicitudes y conexiones. Manténte al tanto de tu red y sigue construyendo experiencias.
+                  </p>
+                </WidgetBody>
+                <CarouselMatched userId={metricsData!.idUsuario} />
+              </WidgetContainer>
+              <WidgetContainer>
+                <WidgetBody>
+                  <Bar data={barData} options={barOptions} />
+                </WidgetBody>
+              </WidgetContainer>
+            </DoubleDiv>
             <WidgetContainer>
               <WidgetBody>
                 <h3>Estado de cuenta</h3>
@@ -282,7 +449,7 @@ const UserInfo = () => {
                 <ButtonDeactivate
                   color={changeStateBtnColor()}
                   onClick={() => setIsModalOpen(true)}
-                  disabled={accountState === "Suspendido"} // Deshabilita el botón si está suspendido
+                  disabled={accountState === "Suspendido"}
                 >
                   {accountState === "Activo"
                     ? "Deshabilitar cuenta"

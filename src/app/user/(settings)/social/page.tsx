@@ -1,23 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Modal from "../../../../components/modals/ModalReport";
-import ModalTips from "../../../../components/modals/ModalTips";
-import CarouselNewUsers from "../../../../components/carousels/CarouselNewUsers";
-import CarouselFeature from "../../../../components/carousels/CarouselFeature"
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
-import { updateRequestById, getRequestsMessagesById, getRequestById } from "../../../api/requests";
-import { FooterMain } from "@/src/components/footer/FooterMain";
-import { IRequestsResponseItem, IUserMetrics } from "@/src/models/requests.model";
-import { OurAlertsText } from "@/src/lib/utils/ourAlertsText";
-import { Bar } from "react-chartjs-2";
+import ModalReport from "@/src/shared/ui/organisms/modals/ModalReport";
+import ModalTips from "@/src/shared/ui/organisms/modals/ModalTips";
+import CarouselNewUsers from "@/src/shared/ui/organisms/carousels/CarouselNewUsers";
+import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
+import ButtonFeature from "@/src/shared/ui/atoms/buttons/ButtonFeature";
+import { FaExclamationTriangle, FaShieldAlt } from "react-icons/fa";
+import { patchRequestById, getRequestsByUserId, getRequestMetricsByUserId } from "../../../api/requests/requests";
+import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
+import { IRequests, IRequestMetrics } from "@/src/core/models/requests/requests.model";
 import { PiUserCirclePlus } from "react-icons/pi";
 import { IoTrashBinOutline } from "react-icons/io5";
+import { getAuthData } from "@/src/lib/utils/getAuthData";
+import { toast } from "react-toastify";
 
-// We register the elements from ChartJS for the Bar Chart
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-// ------------------------------------------------------------------------------
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Container for the whole page.tsx
 const PageContainer = styled.section`
@@ -42,7 +41,7 @@ const PageContainer = styled.section`
     width: 100%;
     font-weight: 500;
     font-size: 18px;
-    color: ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textBlack};
   }
 
   & p {
@@ -89,6 +88,7 @@ const Banner = styled.article`
   position: relative;
   border-radius: 10px;
   width: 100%;
+  min-height: 120px;
 `;
 
 const BannerBody = styled.div`
@@ -105,41 +105,6 @@ const PageBody = styled.div`
   width: 100%;
 `;
 
-const DoubleDiv = styled.div`
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-
-  & div {
-    width: 50% !important;
-  }
-
-  @media (max-width: 769px) {
-    flex-direction: column;
-
-    & div {
-      width: 100% !important;
-    }
-
-    & aside{
-      max-width: 288px !important;
-      min-height: 10rem !important;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem !important;
-    }
-  }
-`;
-
-//Containers for Widgets and Aside
-const WidgetBody = styled.div`
-  width: 100%;
-  min-width: 220px;
-  display: flex;
-  flex-direction: column;
-`;
-
 const P = styled.p`
   font-size: 0.9rem !important;
   hyphens: unset;
@@ -151,7 +116,7 @@ const P = styled.p`
 const WidgetContainer = styled.div`
   padding: 1.5rem 2rem;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -159,9 +124,17 @@ const WidgetContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgPrimary};
 `;
 
-const WidgetContainer2 = styled.div`
+//Containers for Widgets and Aside
+const WidgetBody = styled.div`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const NewUsersContainer = styled.div`
+  width: 100%;
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -172,16 +145,21 @@ const WidgetContainer2 = styled.div`
   @media (max-width: 400px) {
     padding: 0.8rem;
     padding-bottom: 1.5rem;
+  }
+`;
 
-    .need-padding{
-    padding: 1.5rem 1.2rem;
-  }
-  }
+//Containers for Widgets and Aside
+const NewUsersBody = styled.div`
+  padding: 1.5rem 1.2rem;
+  width: 100%;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const RequestCard = styled.div`
   width: 48.5%;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -213,7 +191,7 @@ const RequestBody = styled.div`
     -webkit-text-fill-color: transparent;
     margin: 0;
     padding: 15px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.textBlack};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
   }
 `;
 
@@ -271,13 +249,60 @@ const NoRequestButton = styled.button`
   }
 `;
 
+const TipsButton = styled(ButtonFeature)`
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 4rem;
+  color: ${({ theme }) => theme.colors.textBlack};
+  font-size: 2rem;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.6s ease-in-out;
+
+  & svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  :hover{
+    transition: 0.6s ease-in-out;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
+
+const ReportButton = styled(ButtonFeature)`
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: ${({ theme }) => theme.colors.textBlack};
+  font-size: 2rem;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.6s ease-in-out;
+
+  & svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  :hover{
+    transition: 0.6s ease-in-out;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
+
+
 // Función para enviar la actualización del estado de la solicitud
 const updateRequestState = async (
   idRequest: number,
   idStateRequest: number
 ) => {
   try {
-    const data = await updateRequestById(idRequest, idStateRequest);
+    const data = await patchRequestById(idRequest, idStateRequest);
     return data;
   } catch (error) {
     console.error("Error al hacer el PATCH:", error);
@@ -286,218 +311,209 @@ const updateRequestState = async (
 };
 
 const UserRequests = () => {
-  const [requests, setRequests] = useState<IRequestsResponseItem[]>([]);
-  const [requestData, setRequestData] = useState<IUserMetrics | null>(null);
-  const [userId, setUserId] = useState<number | null>(null); // Guardar el userId de manera segura
+  const [requestsData, setRequestsData] = useState<IRequests[]>([]);
+  const [metricsData, setMetricsData] = useState<IRequestMetrics | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isModalReportOpen, setIsModalReportOpen] = useState<boolean>(false);
   const [isModalTipsOpen, setIsModalTipsOpen] = useState<boolean>(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModalReport = () => setIsModalReportOpen(true);
+  const closeModalReport = () => setIsModalReportOpen(false);
 
   const openModalTips = () => setIsModalTipsOpen(true);
   const closeModalTips = () => setIsModalTipsOpen(false);
 
-  useEffect(() => {
-    // Asegurarnos de que estamos en el cliente antes de acceder a localStorage
-    if (typeof window !== "undefined") {
-      const storedUserId = localStorage.getItem("userId");
-      if (storedUserId) {
-        const userIdNumber = Number(storedUserId);
-        console.log(userIdNumber);
-        if (!isNaN(userIdNumber)) {
-          setUserId(userIdNumber);
-        } else {
-          console.error("userId no es un número válido.");
-        }
-      }
-    }
-  }, []);
-
   useEffect(
     () => {
-      const fetchRequests = async () => {
-        if (!userId) return;
+      if (globalThis.window !== undefined) {
+        const currentUserId = getAuthData('id');
 
-        try {
-          const requestsData: IRequestsResponseItem[] = await getRequestsMessagesById(userId);
-          setRequests(requestsData);
-
-          const data = await getRequestById(userId);
-          setRequestData(data);
+        if (!currentUserId) {
+          setError("ID de usuario no encontrado");
           setLoading(false);
-        } catch (error) {
-          console.error("Error al obtener solicitudes:", error);
-          setLoading(false);
+          return;
         }
-      };
 
-      fetchRequests();
-    }, [userId]
+        const fetchRequests = async () => {
+          if (!currentUserId) return;
+
+          try {
+            const requestsData = await getRequestsByUserId(currentUserId);
+            setRequestsData(requestsData);
+
+            const metricsData = await getRequestMetricsByUserId(currentUserId);
+
+            if (metricsData) {
+              setMetricsData(metricsData);
+            }
+            setLoading(false);
+          } catch (error) {
+            console.error("Error al obtener solicitudes:", error);
+            setError("No se pudo obtener los datos de solicitudes del usuario.");
+            setLoading(false);
+          }
+        };
+
+        fetchRequests();
+      }
+    }, []
   );
 
   const handleAccept = async (id: number) => {
     try {
       await updateRequestState(id, 2); // Actualizar con idStateRequest = 2 (Aceptar)
-      setRequests((prevRequests) =>
+      setRequestsData((prevRequests) =>
         prevRequests.filter((request) => request.id !== id)
       ); // Eliminar la solicitud aceptada
+      toast.success("¡Solicitud aceptada con éxito!");
     } catch (error) {
       console.error("Error al aceptar la solicitud:", error);
+      toast.error("Error al aceptar la solicitud.");
     }
   };
 
   const handleReject = async (id: number) => {
     try {
       await updateRequestState(id, 3); // Actualizar con idStateRequest = 3 (Rechazar)
-      setRequests((prevRequests) =>
+      setRequestsData((prevRequests) =>
         prevRequests.filter((request) => request.id !== id)
       ); // Eliminar la solicitud rechazada
+      toast.success("¡Solicitud rechazada con éxito!");
     } catch (error) {
       console.error("Error al rechazar la solicitud:", error);
+      toast.error("Error al rechazar la solicitud.");
     }
   };
 
-  // Datos para el gráfico de barras (Bar Chart)
-  const barData = {
-    labels: ["Aceptadas", "Pendientes", "Canceladas", "Enviadas"],
-    datasets: [
-      {
-        label: "Conteo de Solicitudes",
-        data: [
-          requestData?.solicitudes.conteoAceptadas,
-          requestData?.solicitudes.conteoPendientes,
-          requestData?.solicitudes.conteoCanceladas,
-          requestData?.solicitudes.conteoEnviadas,
-        ],
-        backgroundColor: [
-          "rgb(246, 241, 214)",
-          "rgb(234, 222, 142)",
-          "rgb(240, 188, 160)",
-          "rgb(228, 128, 128)",
-        ],
-        borderRadius: 10,
-      },
-    ],
-  };
+  // Muestra loading, error o los datos del usuario
+  if (loading) return (
+    <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
+      <Container>
+        <PageContainer >
+          <PageContent>
+            <Banner style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
+              <BannerBody>
+                <h1>Social</h1>
+              </BannerBody>
+            </Banner>
+            <PageBody>
+              <WidgetContainer style={{ display: 'block' }}>
+                <Skeleton height={200} style={{ width: "100%" }} />
+              </WidgetContainer>
+              <Skeleton height={320} style={{ width: "100%" }} />
+            </PageBody>
+          </PageContent>
+        </PageContainer >
+        <FooterMain />
+      </Container >
+    </SkeletonTheme>
+  );
 
-  const barOptions = {
-    responsive: true,
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        grid: {
-          display: false,
-        },
-        beginAtZero: true,
-      },
-    },
-    plugins: {
-      legend: {
-        labels: {
-          usePointStyle: true,
-          pointStyle: 'line',
-        },
-      },
-    },
-  };
-
-  if (loading) {
-    return <OurAlertsText>Cargando...</OurAlertsText>;
-  }
-
-  return (
+  if (error) return (
     <Container>
-      <PageContainer>
-        <PageContent>
-          <Banner>
+      <PageContainer >
+        <PageContent style={{ width: '100%' }}>
+          <Banner style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
             <BannerBody>
               <h1>Social</h1>
             </BannerBody>
           </Banner>
           <PageBody>
-            <WidgetContainer>
-              <WidgetBody>
-                <h3>Conectar</h3>
-                <p>
-                  Actualmente has conectado con <strong>{requestData?.solicitudes.conteoConexiones} usuarios</strong>. Revisa tus solicitudes de conexión y decide con quién intercambiar conocimientos, destrezas y experiencia.
-                </p>
-              </WidgetBody>
-            </WidgetContainer>
-            <WidgetContainer>
-              <WidgetBody>
-                <PageBody>
-                  {requests.length > 0 ? (
-                    requests.map((request) => (
-                      <RequestCard key={request.id}>
-                        <RequestBody>
-                          <h3>{request.userNameRequesting}</h3>
-                          <p>{request.description}</p>
-                        </RequestBody>
-                        <ButtonsContainer>
-                          <NoRequestButton
-                            onClick={() => handleReject(request.id)}
-                          >
-                            <IoTrashBinOutline />Rechazar
-                          </NoRequestButton>
-                          <RequestButton
-                            onClick={() => handleAccept(request.id)}
-                          >
-                            <PiUserCirclePlus />Aceptar
-                          </RequestButton>
-                        </ButtonsContainer>
-                      </RequestCard>
-                    ))
-                  ) : (
-                    <P>◕ No hay solicitudes por responder.</P>
-                  )}
-                </PageBody>
-              </WidgetBody>
-            </WidgetContainer>
-            <WidgetContainer2>
-              <WidgetBody className="need-padding">
-                <h3>Novedades</h3>
-                <p>
-                  SkillSwap sigue creciendo con nuevos profesionales digitales cada día. Descubre los perfiles <strong>más recientes</strong>, conecta con personas afines y aprovecha nuevas oportunidades de colaboración dentro de la comunidad.
-                </p>
-              </WidgetBody>
-              <br />
-              <CarouselNewUsers />
-            </WidgetContainer2>
-            <DoubleDiv>
               <WidgetContainer>
-                <h3>Actividad</h3>
-                <p>
-                  Observa aquí los detalles estadísticos de tus solicitudes y conexiones. Manténte al tanto de tu red y sigue construyendo experiencias.
-                </p>
+                <NoContentContainer error={error} />
               </WidgetContainer>
-              <WidgetContainer>
-                <aside>
-                  <Bar data={barData} options={barOptions} />
-                </aside>
-              </WidgetContainer>
-            </DoubleDiv>
-            <WidgetContainer>
-              <WidgetBody>
-                <h3>Seguridad</h3>
-                <p>
-                  En este espacio podrás realizar reportes a usuarios con conductas sospechosas o inadecuadas.
-                </p>
-              </WidgetBody>
-            </WidgetContainer>
-            <CarouselFeature openModal={openModal} openModalTips={openModalTips} />
+            <NoContentContainer error={error} />
           </PageBody>
         </PageContent>
-      </PageContainer>
-      <ModalTips isOpen={isModalTipsOpen} onClose={closeModalTips} />
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      </PageContainer >
       <FooterMain />
-    </Container>
+    </Container >
+  );
+
+  return (
+    <>
+      <Container>
+        <PageContainer>
+          <PageContent>
+            <Banner>
+              <BannerBody>
+                <h1>Social</h1>
+              </BannerBody>
+              <TipsButton type={"button"} onClick={openModalTips}><FaShieldAlt /></TipsButton>
+              <ReportButton type={"button"} onClick={openModalReport}><FaExclamationTriangle /></ReportButton>
+            </Banner>
+            <PageBody>
+              <WidgetContainer>
+                <WidgetBody>
+                  <h3>Conectar</h3>
+                  <p>
+                    Actualmente has conectado con <strong>{metricsData?.solicitudes.conteoConexiones} usuarios</strong>. Revisa tus solicitudes de conexión y decide con quién intercambiar conocimientos, destrezas y experiencia.
+                  </p>
+                </WidgetBody>
+              </WidgetContainer>
+              <WidgetContainer>
+                <WidgetBody>
+                  <PageBody>
+                    {requestsData.length > 0 ? (
+                      requestsData.map((request) => (
+                        <RequestCard key={request.id}>
+                          <RequestBody>
+                            <h3>{request.userNameRequesting}</h3>
+                            <p>{request.description}</p>
+                          </RequestBody>
+                          <ButtonsContainer>
+                            <NoRequestButton
+                              onClick={() => handleReject(request.id)}
+                            >
+                              <IoTrashBinOutline />Rechazar
+                            </NoRequestButton>
+                            <RequestButton
+                              onClick={() => handleAccept(request.id)}
+                            >
+                              <PiUserCirclePlus />Aceptar
+                            </RequestButton>
+                          </ButtonsContainer>
+                        </RequestCard>
+                      ))
+                    ) : (
+                      <P>◕ No hay solicitudes por responder.</P>
+                    )}
+                  </PageBody>
+                </WidgetBody>
+              </WidgetContainer>
+              <NewUsersContainer>
+                <NewUsersBody>
+                  <h3>Novedades</h3>
+                  <p>
+                    SkillSwap sigue creciendo con nuevos profesionales digitales cada día. Descubre los perfiles <strong>más recientes</strong>, conecta con personas afines y aprovecha nuevas oportunidades de colaboración dentro de la comunidad.
+                  </p>
+                </NewUsersBody>
+                <br />
+                <CarouselNewUsers />
+              </NewUsersContainer>
+            </PageBody>
+          </PageContent>
+        </PageContainer>
+        <ModalTips isOpen={isModalTipsOpen} onClose={closeModalTips} />
+        <ModalReport isOpen={isModalReportOpen} onClose={closeModalReport} />
+        <FooterMain />
+      </Container>
+
+      {/* {isModalTipsOpen && (
+        <ModalTips
+          userToInteractWith={user}
+          isOpen={isModalTipsOpen}
+          onClose={() => setIsModalTipsOpen(false)} />
+      )}
+
+      {isModalReportOpen && (
+        <ModalReport
+          userToInteractWith={user}
+          isOpen={isModalReportOpen}
+          onClose={() => setIsModalReportOpen(false)} />
+      )} */}
+    </>
   );
 };
 
