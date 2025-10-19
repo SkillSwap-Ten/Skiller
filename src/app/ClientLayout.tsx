@@ -1,15 +1,16 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "./GlobalStyling";
-import { Navbar } from "../components/navbar/Navbar";
-import { useTheme } from "../hooks/useTheme";
-import { useThemeAuth } from "../hooks/useThemeAuth";
-import { Logobar } from "../components/logobar/Logobar";
 import { usePathname, useRouter } from 'next/navigation';
-import { clearStorage } from "../lib/services/storageService";
-import LoadingScreen from "../components/loadingScreen/LoadingScreen";
-import { IGlobalTheme } from "../models/globalTheme.model";
+import { Navbar } from "../shared/ui/organisms/navbar/NavbarOffline";
+import { Logobar } from "../shared/ui/molecules/logobar/Logobar";
+import { clearStorage } from "../lib/utils/storageCleaner";
+import { getAuthData } from "../lib/utils/getAuthData";
+import { useTheme } from "../shared/hooks/useTheme";
+import { useThemeAuth } from "../shared/hooks/useThemeAuth";
+import { IGlobalTheme } from "../shared/types/styles/theme.type";
+import { GlobalStyle } from "../shared/styles/GlobalStyling";
+import LoadingScreen from "../shared/ui/screens/LoadingScreen";
 
 const LayoutContainer = styled.div`
     display: flex;
@@ -24,31 +25,37 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const router = useRouter();
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-    const [themeAuth] = useThemeAuth();
     const [theme] = useTheme();
+    const [themeAuth] = useThemeAuth();
     const [definedTheme, setDefinedTheme] = useState<IGlobalTheme | null>(null);
 
+    const isAuth = pathname.startsWith('/auth');
+    const isOffline = pathname.startsWith('/auth') || pathname.startsWith('/legal');
+
     useEffect(() => {
-        const storedToken = typeof window !== 'undefined' ? localStorage.getItem("authToken") : null;
+        const storedToken = globalThis.window === undefined ? null : getAuthData('token');
         setToken(storedToken);
         console.log(storedToken);
-
-        if (!storedToken) {
-            clearStorage();
-        }
 
         const handleStart = () => setLoading(true);
         const handleComplete = () => {
             setTimeout(() => setLoading(false), 3000);
         };
 
+        if (!storedToken) {
+            clearStorage();
+
+            if (!isOffline) {
+                router.push("/");
+                return;
+            }
+        }
+
         router.prefetch(pathname);
 
         handleStart();
         handleComplete();
-    }, [pathname, router]);
-
-    const isAuthPage = pathname === '/auth';
+    }, [pathname, router, isOffline]);
 
     useEffect(() => {
         const themeToUse = (pathname === '/auth') ? themeAuth : theme;
@@ -67,9 +74,9 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         <ThemeProvider theme={definedTheme}>
             <GlobalStyle />
             <LayoutContainer>
-                {!isAuthPage && <Navbar />}
+                {!isAuth && <Navbar />}
                 {children}
-                {!isAuthPage && <Logobar />}
+                {!isAuth && <Logobar />}
             </LayoutContainer>
         </ThemeProvider>
     );

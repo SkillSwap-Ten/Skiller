@@ -1,5 +1,5 @@
-import NotFoundScreen from "../components/notFoundScreen/NotFoundScreen"
-import { NavbarNotFound } from "@/src/components/navbar/NavbarNotFound"
+import NotFoundScreen from "../shared/ui/screens/NotFoundScreen"
+import { NavbarNotFound } from "@/src/shared/ui/organisms/navbar/NavbarNotFound"
 export default function NotFound() {
     return (
         <>
