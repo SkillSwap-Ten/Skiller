@@ -16,22 +16,22 @@ export const metadata: Metadata = {
   authors: [
     { name: "David Francisco Blandón Mena, Luisa Fernanda Ramírez Cardona, Joan Sebastián Zapata Caro, Jonathan Escobar Molina, David Steven Medina Urrego, Arlex Mauricio Zapata Mesa" }
   ],
-  creator: "SkillSwap Team",
-  publisher: "SkillSwap Team",
+  creator: "SkillSwap Ten",
+  publisher: "SkillSwap Ten",
   category: 'Digital Networking',
-    verification: {
-    google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
+  verification: {
+     google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
   },
   keywords: [
-    "Skill", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer",
-    "Community", "Improve", "Marketing", "Virtual", "Online", "Code", "Design", "Art", "Media", "Strenghts", "Medellín", "Trabajo", "Colombia", "TypeScript",
-    "Multimedia", "Content", "Creator", "Desarrollo", "Backend", "Frontend", "Diseño", "Entretenimiento", "Mercadeo", "Proyectos", "Riwi", "Redes", "Practicar",
-    "Comunicación", "Tecnologías", "Aprender", "Estudio", "Intercambio", "Exchange", "Luisa", "Fernanda", "Ramírez", "Cardona", "Jonathan", "Escobar", "Urrego",
-    "Arlex", "Zapata", "Stiven", "David", "Molina", "Mesa", "Medina", "Joan", "Sebastián", "Caro", "David", "Francisco", "Blandón", "Mena", "franccoina", "Laboral",
-    "frn", "Vercel", "Destrezas", "Knowledges", "Conocimientos", "Descubrir", "Intercambiar", "Social", "Creativos", "Comunidad", "Cultura", "Github", "Experiencia",
-    "Behance", "Linkedin", "Jobs", "Web", "UX", "UI", "Nextjs", "Match", "Conectar", "Connect", "Discover", "New", "Nuevo", "Saberes", "Ideas", "Solicitud", "Colaborar",
-    "Solicitar", "Mensajes", "Message", "Compartir", "Share", "DevOps", "Frontend", "Backend", ".NET", "csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional",
-    "Conocer"
+    "Skill", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer", "Sitio Web",
+    "Community", "Improve", "Marketing", "Virtual", "Online", "Code", "Design", "Art", "Media", "Strenghts", "Medellín", "Trabajo", "Colombia", "TypeScript", "Website",
+    "Multimedia", "Content", "Creator", "Desarrollo", "Backend", "Frontend", "Diseño", "Entretenimiento", "Mercadeo", "Proyectos", "Riwi", "Redes", "Practicar", "App",
+    "Comunicación", "Tecnologías", "Aprender", "Estudio", "Intercambio", "Exchange", "Luisa", "Fernanda", "Ramírez", "Cardona", "Jonathan", "Escobar", "Urrego", "Dotnet",
+    "Arlex", "Zapata", "Stiven", "David", "Molina", "Mesa", "Medina", "Joan", "Sebastián", "Caro", "David", "Francisco", "Blandón", "Mena", "franccoina", "Laboral", "Deploy",
+    "frn", "Vercel", "Destrezas", "Knowledges", "Conocimientos", "Descubrir", "Intercambiar", "Social", "Creativos", "Comunidad", "Cultura", "Github", "Experiencia", "GitHub",
+    "Behance", "Linkedin", "Jobs", "Web", "UX", "UI", "Nextjs", "Match", "Conectar", "Connect", "Discover", "New", "Nuevo", "Saberes", "Ideas", "Solicitud", "Colaborar", "API",
+    "Solicitar", "Mensajes", "Messages", "Compartir", "Share", "DevOps", "Frontend", "Backend", ".NET", "Csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional",
+    "Conocer", "SkillSwap", "Skill-Swap", "Skill 10", "Skill-10", "Skill-Ten", "Skill Ten", "Skiller", "SkillSwap Ten", "SkillSwap-Ten", "Skill-Swap-Ten", "Swap", "C-sharp"
   ],
   robots: {
     index: true,
