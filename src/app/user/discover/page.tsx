@@ -1,19 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import CardAdsDiscover from "@/src/components/cards/CardAdsDiscover";
-import ButtonAside from "@/src/components/ui/buttons/ButtonAside";
-import ButtonBelow from "@/src/components/ui/buttons/ButtonBelow";
-import Search from "@/src/components/searchs/search";
-import AllUsers from "../../../components/containers/AllUsersContainer/AllUsers";
-import CarouselNewUsers from "../../../components/carousels/CarouselNewUsers";
-import { IUserCardProps } from "../../../models/userCards.model";
-import { OurAlertsText } from "@/src/lib/utils/ourAlertsText";
-import { FooterMain } from "@/src/components/footer/FooterMain";
-import { getUsersForImages } from '../../api/users';
+import CardAdsDiscover from "@/src/shared/ui/molecules/cards/CardAdsDiscover";
+import ButtonAside from "@/src/shared/ui/atoms/buttons/ButtonAside";
+import ButtonBelow from "@/src/shared/ui/atoms/buttons/ButtonBelow";
+import SearchDiscover from "@/src/shared/ui/molecules/searchs/SearchDiscover";
+import DiscoverUsers from "../../../features/users/components/UserDiscover";
+import CarouselNewUsers from "../../../shared/ui/organisms/carousels/CarouselNewUsers";
+import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
+import { getUsersForImages } from '../../api/users/users';
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { FaArrowDownAZ } from "react-icons/fa6";
 import { MdOutlineAlignHorizontalLeft } from "react-icons/md";
+import { getCurrentUserId } from "@/src/lib/utils/getCurrentUserId";
+import { IUserForImages } from "@/src/core/models/users/users.model";
 
 const DiscoverPage = styled.div`
   width: 100% !important;
@@ -98,6 +98,7 @@ const DivCarousel = styled.div`
 const UsersContainer = styled.div`
   padding-top: 0 !important;
   margin-top: 0 !important;
+  padding-bottom: 0 !important;
 `;
 
 const SearchContainer = styled.div`
@@ -122,7 +123,7 @@ const SearchContainer = styled.div`
       align-self: center;
       display: block;
       height: 1px;
-      border-bottom: 1px solid ${({ theme }) => theme.colors.textBlack};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
       width: 98%;
       padding-top: 0.5rem;
     }
@@ -151,6 +152,7 @@ const Content = styled.div`
   width: 100%;
   height: 80%;
   padding: 1rem;
+  padding-bottom: 0 !important;
   overflow-x: hidden;
 `;
 
@@ -182,12 +184,13 @@ const SidebarContainer = styled.div`
 
 const Discover = () => {
   // Estados para manejar a todos los usuarios, loading y errores
-  const [allUsersData, setAllUsersData] = useState<IUserCardProps[]>([]);
+  const [allUsersData, setAllUsersData] = useState<IUserForImages[]>([]);
+  const [currentUserData, setCurrentUserData] = useState<IUserForImages | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   // Estado para manejar los usuarios filtrados
-  const [filteredUsers, setFilteredUsers] = useState<IUserCardProps[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<IUserForImages[]>([]);
 
   // Función de búsqueda
   const handleSearch = (query: string | null): boolean => {
@@ -197,9 +200,9 @@ const Discover = () => {
     }
 
     const lowercasedQuery = query.toLowerCase().trim();
-    const filtered: IUserCardProps[] = allUsersData.filter((user) =>
+    const filtered: IUserForImages[] = allUsersData.filter((user) =>
       user.fullName.toLowerCase().includes(lowercasedQuery) ||
-      user.abilities.toLowerCase().includes(lowercasedQuery)
+      user.abilities!.toLowerCase().includes(lowercasedQuery)
     );
 
     setFilteredUsers(filtered);
@@ -213,41 +216,42 @@ const Discover = () => {
 
   // Filtrar por top usuarios
   const handleShowTopUsers = () => {
-    const sortedUsers = [...allUsersData].sort((a, b) => b.qualification - a.qualification);
+    const sortedUsers = [...allUsersData].sort((a, b) => b.qualification! - a.qualification!);
     setFilteredUsers(sortedUsers);
   };
 
   // Filtrar por orden alfabético
   const handleShowAlphabeticalOrder = () => {
-    const sortedUsers = [...allUsersData].sort((a, b) => a.jobTitle.localeCompare(b.jobTitle));
+    const sortedUsers = [...allUsersData].sort((a, b) => a.jobTitle!.localeCompare(b.jobTitle!));
     setFilteredUsers(sortedUsers);
   };
 
   // Fetch de los usuarios
   useEffect(() => {
-    const fetchAllUsersData = async () => {
-      try {
-        const responseData = await getUsersForImages();
-        setAllUsersData(responseData);
-        setFilteredUsers(responseData);
+    if (globalThis.window !== undefined) {
+      const fetchAllUsersData = async () => {
+        try {
+          const responseData = await getUsersForImages();
 
-        setLoading(false);
-      } catch (error) {
-        setError(error as string);
-        setLoading(false);
-      }
-    };
+          const currentUserId = getCurrentUserId();
+          const responseDataFiltered = responseData.filter(user => user.id !== currentUserId);
 
-    fetchAllUsersData();
+          const matchedCurrentUser = responseData.find((user) => user.id === currentUserId);
+
+          setCurrentUserData(matchedCurrentUser!);
+          setAllUsersData(responseDataFiltered);
+          setFilteredUsers(responseDataFiltered);
+
+          setLoading(false);
+        } catch (error) {
+          setError(error as string);
+          setLoading(false);
+        }
+      };
+
+      fetchAllUsersData();
+    }
   }, []);
-
-  if (loading) {
-    return <OurAlertsText>Cargando...</OurAlertsText>;
-  }
-
-  if (error) {
-    return <OurAlertsText>Error: {error}</OurAlertsText>;
-  }
 
   return (
     <DiscoverPage>
@@ -268,7 +272,7 @@ const Discover = () => {
         <Content>
           <DivContainer>
             <SearchContainer>
-              <Search label="⌕" onSearch={handleSearch} />
+              <SearchDiscover placeholder="¿Qué quieres aprender hoy...?" label="⌕" onSearch={handleSearch} />
               <Bottombar>
                 <ButtonBelow type={"button"} label={"Default"} onClick={handleFilterReset}>
                 </ButtonBelow>
@@ -283,11 +287,11 @@ const Discover = () => {
               <DivCarousel>
                 <CarouselNewUsers />
               </DivCarousel>
-              <AllUsers users={filteredUsers} />
+              <DiscoverUsers loading={loading} error={error} users={filteredUsers} />
             </UsersContainer>
           </DivContainer>
           <LateralContainer>
-            <CardAdsDiscover />
+            <CardAdsDiscover loading={loading} error={error} user={currentUserData!} />
           </LateralContainer>
         </Content>
       </Container>

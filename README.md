@@ -1,201 +1,285 @@
-![Logotype](./public/img/skillswap-logotype.webp)
+![Logotype](./public/img/skillswap-logotype.png)
 
 __SkillSwap__ is a modern platform designed to facilitate skill exchange, connecting people in the digital environment who want to learn with those willing to share their knowledge.
+
+--------------------------------------------------------------------------------------------------------
 
 ## Why SkillSwap?
 
 Updating and strengthening our skills is crucial, especially in a constantly evolving digital environment. SkillSwap addresses the challenges of collaborative learning, offering a smooth and effective digital experience for knowledge exchange.
 
-## Objective
+## Objectives
 
 Facilitate continuous learning and collaborative teaching, creating a vibrant community where users can explore their interests and direct their personal and professional development.
 
+--------------------------------------------------------------------------------------------------------
+
 ## Technologies Used
 
-- *Frontend*:
-   - Next.js, TypeScript, Redux Toolkit, Styled Components, Bootstrap Icons, React-based libraries
+__⚙️ FRONTEND:__
 
-- *Backend*:
-   - C#, .NET, Swagger, Azure
- 
-## Admin Credentials
+- ![TypeScript](https://img.shields.io/badge/-999?style=flat&logo=typescript&logoColor=fff)&nbsp; TypeScript
+- ![Next.js](https://img.shields.io/badge/-999?style=flat&logo=next.js&logoColor=fff)&nbsp; Next.js
+- ![Vercel](https://img.shields.io/badge/-999?logo=vercel&logoColor=fff)&nbsp; Vercel
+- ![Docker](https://img.shields.io/badge/-999?logo=docker&logoColor=fff)&nbsp; Docker
+  - Redux Toolkit, Styled Components, React-based libraries
+
+__⚙️ BACKEND:__
+
+- ![C#](https://img.shields.io/badge/-555?style=flat&logo=c&logoColor=fff)&nbsp; C#
+- ![.NET](https://img.shields.io/badge/-555?style=flat&logo=.net&logoColor=fff)&nbsp; .NET
+- ![Docker](https://img.shields.io/badge/-555?logo=docker&logoColor=fff)&nbsp; Docker
+  - Swagger, Azure/Render
+
+--------------------------------------------------------------------------------------------------------
+
+## Auth Credentials
+
 To access the admin panel, use the following credentials:
 
-- *Email*: arlex.z96@gmail.com
+- *Email*: <arlex.z96@gmail.com>
 - *Password*: @A12345
 
-These credentials should be used only for administrative purposes.
+To access the user overview, use the following credentials:
+
+- *Email*: <davidmedina@gmail.com>
+- *Password*: @A12345
+
+*P.S: These credentials are provided only for demo/testing purposes. Do not use them in production environments.*
+
+--------------------------------------------------------------------------------------------------------
 
 ## Project Structure
 
 ```bash
-├── public
-│   ├── img
-│   ├── svg
-│   └── vid
-├── src
-│   ├── app
-│   │   ├── (account)
-│   │   │   └── auth
-│   │   ├── admin
-│   │   │   ├── legal
-│   │   │   ├── posts
-│   │   │   ├── reports
-│   │   │   ├── users
+├── /public
+│   ├── /img
+│   ├── /svg
+│   └── /vid
+├── /src
+│   ├── /app
+│   │   ├── /(account)
+│   │   │   └── /auth
+│   │   │       ├── /password/reset
+│   │   │       ├── layout.tsx
+│   │   │       └── page.tsx
+│   │   ├── /admin
+│   │   │   ├── /legal
+│   │   │   ├── /reports
+│   │   │   ├── /users
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
-│   │   ├── api
-│   │   │   └── github-profile
-│   │   ├── legal
-│   │   ├── recoverPassword
-│   │   ├── redux
-│   │   │   ├── slices
-│   │   │   └── store.ts
-│   │   ├── user
-│   │   │   ├── detail/u
-│   │   │   ├── discover
-│   │   │   ├── legal
-│   │   │   ├── match
+│   │   ├── /user
+│   │   │   ├── /(settings)
+│   │   │   │   ├── /info
+│   │   │   │   ├── /profile
+│   │   │   │   └── /social
+│   │   │   ├── /detail/u/[id]
+│   │   │   ├── /discover
+│   │   │   ├── /legal
+│   │   │   ├── /match
 │   │   │   ├── layout.tsx
-│   │   │   ├── page.tsx
-│   │   │   └── (settings)
-│   │   │       ├── info
-│   │   │       ├── profile
-│   │   │       └── social
+│   │   │   └── page.tsx
+│   │   ├── /legal
+│   │   ├── /api
+│   │   ├── page.tsx
 │   │   ├── layout.tsx
+│   │   ├── not-found.tsx
 │   │   ├── Providers.tsx
-│   │   ├── RootHandler.tsx
-│   │   └── GlobalStyling.tsx
-│   ├── components
-│   │   └── ui
-│   ├── hooks
-│   ├── lib
-│   │   ├── services
-│   │   └── utils
-│   ├── models
+│   │   ├── ClientLayout.tsx
+│   │   └── RouteHandler.tsx
+│   ├── /shared
+│   │   ├── /hooks
+│   │   ├── /styles
+│   │   ├── /types
+│   │   └── /ui
+│   │       ├── /atoms
+│   │       ├── /molecules
+│   │       ├── /organisms
+│   │       └── /screens
+│   ├── /core
+│   │   ├── /dto
+│   │   └── /models
+│   ├── /features/any
+│   │   ├── /types
+│   │   ├── /hooks
+│   │   ├── /components
+│   │   └── anySlice.ts
+│   ├── /lib
+│   │   ├── /utils
+│   │   └── store.ts
 │   └── middleware.ts
-└─── .env.local (OPTIONAL)
+├── .env*
+├── .gitignore
+├── .dockerignore
+├── package.json
+├── Dockerfile
+├── README.md
+└── ...
 ```
+
+--------------------------------------------------------------------------------------------------------
+
+<h1 align="center">SkillSwap Team</h1>
+<p align="center">
+  <a href="https://github.com/franccoina" target="_blank"><img src="https://img.shields.io/badge/-franccoina-777777?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+    <a href="https://github.com/medi77na" target="_blank"><img src="https://img.shields.io/badge/-medi77na-318A80?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
+  <a href="https://github.com/luisaramicar11" target="_blank"><img src="https://img.shields.io/badge/-luisaramicar11-327FE3?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+  <a href="https://github.com/JoanZapata05" target="_blank"><img src="https://img.shields.io/badge/-JoanZapata05-572364?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+  <a href="https://github.com/Arlexz96" target="_blank"><img src="https://img.shields.io/badge/-Arlexz96-900F10?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
+  <a href="https://github.com/JEscobar07" target="_blank"><img src="https://img.shields.io/badge/-JEscobar07-FC5A00?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+<a href="mailto:skillswapten@gmail.com" target="_blank">
+  <img src="https://img.shields.io/badge/-skillswapten@gmail.com-FFA900?style=flat&logo=gmail&logoColor=white" alt="social-media-logo"/>
+</a>
+</p>
+
+--------------------------------------------------------------------------------------------------------
+
+## Frontend
+
+- `franccoina` David Francisco Blandón Mena
+
+- `luisaramicar11` Luisa Fernanda Ramírez Cardona
+
+- `JoanZapata05` Joan Sebastián Zapata Caro
+
+## Backend
+
+- `Arlexz96` Arlex Mauricio Zapata Mesa
+
+- `JEscobar07` Jonathan Escobar Molina
+
+- `medi77na` David Steven Medina Urrego
+
+--------------------------------------------------------------------------------------------------------  
 
 ## Resources
 
 1. In this link, you can view the Documentation of our project on Notion:
-    - [https://plum-pig-ed5.notion.site/SKILLSWAP-8fa0afeb7d144278894d643549d1e669](https://plum-pig-ed5.notion.site/SKILLSWAP-8fa0afeb7d144278894d643549d1e669)
+    - [Go to Notion](https://plum-pig-ed5.notion.site/SKILLSWAP-8fa0afeb7d144278894d643549d1e669)
 
 2. In this link, you can view the Task Management and Sprints of our project on Jira:
-    - [https://msgamesje.atlassian.net/jira/software/projects/SCRUM/boards/1?atlOrigin=eyJpIjoiNTFhZDYxYjI1NTU0NGZjMmFlMjVkMWRjNTM5ODk3YzkiLCJwIjoiaiJ9](https://msgamesje.atlassian.net/jira/software/projects/SCRUM/boards/1?atlOrigin=eyJpIjoiNTFhZDYxYjI1NTU0NGZjMmFlMjVkMWRjNTM5ODk3YzkiLCJwIjoiaiJ9)
+    - [Go to Jira](https://msgamesje.atlassian.net/jira/software/projects/SCRUM/boards/1?atlOrigin=eyJpIjoiNTFhZDYxYjI1NTU0NGZjMmFlMjVkMWRjNTM5ODk3YzkiLCJwIjoiaiJ9)
 
-3. In this link, you can view the MockUp and Figma Design of our project on Figma:
-    - [https://www.figma.com/design/FEDH5WgaGXBLSr2xBBA8OV/SkillSwap.ts-Mockup?node-id=0-1&t=mbwWpVTL1rtoLHnZ-1](https://www.figma.com/design/FEDH5WgaGXBLSr2xBBA8OV/SkillSwap.ts-Mockup?node-id=0-1&t=mbwWpVTL1rtoLHnZ-1)
+3. In this link, you can view the MockUp and Prototype Design of our project on Figma:
+    - [Go to Figma](https://www.figma.com/design/FEDH5WgaGXBLSr2xBBA8OV/SkillSwap.ts-Mockup?node-id=0-1&t=mbwWpVTL1rtoLHnZ-1)
 
 4. In this link, you can view our project deployed on Vercel:
-    - [https://skill-swap-ten.vercel.app/](https://skill-swap-ten.vercel.app/)
+    - [Go to SkillSwap](https://skillswapten.vercel.app)
 
 5. In this link, you can explore the team's repository for backend develop and deploy:
-    - [https://github.com/medi77na/SkillSwap/](https://github.com/medi77na/SkillSwap/)
+    - [Go to Backend Repository](https://github.com/SkillSwap-Ten/SkillSwap)
 
 6. You are here right now! Be sure to explore our team's repository for frontend develop and deploy:
-    - [https://github.com/luisaramicar11/skillSwap](https://github.com/luisaramicar11/skillSwap)
+    - [Go to Frontend Repository](https://github.com/SkillSwap-Ten/Skiller)
 
-## Equipo Frontend
-
-- David Francisco Blandón Mena
-    - franccoina
-
-- Luisa Fernanda Ramírez Cardona
-    - luisaramicar11
-
-- Joan Sebastián Zapata Caro
-    - JoanZapata05
-
-## Equipo Backend
-
-- Arlex Mauricio Zapata Mesa
-    - Arlexz96
-
-- Jonathan Escobar Molina
-    - JEscobar07
-
-- David Steven Medina Urrego
-    - medi77na
-
-## Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/luisaramicar11/skillSwap.git
-```
-
-2. Run the project in the terminal:
-
-```bash
-npm run dev
-```
-
-3. Create a file named __".env.local"__ in the root of the project:
-
-- This file should contain a GITHUB token allowing you to preview users' GitHub profiles.
-- However, due to the **".gitignore"**, you may not have this file when cloning this project, or it may be automatically deleted during transfer.
-- It is recommended that you create it manually, but don’t worry; this will not affect your experience.
-- You will need to generate your own GITHUB token, which you can obtain by following the instructions on GitHub or just go to the end of this document, where we will explain it to you. 
-
-```bash
-.env.local
-```
-
-4. Write the following code in the previously created file to keep the token in your project. You must name the variable this way, otherwise, it will not work:
-
-```bash
-NEXT_PUBLIC_GITHUB_TOKEN=your_generated_token_here
-```
-
-5. Open [http://localhost:3000](http://localhost:3000) on your browser and enjoy our project.
-
-<br>
+*P.S: In case you'd like to get in touch with our team, feel free to email us at* __skillswapten@gmail.com__.
 
 --------------------------------------------------------------------------------------------------------
 
-<br>
+## Installation
+
+1. Clone the repositories exactly as below:
+
+```bash
+# Frontend repository
+git clone https://github.com/SkillSwap-Ten/Skiller.git   
+
+# Backend repository     
+git clone https://github.com/SkillSwap-Ten/SkillSwap.git   
+```
+
+2. Move into the Frontend directory and install the dependencies:
+
+```bash
+# Move into frontend folder (install project packages and dependencies)
+cd Skiller
+npm install
+```
+
+3. Due to the `.gitignore`, you may not have the environment variables file when cloning this project. To solve this, create an `.env` file __on the root directory of the frontend project__ (`/Skiller`):
+
+```bash
+# File name
+.env
+```
+
+4. Then, place there the three environment variables according to the instructions below:
+<br/>
+
+    - `NEXT_PUBLIC_GITHUB_API_URL`: GitHub API URL (default: <https://api.github.com/users>)
+    - `NEXT_PUBLIC_BASE_API_URL`: SkillSwap API URL (default: <https://skillswap-qww9.onrender.com/api>)
+    - `GITHUB_TOKEN`: GitHub API TOKEN (secret: [you_can_create_it_on_your_own])
+
+- *P.S: You can generate your own GITHUB token by following the instructions on [GitHub Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)... or just go to the end of this document, where we will explain it to you.*
+
+```bash
+# Content of .env file
+NEXT_PUBLIC_GITHUB_API_URL=github_url_here
+NEXT_PUBLIC_BASE_API_URL=skillswap_url_here
+GITHUB_TOKEN=your_generated_token_here
+```
+
+5. Now, move into the Backend directory:
+
+```bash
+# Move into backend folder (contains docker-compose.yml)
+cd ..
+cd SkillSwap  
+```
+
+6. Run the project container in the terminal with Docker. Choose __ONLY ONE__ of the following options:
+
+```bash
+# Both Backend and Frontend for production (Next with `npm run start`)
+docker compose up --build
+
+# Backend for production and Frontend for dev (Next with hot reload `npm run dev`)
+docker compose run --service-ports Skiller npm run dev
+```
+
+7. Open [http://localhost:3000](http://localhost:3000) on your browser and enjoy our project.
+
+--------------------------------------------------------------------------------------------------------
 
 ### How to Generate a GitHub Personal Access Token
 
-1. **Log in to GitHub**:
+1. __Log in to GitHub__:
    - Go to [GitHub](https://github.com) and log in to your account.
 
-2. **Navigate to Settings**:
+2. __Navigate to Settings__:
    - Click on your profile picture in the top right corner.
-   - Select **Settings** from the dropdown menu.
+   - Select __Settings__ from the dropdown menu.
 
-3. **Access Developer Settings**:
-   - In the left sidebar, scroll down and click on **Developer settings**.
+3. __Access Developer Settings__:
+   - In the left sidebar, scroll down and click on __Developer settings__.
 
-4. **Personal Access Tokens**:
-   - Click on **Personal access tokens** in the left sidebar.
-   - Select **Tokens (classic)**.
+4. __Personal Access Tokens__:
+   - Click on __Personal access tokens__ in the left sidebar.
+   - Select __Tokens (classic)__.
 
-5. **Generate New Token**:
-   - Click on the **Generate new token** button.
+5. __Generate New Token__:
+   - Click on the __Generate new token__ button.
 
-6. **Set Token Scopes**:
-   - Give your token a descriptive **note**.
-   - Set the **expiration** for the token as needed.
+6. __Set Token Scopes__:
+   - Give your token a descriptive __note__.
+   - Set the __expiration__ for the token as needed.
    - Select the scopes for the token:
-     - **repo**: Full control of private repositories.
-     - **user**: Read and write access to profile data.
+     - __repo__: Full control of private repositories.
+     - __user__: Read and write access to profile data.
 
-7. **Generate and Copy the Token**:
-   - Click on **Generate token**.
-   - **Copy** the generated token. You won’t be able to see it again!
+7. __Generate and Copy the Token__:
+   - Click on __Generate token__.
+   - __Copy__ the generated token. You won’t be able to see it again!
 
-8. **Store Your Token**:
-   - Save your token securely, such as in a `.env.local` file, and use it in your project as needed.
+8. __Store Your Token__:
+   - Save your token securely, such as in a `.env` file, and use it in your project as needed.
 
-### Important:
+### Remember...
+
 Make sure to keep your token private. If you believe it has been compromised, revoke it immediately and generate a new one.
 
-
--------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------
 
 <br>
 <div align="center">
@@ -204,10 +288,10 @@ Make sure to keep your token private. If you believe it has been compromised, re
 </div>
 <br>
 
--------------------------------------------------------------------------------------------------------- 
+--------------------------------------------------------------------------------------------------------
 
 <div align="center">
-  <img src="./public/img/skillswap-isotype.webp" alt="Skillswap-Isotype" width="400" />
+  <img src="./public/img/skillswap-isotype.png" alt="Skillswap-Isotype" width="400" />
 </div>
 
 <div align="center">
@@ -216,4 +300,3 @@ Make sure to keep your token private. If you believe it has been compromised, re
       © All rights reserved.
        </em>
 </div>
-
