@@ -22,14 +22,16 @@ __⚙️ FRONTEND:__
 - ![Next.js](https://img.shields.io/badge/-999?style=flat&logo=next.js&logoColor=fff)&nbsp; Next.js
 - ![Vercel](https://img.shields.io/badge/-999?logo=vercel&logoColor=fff)&nbsp; Vercel
 - ![Docker](https://img.shields.io/badge/-999?logo=docker&logoColor=fff)&nbsp; Docker
-  - Redux Toolkit, Styled Components, React-based libraries
+
+*...Redux Toolkit, Styled Components, React-based libraries*
 
 __⚙️ BACKEND:__
 
 - ![C#](https://img.shields.io/badge/-555?style=flat&logo=c&logoColor=fff)&nbsp; C#
 - ![.NET](https://img.shields.io/badge/-555?style=flat&logo=.net&logoColor=fff)&nbsp; .NET
 - ![Docker](https://img.shields.io/badge/-555?logo=docker&logoColor=fff)&nbsp; Docker
-  - Swagger, Azure/Render
+
+*...Swagger, Azure/Render*
 
 --------------------------------------------------------------------------------------------------------
 
