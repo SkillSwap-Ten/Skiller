@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import { NavbarUser } from '../../components/navbar/NavbarUser';
 import styled from 'styled-components';
-import { Logobar } from '@/src/components/logobar/Logobar';
+import { NavbarUser } from '../../shared/ui/organisms/navbar/NavbarUser';
+import { Logobar } from '@/src/shared/ui/atoms/logobar/Logobar';
 
 const LayoutContainer = styled.div`
     display: flex;
@@ -22,8 +22,8 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
         <LayoutContainer>
             <ContentContainer>
                 <NavbarUser />
-                    {children}
-                    <Logobar />
+                {children}
+                <Logobar />
             </ContentContainer>
         </LayoutContainer>
     );
