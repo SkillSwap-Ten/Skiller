@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import skillswap_isotype from "@/public/img/skillswap-isotype.webp"
-import StyledNavLink from '@/src/components/ui/links/NavLinks';
-import { handlePageChange } from '@/src/lib/utils/handlePageTheme';
-import { FooterMain } from '@/src/components/footer/FooterMain';
+import NavLink from '@/src/shared/ui/atoms/links/NavLinks';
+import { handlePageTheme } from '@/src/lib/utils/themeHandler';
+import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 
 const LegalContainer = styled.article`
   width: 100%;
@@ -18,10 +18,12 @@ const LegalContainer = styled.article`
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 25px;
   max-width: 800px;
   margin: auto;
-  gap: 1rem;
+  gap: 5px;
 
   & hr{
     height: 2px;
@@ -30,13 +32,17 @@ const Container = styled.div`
     margin: 5px;
     opacity: 0.1;
     border-radius: 50%;
-    margin-bottom: 40px;    
+  }
+
+  @media (max-width: 768px) {
+    padding-bottom: 10px;
   }
 `;
 
 const Title = styled.h1`
   text-align: center;
   margin: 0;
+  margin-bottom: 5px;
   background: ${({ theme }) => theme.colors.gradientText};
   font-size: 2.5rem;
   font-weight: normal;
@@ -47,35 +53,38 @@ const Title = styled.h1`
 `;
 
 const Section = styled.section`
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.5rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 10px;
-  font-weight: 200;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   opacity: 0.8;
 `;
 
 const Paragraph = styled.p`
   font-size: 1rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.6;
+  line-height: 1.5;
+  text-align: justify;
 `;
 
 const Strong = styled.strong`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-weight: 600;
+  opacity: 0.8;
 `;
 
 const Arrow = styled.span`
   margin-right: 8px;
   font-size: 18px;
   font-weight: 500;
-  font-style: normal;
   display: flex;
   align-items: center;
   margin: 0;
@@ -95,14 +104,14 @@ const BackLink = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.textSecondary};
   text-decoration: none;
-  gap:5px;
+  gap:4px;
   margin: 0;
-  padding-bottom: 15px;
 
   a {
     color: ${({ theme }) => theme.colors.textSecondary};
     padding: 0 !important;
     margin: 0 !important;
+    font-weight: 500;
   }
 `;
 
@@ -110,10 +119,12 @@ const Legal = () => {
   return (
     <LegalContainer>
       <Container>
-        <BackLink onClick={() => handlePageChange("INICIO")}>
-          <Arrow>&lt;</Arrow> VOLVER A <StyledNavLink href="/" label="INICIO"></StyledNavLink><Arrow>&gt;</Arrow>
-        </BackLink>
         <Title>Legal</Title>
+
+        <hr />
+        <BackLink onClick={() => handlePageTheme("INICIO")}>
+          <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/" label="INICIO"></NavLink><Arrow>&gt;</Arrow>
+        </BackLink>
         <hr />
 
         <Section>
@@ -123,7 +134,7 @@ const Legal = () => {
 
         <Section>
           <SectionTitle>Correo de Contacto</SectionTitle>
-          <Paragraph><Strong>Email:</Strong> skillswap4@gmail.com</Paragraph>
+          <Paragraph><Strong>Email:</Strong> skillswapten@gmail.com</Paragraph>
         </Section>
 
         <Section>
