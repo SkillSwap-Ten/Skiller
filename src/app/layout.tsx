@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   publisher: "SkillSwap Ten",
   category: 'Digital Networking',
   verification: {
-     google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
+    google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
   },
   keywords: [
     "Skill", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer", "Sitio Web",
@@ -57,16 +57,16 @@ export const metadata: Metadata = {
     creatorId: '1664752708694208515',
     siteId: '1664752708694208515',
     description: 'Aventúrate a intercambiar habilidades digitales con SkillSwap.',
-    images: ['https://skillswapten.vercel.app/img/skillswap-open-graph.png'],
+    images: ['https://skillswapten.vercel.app/img/skillswap-opengraphs.png'],
   },
   openGraph: {
     title: "SkillSwap · Looking for Skill",
     description: "Aventúrate a intercambiar habilidades digitales con SkillSwap.",
-    url: "https://skillswapten.vercel.app/",
-    siteName: "SkillSwap-Ten",
+    url: "https://skillswapten.vercel.app",
+    siteName: "SkillSwap",
     images: [
       {
-        url: "https://skillswapten.vercel.app/img/skillswap-open-graph.png",
+        url: "https://skillswapten.vercel.app/img/skillswap-opengraphs.png",
         width: 1200,
         height: 630,
         alt: "SkillSwap-Ten",
@@ -89,7 +89,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <meta name="sitedomain" content="https://skillswapten.vercel.app/" />
+        <meta name="sitedomain" content="https://skillswapten.vercel.app" />
         <meta name="organization" content="SkillSwap-Ten, frn!, riwi" />
         <meta name="designer" content="David Francisco Blandón Mena, Luisa Fernanda Ramírez Cardona, Joan Sebastián Zapata Caro" />
         <meta name="copyright" content="© 2024 SkillSwap. Todos los derechos reservados." />

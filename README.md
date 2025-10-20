@@ -14,43 +14,6 @@ Facilitate continuous learning and collaborative teaching, creating a vibrant co
 
 --------------------------------------------------------------------------------------------------------
 
-## Technologies Used
-
-__⚙️ FRONTEND:__
-
-- ![TypeScript](https://img.shields.io/badge/-999?style=flat&logo=typescript&logoColor=fff)&nbsp; TypeScript
-- ![Next.js](https://img.shields.io/badge/-999?style=flat&logo=next.js&logoColor=fff)&nbsp; Next.js
-- ![Vercel](https://img.shields.io/badge/-999?logo=vercel&logoColor=fff)&nbsp; Vercel
-- ![Docker](https://img.shields.io/badge/-999?logo=docker&logoColor=fff)&nbsp; Docker
-
-*...Redux Toolkit, Styled Components, React-based libraries*
-
-__⚙️ BACKEND:__
-
-- ![C#](https://img.shields.io/badge/-555?style=flat&logo=c&logoColor=fff)&nbsp; C#
-- ![.NET](https://img.shields.io/badge/-555?style=flat&logo=.net&logoColor=fff)&nbsp; .NET
-- ![Docker](https://img.shields.io/badge/-555?logo=docker&logoColor=fff)&nbsp; Docker
-
-*...Swagger, Azure/Render*
-
---------------------------------------------------------------------------------------------------------
-
-## Auth Credentials
-
-To access the admin panel, use the following credentials:
-
-- *Email*: <arlex.z96@gmail.com>
-- *Password*: @A12345
-
-To access the user overview, use the following credentials:
-
-- *Email*: <davidmedina@gmail.com>
-- *Password*: @A12345
-
-*P.S: These credentials are provided only for demo/testing purposes. Do not use them in production environments.*
-
---------------------------------------------------------------------------------------------------------
-
 ## Project Structure
 
 ```bash
@@ -122,17 +85,58 @@ To access the user overview, use the following credentials:
 
 --------------------------------------------------------------------------------------------------------
 
+<h1 align="center">Tech Stack</h1>
+<p align="center">
+   <img src="https://img.shields.io/badge/*-TypeScript-yellow?logo=typescript&logoColor=white" alt="tech-stack-logo"> 
+   <img src="https://img.shields.io/badge/*-Next.js-red?logo=next.js&logoColor=white" alt="tech-stack-logo"> 
+   <img src="https://img.shields.io/badge/*-Docker-purple?logo=docker&logoColor=white" alt="tech-stack-logo"> 
+   <img src="https://img.shields.io/badge/*-Dotnet-blue?logo=dotnet&logoColor=white" alt="tech-stack-logo"> 
+   <img src="https://img.shields.io/badge/*-_C_Sharp-green?logo=c&logoColor=white" alt="tech-stack-logo"> 
+</p>
+
+--------------------------------------------------------------------------------------------------------
+
+## Frontend
+
+- `TypeScript`
+
+- `Next.js`
+
+- `Docker`
+
+- `Redux Toolkit`
+
+- `Styled Components`
+
+- `React-based libraries`
+
+## Backend
+
+- `Dotnet`
+
+- `C-Sharp`
+
+- `Docker`
+
+- `Swagger`
+
+- `Azure`
+
+- `Render`
+
+--------------------------------------------------------------------------------------------------------
+
 <h1 align="center">SkillSwap Team</h1>
 <p align="center">
-  <a href="https://github.com/franccoina" target="_blank"><img src="https://img.shields.io/badge/-franccoina-777777?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
-    <a href="https://github.com/medi77na" target="_blank"><img src="https://img.shields.io/badge/-medi77na-318A80?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
-  <a href="https://github.com/luisaramicar11" target="_blank"><img src="https://img.shields.io/badge/-luisaramicar11-327FE3?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
-  <a href="https://github.com/JoanZapata05" target="_blank"><img src="https://img.shields.io/badge/-JoanZapata05-572364?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
-  <a href="https://github.com/Arlexz96" target="_blank"><img src="https://img.shields.io/badge/-Arlexz96-900F10?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
-  <a href="https://github.com/JEscobar07" target="_blank"><img src="https://img.shields.io/badge/-JEscobar07-FC5A00?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
-<a href="mailto:skillswapten@gmail.com" target="_blank">
-  <img src="https://img.shields.io/badge/-skillswapten@gmail.com-FFA900?style=flat&logo=gmail&logoColor=white" alt="social-media-logo"/>
-</a>
+   <a href="https://github.com/franccoina" target="_blank"><img src="https://img.shields.io/badge/-franccoina-777777?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="https://github.com/medi77na" target="_blank"><img src="https://img.shields.io/badge/-medi77na-318A80?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="https://github.com/luisaramicar11" target="_blank"><img src="https://img.shields.io/badge/-luisaramicar11-327FE3?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="https://github.com/JoanZapata05" target="_blank"><img src="https://img.shields.io/badge/-JoanZapata05-572364?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="https://github.com/Arlexz96" target="_blank"><img src="https://img.shields.io/badge/-Arlexz96-900F10?style=flate&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="https://github.com/JEscobar07" target="_blank"><img src="https://img.shields.io/badge/-JEscobar07-FC5A00?style=flat&logo=github&logoColor=white" alt="social-media-logo"/></a>
+   <a href="mailto:skillswapten@gmail.com" target="_blank">
+   <img src="https://img.shields.io/badge/-skillswapten@gmail.com-FFA900?style=flat&logo=gmail&logoColor=white" alt="social-media-logo"/>
+   </a>
 </p>
 
 --------------------------------------------------------------------------------------------------------
@@ -176,6 +180,22 @@ To access the user overview, use the following credentials:
     - [Go to Frontend Repository](https://github.com/SkillSwap-Ten/Skiller)
 
 *P.S: In case you'd like to get in touch with our team, feel free to email us at* __skillswapten@gmail.com__.
+
+--------------------------------------------------------------------------------------------------------
+
+## Auth Credentials
+
+To access the admin panel, use the following credentials:
+
+- *Email*: <arlex.z96@gmail.com>
+- *Password*: @A12345
+
+To access the user overview, use the following credentials:
+
+- *Email*: <davidmedina@gmail.com>
+- *Password*: @A12345
+
+*P.S: These credentials are provided only for demo/testing purposes. Do not use them in production environments.*
 
 --------------------------------------------------------------------------------------------------------
 
@@ -277,7 +297,7 @@ docker compose run --service-ports Skiller npm run dev
 8. __Store Your Token__:
    - Save your token securely, such as in a `.env` file, and use it in your project as needed.
 
-### Remember...
+### Remember
 
 Make sure to keep your token private. If you believe it has been compromised, revoke it immediately and generate a new one.
 
