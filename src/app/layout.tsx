@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   ],
   creator: "SkillSwap Ten",
   publisher: "SkillSwap Ten",
-  category: 'Digital Networking',
+  category: "Digital Networking",
   verification: {
-    google: 'zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI',
+    google: "zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI",
   },
   keywords: [
     "Skill", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer", "Sitio Web",
