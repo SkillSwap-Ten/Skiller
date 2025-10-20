@@ -305,7 +305,7 @@ Make sure to keep your token private. If you believe it has been compromised, re
 <br>
 <div align="center">
      <em>We thank you very much for visiting our loved project.</strong></em><br>
-        <em>Greetings from <strong>SkillSwap Team.</strong></em>
+        <em>Greetings from the <strong>SkillSwap Team.</strong></em>
 </div>
 <br>
 
