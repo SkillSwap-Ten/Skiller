@@ -5,8 +5,8 @@ import { postSetNewPassword } from "@/src/app/api/auth/auth";
 import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 import { handlePageTheme } from "@/src/lib/utils/themeHandler";
 import { toast } from "react-toastify";
-import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 import styled from "styled-components";
+import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 
 // Styled Components para el formulario
 const PageContainer = styled.div`
