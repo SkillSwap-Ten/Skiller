@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { usePathname, useRouter } from 'next/navigation';
 import { Navbar } from "../shared/ui/organisms/navbar/NavbarOffline";
-import { Logobar } from "../shared/ui/atoms/logobar/Logobar";
+import { Logobar } from "../shared/ui/molecules/logobar/Logobar";
 import { clearStorage } from "../lib/utils/storageCleaner";
 import { getAuthToken } from "../lib/utils/getAuthToken";
 import { useTheme } from "../shared/hooks/useTheme";

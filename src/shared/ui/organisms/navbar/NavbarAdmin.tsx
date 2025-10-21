@@ -5,21 +5,20 @@ import { FiLogOut } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { PiList } from "react-icons/pi";
-import { smoothScrollToTop } from "@/src/lib/utils/scrollBehavior";
 import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 import AdminProfileSidebar from "../sidebars/SidebarAdmin";
 import LogoutButton from "../../atoms/buttons/ButtonLogout";
 
 // Styled components
 const NavbarContainer = styled.nav`
-    z-index: 10;
     position: fixed;
+    z-index: 10;
     width: 100%;
     height: 54px;
+    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     top: 0;
     background-color: ${({ theme }) => theme.colors.bgNavbar};
     color: ${({ theme }) => theme.colors.textWhite};
-    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,32 +27,6 @@ const NavbarContainer = styled.nav`
 
     @media (max-width: 790px) {
         padding: 0 5px;
-    }
-`;
-
-const SidebarLink = styled.span`
-    width: 100px;
-    cursor: pointer;
-    list-style: none;
-
-    & a{
-        width: max-content;
-        padding: 15px;
-    }
-
-    @media (max-width: 790px) {
-        display: none;
-    }
-`;
-
-const IconsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-
-    @media (max-width: 790px) {
-        gap: 5px;
     }
 `;
 
@@ -154,18 +127,79 @@ const NavListContent = styled.ul`
 `;
 
 const NavItem = styled.li`
+    cursor: pointer;
     display: inline-block;
     font-size: 15px;
-    cursor: pointer;
 `;
 
-const HamburgerMenu = styled.div`
-    display: none;
-    cursor: pointer;
+const IconsContainer = styled.div`
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 20px;
+
+    @media (max-width: 790px) {
+        gap: 5px;
+    }
+`;
+
+const MenuToggleContainer = styled.div`
+    cursor: pointer;
+    list-style: none;
+    display: none;
 
     @media (max-width: 790px) {
         display: block;
+    }
+`;
+
+const SidebarToggleContainer = styled.div`
+    width: 100px;
+    list-style: none;
+    cursor: pointer;
+
+    @media (max-width: 790px) {
+        display: none;
+    }
+`;
+
+const NavToggle = styled.span`
+    text-decoration: none;
+    padding: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    color: ${({ theme }) => theme.colors.textWhite};
+    display: flex;
+    transition: 0.4s;
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+
+    & svg {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        fill: ${({ theme }) => theme.colors.textWhite}; 
+    }
+
+    & small {
+        margin: 0;
+        padding: 0;
+        font-weight: 300;
+        font-size: 12px;
+        gap: 10px;
+        font-style: italic;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        color: ${({ theme }) => theme.colors.textWhite};
+    }
+
+    &:hover {
+        transform: scale(0.95);
+        transition: 0.4s;
     }
 `;
 
@@ -201,36 +235,31 @@ const BoxLogout = styled.div`
 
 // Navbar component
 export const NavbarAdmin: React.FC = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenToggleMenu, setIsOpenToggleMenu] = useState(false);
     const [isSidebarProfileOpen, setIsSidebarProfileOpen] = useState<boolean>(false);
 
     const openSidebarProfile = () => setIsSidebarProfileOpen(true);
     const closeSidebarProfile = () => setIsSidebarProfileOpen(false);
 
     const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const handleOpenSidebarAndScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        openSidebarProfile();
-        smoothScrollToTop(2000);
+        setIsOpenToggleMenu(!isOpenToggleMenu);
     };
 
     return (
         <NavbarContainer>
             <AdminProfileSidebar isOpen={isSidebarProfileOpen} onClose={closeSidebarProfile} />
-            <SidebarLink>
-                <NavLink href="#" hover={{ transform: 'scale(0.95)', transition: '0.4s' }} onClick={handleOpenSidebarAndScroll}>
-                    <small><span>+</span>Ayuda</small>
-                </NavLink>
-            </SidebarLink>
-            <HamburgerMenu>
-                <NavLink onClick={toggleMenu} hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#">
-                    {isOpen ? <AiOutlineClose /> : <PiList />}
-                </NavLink>
-            </HamburgerMenu>
-            <NavListContainer isOpen={isOpen}>
+
+            <SidebarToggleContainer>
+                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Ayuda</small></NavToggle>
+            </SidebarToggleContainer>
+
+            <MenuToggleContainer>
+                <NavToggle onClick={toggleMenu}>
+                    {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
+                </NavToggle>
+            </MenuToggleContainer>
+
+            <NavListContainer isOpen={isOpenToggleMenu}>
                 <NavList>
                     <NavListContent>
                         <NavItem>

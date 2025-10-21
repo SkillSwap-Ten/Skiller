@@ -38,24 +38,53 @@ const AuthLink = styled.span`
     }
 `;
 
-const SidebarLink = styled.span`
+const SidebarToggleContainer = styled.div`
     width: 100px;
-    cursor: pointer;
     list-style: none;
+    cursor: pointer;
 
-    & a{
-        width: max-content;
-        padding: 15px;
+    @media (max-width: 790px) {
+        display: none;
     }
 `;
 
-const SidebarLinkContainer = styled.span`
-    width: 100px;
+const NavToggle = styled.span`
+    text-decoration: none;
+    padding: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    color: ${({ theme }) => theme.colors.textWhite};
+    display: flex;
+    transition: 0.4s;
+    align-items: center; 
+    justify-content: center;
     cursor: pointer;
-    list-style: none;
 
-    @media (max-width: 768px) {
-        display: none;
+    & svg {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        fill: ${({ theme }) => theme.colors.textWhite}; 
+    }
+
+    & small {
+        margin: 0;
+        padding: 0;
+        font-weight: 300;
+        font-size: 12px;
+        gap: 10px;
+        font-style: italic;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        color: ${({ theme }) => theme.colors.textWhite};
+    }
+
+    &:hover {
+        transform: scale(0.95);
+        transition: 0.4s;
     }
 `;
 
@@ -82,25 +111,13 @@ export const Navbar: React.FC = () => {
     const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);
 
-    const handleOpenSidebarAndScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        openSidebar();
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    };
-
     return (
         <NavbarContainer>
             <OfflineProfileSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-            <SidebarLinkContainer>
-                <SidebarLink>
-                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href={'#'} onClick={handleOpenSidebarAndScroll}>
-                        <small><span>+</span>SkillSwap</small>
-                    </NavLink>
-                </SidebarLink>
-            </SidebarLinkContainer>
+            <SidebarToggleContainer>
+                <NavToggle onClick={openSidebar}><small><span>+</span>SkillSwap</small></NavToggle>
+            </SidebarToggleContainer>
+
             <IconsContainer>
                 <AuthLink>
                     <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/auth" label="AUTH">

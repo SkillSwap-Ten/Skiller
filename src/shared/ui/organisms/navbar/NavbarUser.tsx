@@ -10,7 +10,6 @@ import { BsInfoCircle } from "react-icons/bs";
 import { PiList } from "react-icons/pi";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
-import { smoothScrollToTop } from "@/src/lib/utils/scrollBehavior";
 
 // Styled components
 const NavbarContainer = styled.nav`
@@ -30,36 +29,6 @@ const NavbarContainer = styled.nav`
 
     @media (max-width: 790px) {
         padding: 0 5px;
-    }
-`;
-
-const SidebarLink = styled.span`
-    width: 100px;
-    cursor: pointer;
-    list-style: none;
-
-    & a{
-        width: max-content;
-        padding: 15px;
-    }
-
-    @media (max-width: 790px) {
-        display: none;
-    }
-`;
-
-const IconsContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-
-    @media (max-width: 790px) {
-        gap: 5px;
-
-        .settings-icon{
-            display: none;
-    }
     }
 `;
 
@@ -165,16 +134,6 @@ const NavItem = styled.li`
     font-size: 15px;
 `;
 
-const HamburgerMenu = styled.div`
-    cursor: pointer;
-    display: none;
-    justify-content: center;
-
-    @media (max-width: 790px) {
-        display: block;
-    }
-`;
-
 const SettingsNavList = styled.div`
     display: none;
     justify-content: start;
@@ -221,6 +180,86 @@ const SettingsNavItem = styled.li`
     }
 `;
 
+const IconsContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    @media (max-width: 790px) {
+        gap: 5px;
+    }
+`;
+
+const MenuToggleContainer = styled.div`
+    cursor: pointer;
+    list-style: none;
+    display: none;
+
+    @media (max-width: 790px) {
+        display: block;
+    }
+`;
+
+const SidebarToggleContainer = styled.div`
+    width: 100px;
+    list-style: none;
+    cursor: pointer;
+
+    @media (max-width: 790px) {
+        display: none;
+    }
+`;
+
+const SettingsToggleContainer = styled.div`
+    cursor: pointer;
+    list-style: none;
+
+    @media (max-width: 790px) {
+        display: none;
+    }
+`;
+
+const NavToggle = styled.span`
+    text-decoration: none;
+    padding: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    color: ${({ theme }) => theme.colors.textWhite};
+    display: flex;
+    transition: 0.4s;
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+
+    & svg {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        fill: ${({ theme }) => theme.colors.textWhite}; 
+    }
+
+    & small {
+        margin: 0;
+        padding: 0;
+        font-weight: 300;
+        font-size: 12px;
+        gap: 10px;
+        font-style: italic;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        color: ${({ theme }) => theme.colors.textWhite};
+    }
+
+    &:hover {
+        transform: scale(0.95);
+        transition: 0.4s;
+    }
+`;
+
 const BoxLogout = styled.div`
     display: none;
     align-items: center;
@@ -253,7 +292,7 @@ const BoxLogout = styled.div`
 
 // Navbar component
 export const NavbarUser: React.FC = () => {
-    const [isOpenToggle, setIsOpenToggle] = useState(false);
+    const [isOpenToggleMenu, setIsOpenToggleMenu] = useState(false);
     const [isSidebarProfileOpen, setIsSidebarProfileOpen] = useState<boolean>(false);
     const [isSidebarSettingsOpen, setIsSidebarSettingsOpen] = useState<boolean>(false);
 
@@ -263,36 +302,25 @@ export const NavbarUser: React.FC = () => {
     const closeSidebarSettings = () => setIsSidebarSettingsOpen(false);
 
     const toggleMenu = () => {
-        setIsOpenToggle(!isOpenToggle);
-    };
-
-    const handleOpenSettingsAndScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        openSidebarSettings();
-        smoothScrollToTop(2000);
-    };
-
-    const handleOpenSidebarAndScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
-        openSidebarProfile();
-        smoothScrollToTop(2000);
+        setIsOpenToggleMenu(!isOpenToggleMenu);
     };
 
     return (
         <NavbarContainer>
             <UserProfileSidebar isOpen={isSidebarProfileOpen} onClose={closeSidebarProfile} />
             <SettingsFloatingSidebar isOpen={isSidebarSettingsOpen} onClose={closeSidebarSettings} />
-            <SidebarLink>
-                <NavLink href="#" hover={{ transform: 'scale(0.95)', transition: '0.4s' }} onClick={handleOpenSidebarAndScroll}>
-                    <small><span>+</span>Notificaciones</small>
-                </NavLink>
-            </SidebarLink>
-            <HamburgerMenu>
-                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} onClick={toggleMenu} href="#" >
-                    {isOpenToggle ? <AiOutlineClose /> : <PiList />}
-                </NavLink>
-            </HamburgerMenu>
-            <NavListContainer isOpen={isOpenToggle}>
+
+            <SidebarToggleContainer>
+                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Notificaciones</small></NavToggle>
+            </SidebarToggleContainer>
+
+            <MenuToggleContainer>
+                <NavToggle onClick={toggleMenu}>
+                    {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
+                </NavToggle>
+            </MenuToggleContainer>
+
+            <NavListContainer isOpen={isOpenToggleMenu}>
                 <NavList>
                     <NavListContent>
                         <NavItem>
@@ -327,9 +355,11 @@ export const NavbarUser: React.FC = () => {
                 </NavList>
             </NavListContainer>
             <IconsContainer>
-                <NavLink className="settings-icon" hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#" onClick={handleOpenSettingsAndScroll}>
-                    <IoSettingsOutline />
-                </NavLink>
+                <SettingsToggleContainer>
+                    <NavToggle onClick={openSidebarSettings}>
+                        <IoSettingsOutline />
+                    </NavToggle>
+                </SettingsToggleContainer>
                 <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/user/legal" label="LEGAL" >
                     <BsInfoCircle />
                 </NavLink>

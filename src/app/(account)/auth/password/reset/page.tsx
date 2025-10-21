@@ -9,16 +9,54 @@ import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 import styled from "styled-components";
 
 // Styled Components para el formulario
+const PageContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgTertiary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+`;
+
+const PageSideBanner = styled.div<{ urlImage: string }>`
+  background-image: url(${(props) => props.urlImage});
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+
+  @media (max-width: 950px) {
+    display: none;
+  }
+`;
+
+const PageContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+
+  & div {
+    width: 100%;
+  }
+
+  @media (max-width: 950px) {
+    width: 100%;
+  }
+`;
+
 const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
-
-  & div {
-    width: 100%;
-  }
 `;
 
 const FormWrapper = styled.div`
@@ -29,6 +67,10 @@ const FormWrapper = styled.div`
   text-align: center;
   width: 100%;
   max-width: 400px;
+
+  @media (min-width: 950px) {
+    text-align: start;
+  }
 
   @media (max-width: 450px) {
     max-width: 80%;
@@ -74,9 +116,10 @@ const BackLink = styled.div`
   opacity: 0.6;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   background-color: transparent;
   border: none;
+  padding-top: 3rem;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -124,7 +167,7 @@ function ResetPassword() {
     const params = new URLSearchParams(globalThis.location.search);
     const tokenFromURL = params.get("token");
     if (tokenFromURL) {
-      setToken(tokenFromURL); 
+      setToken(tokenFromURL);
       localStorage.setItem("resetToken", tokenFromURL);
     } else {
       toast.error("Token inválido o ausente.");
@@ -180,34 +223,39 @@ function ResetPassword() {
   };
 
   return (
-    <FormContainer>
-      <BackLink onClick={() => handlePageTheme("INICIAR SESIÓN")}>
-        <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="AUTH"></NavLink>
-      </BackLink>
-      <FormWrapper>
-        <Title>SkillSwap</Title>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="password">Crear nueva contraseña</label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <label htmlFor="confirm-password">Confirmar nueva contraseña</label>
-          <Input
-            type="password"
-            id="confirm-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-          <SubmitButton type="submit">ENVIAR</SubmitButton>
-        </form>
-      </FormWrapper>
-      <FooterMain />
-    </FormContainer>
+    <PageContainer>
+      <PageSideBanner urlImage="/img/bg-banner.webp" />
+      <PageContent>
+        <FormContainer>
+          <BackLink onClick={() => handlePageTheme("INICIAR SESIÓN")}>
+            <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/auth" label="AUTH"></NavLink><Arrow>&gt;</Arrow>
+          </BackLink>
+          <FormWrapper>
+            <Title>SkillSwap</Title>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="password">Crear nueva contraseña</label>
+              <Input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label htmlFor="confirm-password">Confirmar nueva contraseña</label>
+              <Input
+                type="password"
+                id="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <SubmitButton type="submit">ENVIAR</SubmitButton>
+            </form>
+          </FormWrapper>
+        </FormContainer>
+        <FooterMain />
+      </PageContent>
+    </PageContainer>
   );
 }
 

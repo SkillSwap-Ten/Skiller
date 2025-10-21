@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavbarAdmin } from '../../shared/ui/organisms/navbar/NavbarAdmin';
-import { Logobar } from '@/src/shared/ui/atoms/logobar/Logobar';
+import { Logobar } from '@/src/shared/ui/molecules/logobar/Logobar';
 
 const LayoutContainer = styled.div`
     display: flex;

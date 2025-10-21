@@ -227,16 +227,15 @@ npm install
 ```
 
 4. Then, place there the three environment variables according to the instructions below:
-<br/>
 
-    - `NEXT_PUBLIC_GITHUB_API_URL`: GitHub API URL (default: <https://api.github.com/users>)
-    - `NEXT_PUBLIC_BASE_API_URL`: SkillSwap API URL (default: <https://skillswap-qww9.onrender.com/api>)
-    - `GITHUB_TOKEN`: GitHub API TOKEN (secret: [you_can_create_it_on_your_own])
+- `NEXT_PUBLIC_GITHUB_API_URL`: GitHub API URL (default: <https://api.github.com/users>)
+- `NEXT_PUBLIC_BASE_API_URL`: SkillSwap API URL (default: <https://skillswap-qww9.onrender.com/api>)
+- `GITHUB_TOKEN`: GitHub API TOKEN (secret: [you_can_create_it_on_your_own])
 
-- *P.S: You can generate your own GITHUB token by following the instructions on [GitHub Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)... or just go to the end of this document, where we will explain it to you.*
+*P.S: You can generate your own GITHUB token by following the instructions on [GitHub Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)... or just go to the end of this document, where we will explain it to you.*
 
 ```bash
-# Content of .env file
+# .env.example (Guide for .env file content)
 NEXT_PUBLIC_GITHUB_API_URL=github_url_here
 NEXT_PUBLIC_BASE_API_URL=skillswap_url_here
 GITHUB_TOKEN=your_generated_token_here
