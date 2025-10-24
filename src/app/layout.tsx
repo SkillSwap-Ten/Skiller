@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     creatorId: '1664752708694208515',
     siteId: '1664752708694208515',
     description: 'Aventúrate a intercambiar habilidades digitales con SkillSwap.',
-    images: ['https://skillswapten.vercel.app/img/skillswap-opengraphs.png'],
+    images: ['https://skillswapten.vercel.app/img/skillswap-opengraph-tw.png'],
   },
   openGraph: {
     title: "SkillSwap · Looking for Skill",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     siteName: "SkillSwap",
     images: [
       {
-        url: "https://skillswapten.vercel.app/img/skillswap-opengraphs.png",
+        url: "https://skillswapten.vercel.app/img/skillswap-opengraph-og.png",
         width: 1200,
         height: 630,
         alt: "SkillSwap-Ten",
