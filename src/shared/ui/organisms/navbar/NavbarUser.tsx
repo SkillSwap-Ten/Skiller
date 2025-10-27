@@ -50,6 +50,16 @@ const NavListContainer = styled.div<{ isOpen: boolean }>`
         z-index: 100;
         transition: 1s ease-in-out;
         background-color: ${({ theme }) => theme.colors.bgMainOpacity};
+        animation: appear-list 1s ease-in-out;
+
+        @keyframes appear-list {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
     }
 `;
 
