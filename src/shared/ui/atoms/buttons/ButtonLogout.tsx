@@ -29,10 +29,6 @@ const Button = styled.button`
   svg {
     margin-right: 10px;
   }
-
-  @media (max-width: 790px) {
-    padding: 10px 5px;
-  }
 `;
 
 const LogoutButton: React.FC<IButtonProps> = ({ children, type }) => {
