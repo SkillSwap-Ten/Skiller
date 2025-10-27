@@ -48,16 +48,6 @@ const NavListContainer = styled.div<{ isOpen: boolean }>`
         z-index: 100;
         transition: 1s ease-in-out;
         background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-        animation: appear-list 1s ease-in-out;
-
-        @keyframes appear-list {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
     }
 `;
 
@@ -76,7 +66,7 @@ const NavList = styled.ul`
         align-items: start;
         justify-content: space-between;
         height: 100%;
-        width: 50%;
+        width: 70%;
         padding: 10px 5px;
         margin: 0;
         transition: 1s ease-in-out;
@@ -211,7 +201,7 @@ const BoxLogout = styled.div`
     align-self: end !important;
     justify-self: end !important;
     left: 0;
-    width: 50%;
+    width: 70%;
     padding: 16px;
     bottom: 54px;
     transition: 2s ease-in-out;
