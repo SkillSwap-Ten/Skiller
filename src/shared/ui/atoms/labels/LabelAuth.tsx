@@ -11,9 +11,9 @@ const AuthLabelStyled = styled.label`
   margin-top: 10px;
 `;
 
-const Label: React.FC<ILabelProps> = ({ text, htmlFor, className }) => {
+const Label: React.FC<ILabelProps> = ({ text, htmlFor, hidden, className }) => {
   return (
-    <AuthLabelStyled htmlFor={htmlFor} className={className}>
+    <AuthLabelStyled hidden={hidden} htmlFor={htmlFor} className={className}>
       {text}
     </AuthLabelStyled>
   );

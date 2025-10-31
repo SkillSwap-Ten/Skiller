@@ -6,7 +6,7 @@ import SkillTagTinyList from "../../../atoms/tags/SkillTagTiny";
 import { ITableRowUserProps } from "../../../../types/organisms/table.type";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaBehanceSquare, FaGithubSquare } from "react-icons/fa";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 const Td = styled.td`
   padding: 10px;
@@ -37,7 +37,7 @@ const Td = styled.td`
 `;
 
 const Tr = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
   
   &:hover {
     background-color: #eee;
@@ -131,24 +131,24 @@ const SocialButtons = styled.div`
 const SocialButton = styled.div`
   border-radius: 5px;
   padding: 0.3rem 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   font-weight: 500;
   word-wrap: break-word;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
 
   a {
     padding: 0;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
     font-size: 0.9rem
   }
 `;
 
 const Avatar = styled.div<{ urlImage: string }>`
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;
@@ -210,7 +210,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
       };
     };
 
-    if (urlImage && validateImageUrl(urlImage)) {
+    if (urlImage && isValidImageUrl(urlImage)) {
       checkImageUrl(urlImage);
     } else {
       setImageUrl("/img/default-picture-full.webp");

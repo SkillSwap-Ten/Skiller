@@ -93,7 +93,6 @@ const Arrow = styled.span`
 `;
 
 const BackLink = styled.div` 
-  opacity: 0.5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,15 +101,15 @@ const BackLink = styled.div`
   font-size: 11px;
   font-weight: 500;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.textTertiary};
   text-decoration: none;
   gap:4px;
   margin: 0;
 
   a {
-    color: ${({ theme }) => theme.colors.textSecondary};
-    padding: 0 !important;
-    margin: 0 !important;
+    color: ${({ theme }) => theme.colors.textTertiary};
+    padding: 0;
+    margin: 0;
     font-weight: 500;
   }
 `;

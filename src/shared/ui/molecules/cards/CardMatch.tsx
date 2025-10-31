@@ -16,7 +16,7 @@ const CardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0.8rem 0;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 0.5rem;
   padding-right: 0.2rem;
 
@@ -89,8 +89,8 @@ const ConnectionsSection = styled.div`
   color: ${({ theme }) => theme.colors.textTertiary};
   background-color: ${({ theme }) => theme.colors.bgPrimary};
   border: none;
-  border-top: 1px solid ${({ theme }) => theme.colors.textDark};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-top: 1px solid ${({ theme }) => theme.colors.borderDark};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
   font-size: 0.8rem;
   width: 100%;
   font-weight: 500;
@@ -116,7 +116,7 @@ const RatingStars = styled.div`
 `;
 
 const Star = styled.span`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 16px;
 `;
 
@@ -150,7 +150,7 @@ const SubTitle = styled.h4`
 `;
 
 const P = styled.p`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 0.9rem;
   font-weight: 300;
   padding: 0;

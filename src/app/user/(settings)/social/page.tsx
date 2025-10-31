@@ -41,7 +41,7 @@ const PageContainer = styled.section`
     width: 100%;
     font-weight: 500;
     font-size: 18px;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
   }
 
   & p {
@@ -116,7 +116,7 @@ const P = styled.p`
 const WidgetContainer = styled.div`
   padding: 1.5rem 2rem;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -134,7 +134,7 @@ const WidgetBody = styled.div`
 
 const NewUsersContainer = styled.div`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -159,7 +159,7 @@ const NewUsersBody = styled.div`
 
 const RequestCard = styled.div`
   width: 48.5%;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -191,7 +191,7 @@ const RequestBody = styled.div`
     -webkit-text-fill-color: transparent;
     margin: 0;
     padding: 15px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
   }
 `;
 
@@ -255,7 +255,7 @@ const TipsButton = styled(ButtonFeature)`
   position: absolute;
   bottom: 1rem;
   right: 4rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 2rem;
   cursor: pointer;
   background: transparent;
@@ -278,7 +278,7 @@ const ReportButton = styled(ButtonFeature)`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 2rem;
   cursor: pointer;
   background: transparent;

@@ -21,7 +21,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   height: 75%;
   padding: 1rem;
@@ -232,23 +232,23 @@ const DivRating = styled.div`
 `;
 
 const RatingStars = styled.div`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 1.2rem;
 `;
 
 const Star = styled.span`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 16px;
   margin: 0 2px;
   font-style: normal;
 `;
 
 const Unknown = styled.span`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   padding: 2px 10px;
   border-radius: 20px;
   text-align: center;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textGrey};
   font-size: 8px;
   font-weight: bold;
 `;

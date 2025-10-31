@@ -68,7 +68,7 @@ const PaginationDots = styled.span`
 const PaginationButton = styled.button`
   background-color: transparent;
   color: ${({ theme }) => theme.colors.textSecondary};
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textGrey};
   padding: 6px 14px;
   cursor: pointer;
   border-radius: 8px;

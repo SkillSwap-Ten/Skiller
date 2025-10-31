@@ -111,7 +111,7 @@ const NavItem = styled.li`
     align-items: start;
     font-size: 18px;
     cursor: pointer;
-    border-left: 2px solid ${({ theme }) => theme.colors.textDark};
+    border-left: 2px solid ${({ theme }) => theme.colors.borderDark};
     padding: 0 0.5rem;
     width: 100%;
 

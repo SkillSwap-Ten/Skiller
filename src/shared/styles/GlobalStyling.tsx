@@ -17,23 +17,35 @@ export const GlobalTheme: IGlobalTheme = {
         bgNavbar: '#222222',
         bgBanner: 'rgba(0, 0, 0, 0.1)',
         bgMainOpacity: '#00000050',
-        bgSidebar: '#FFFFFF',
+        bgSidebar: '#FEFEFE',
         bgNotFound: '#F5F5F5',
-        bgPrimary: '#FFFFFF',
+        bgPrimary: '#FEFEFE',
         bgSecondary: '#222222',
         bgTertiary: '#F5F5F5',
+
+        bgDark: '#00000020',
+        bgNeutral: '#F5F5F5',
+        bgLight: '#FFFFFF50',
+
         bgOrange: '#F4F2EE',
+        bgBlack: '#222222',
+        bgWhite: '#FEFEFE',
         bgGray: '#777777',
         bgGrey: '#222222',
 
         textSecondary: '#222222',
         textPrimary: '#FFFFFF',
-        textBlack: '#555555',
+        textTertiary: '#00000050',
         textSidebar: '#555555',
+
         textDark: '#00000020',
+        textNeutral: '#999999',
+        textLight: '#FFFFFF50',
+
+        textBlack: '#222222',
         textWhite: '#FFFFFF',
         textGray: '#707070',
-        textTertiary: '#00000050',
+        textGrey: '#555555',
 
         textPurple: '#7A5CCC',
         textOrange: '#DC7D2F',
@@ -48,14 +60,18 @@ export const GlobalTheme: IGlobalTheme = {
         textBrown: '#7F6229',
         textPink: '#EFC7C5',
 
-        borderLogobar: '#DDDDDD',
+        borderDark: '#00000020',
+        borderNeutral: '#BBBBBB',
+        borderLight: '#FFFFFF50',
+
         borderNavs: '#333333',
-        borderAuthLeft: '#FFFFFF',
+        borderLogobar: '#DDDDDD',
+        borderAuthLeft: '#FEFEFE',
         borderAuthRight: '#F0AC27',
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(270deg, #F0AC2790 20%,  #DC7D2F90 80%, #D13B0090 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC2799 20%,  #DC7D2F99 80%, #D13B0099 100% )',
 
         gradientPink: 'linear-gradient(90deg, #7D93FF 0%, #F093C0 85%, #EFC7C5 100%)',
         gradientGreen: 'linear-gradient(90deg, #B6CB65 0%, #37A879 52%, #4A54AE66 100%)',
@@ -70,20 +86,32 @@ export const GlobalDarkTheme: IGlobalTheme = {
         bgSidebar: '#1A1A1A',
         bgNotFound: '#0E0E0E',
         bgPrimary: '#222222',
-        bgSecondary: '#FFFFFF',
+        bgSecondary: '#FEFEFE',
         bgTertiary: '#3A3A3A',
+
+        bgDark: '#00000020',
+        bgNeutral: '#F5F5F5',
+        bgLight: '#FFFFFF50',
+
         bgOrange: '#3B2B1A',
+        bgBlack: '#222222',
+        bgWhite: '#FEFEFE',
         bgGray: '#999999',
         bgGrey: '#CCCCCC',
 
-        textSecondary: '#222222',
-        textPrimary: '#FFFFFF',
-        textBlack: '#CCCCCC',
+        textSecondary: '#FFFFFF',
+        textPrimary: '#222222',
+        textTertiary: '#FFFFFF60',
         textSidebar: '#DDDDDD',
+
         textDark: '#FFFFFF20',
+        textNeutral: '#999999',
+        textLight: '#FFFFFF50',
+
+        textBlack: '#222222',
         textWhite: '#FFFFFF',
         textGray: '#BBBBBB',
-        textTertiary: '#FFFFFF60',
+        textGrey: '#CCCCCC',
 
         textPurple: '#A88CFF',
         textOrange: '#F7A94B',
@@ -98,14 +126,18 @@ export const GlobalDarkTheme: IGlobalTheme = {
         textBrown: '#866E3E',
         textPink: '#FFB6C1',
 
-        borderLogobar: '#2D2D2D',
+        borderDark: '#00000020',
+        borderNeutral: '#BBBBBB',
+        borderLight: '#FFFFFF50',
+
         borderNavs: '#444444',
-        borderAuthLeft: '#FFFFFF',
-        borderAuthRight: '#FFFFFF',
+        borderLogobar: '#2D2D2D',
+        borderAuthLeft: '#EFEFEF',
+        borderAuthRight: '#EFEFEF',
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(270deg, #F0AC2790 20%,  #DC7D2F90 80%, #D13B0090 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC2799 20%,  #DC7D2F99 80%, #D13B0099 100% )',
 
         gradientPink: 'linear-gradient(90deg, #9DAAFF 0%, #F5A3D4 85%, #FFCDD2 100%)',
         gradientGreen: 'linear-gradient(90deg, #85A84F 0%, #2C8F66 52%, #3E47A066 100%)',

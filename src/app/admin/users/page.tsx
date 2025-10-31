@@ -41,7 +41,7 @@ const PageContainer = styled.section`
     width: 100%;
     font-weight: 500;
     font-size: 18px;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
   }
 
   & p {
@@ -99,7 +99,7 @@ const WidgetContainer = styled.div`
   justify-content: center;
   align-items: start;
   flex-direction: column;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
 `
 

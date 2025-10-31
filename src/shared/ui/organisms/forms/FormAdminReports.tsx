@@ -2,9 +2,10 @@
 import React, { FormEvent, MouseEvent, useState, useEffect, useMemo } from "react";
 import { IAdminReportFormProps } from "@/src/shared/types/organisms/form.type";
 import { IReport } from "../../../../core/models/reports/reports.model";
+import { useDebouncedCallback } from "@/src/shared/hooks/useDebouncedState";
 import styled from "styled-components";
 import Label from "../../atoms/labels/Label";
-import Select from "../../atoms/selects/Select";
+import Select from "../../molecules/selects/Select";
 import TextArea from "../../atoms/textareas/TextArea";
 import Input from "../../atoms/inputs/Input";
 
@@ -122,6 +123,11 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
     setHasChanges(changedFields.length > 0 && changedFields.length < totalFields);
   }, [form, dataToEdit, initialFormState]);
 
+  const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
+    console.log("Debounced value:", value);
+  },
+    500);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -151,6 +157,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
 
       return updatedForm;
     });
+    handleChangeDebounced(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -170,7 +177,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
   ) => {
     e.preventDefault();
     setForm(initialFormState);
-    setDataToEdit(null);
+    setDataToEdit(initialFormState);
   };
 
 
@@ -267,7 +274,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
             value={form.actionDetails! || ""}
             maxLength={300}
           />
-          <sub>{form.actionDetails!.length} / 300 caracteres</sub>
+          <sub>{form.actionDetails!.length} / 300 caracteres.</sub>
         </Div>
 
         <Div>
@@ -319,7 +326,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
             name="idReportedUser"
             id="idReportedUser"
             value={form.idReportedUser}
-            placeholder="ID del Reportado" 
+            placeholder="ID del Reportado"
             readOnly
           />
         </Div>

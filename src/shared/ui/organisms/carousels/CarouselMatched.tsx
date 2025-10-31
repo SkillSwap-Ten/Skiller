@@ -16,7 +16,7 @@ import "swiper/css/navigation";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { IUserForImages } from "@/src/core/models/users/users.model";
 
 const CarouselWrapper = styled.div`
@@ -26,7 +26,7 @@ const CarouselWrapper = styled.div`
 `;
 
 const CustomSwiper = styled(Swiper)`
-width: 100%;
+  width: 100%;
   padding: 0 !important;
 
   .swiper-button-next,
@@ -83,7 +83,7 @@ const AvatarWrapper = styled.div`
   justify-content: center;
 
   img {
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
     border-radius: 50%;
     object-fit: cover;
     width: 100%;
@@ -237,7 +237,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
     if (!allUsersData) return;
 
     allUsersData.forEach((user) => {
-      if (validateImageUrl(user.urlImage)) {
+      if (isValidImageUrl(user.urlImage)) {
         checkImageUrl(user.id, user.urlImage ?? "/img/default-picture-full.webp");
       } else {
         setImageUrls((prev) => ({ ...prev, [user.id]: "/img/default-picture-full.webp" }));
@@ -315,7 +315,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
     return (
       <CarouselWrapper>
         <NoContentContainer>
-          <p>Aún no tienes conexiones. Conecta con alguien en la sección de<strong> Discover</strong></p>
+          <p>Aún no tienes conexiones. Conecta con alguien en la sección de<strong> Descubre</strong></p>
         </NoContentContainer>
       </CarouselWrapper>
     );

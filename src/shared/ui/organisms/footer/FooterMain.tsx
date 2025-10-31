@@ -6,7 +6,7 @@ const PageWrapper = styled.div`
     margin-top: 72px;
 `;
 
-const FooterContainer = styled.div`
+const FooterStyled = styled.footer`
     text-align: center;
     display: flex;
     align-items: center;
@@ -40,9 +40,9 @@ const FooterText = styled.p`
 export const FooterMain: React.FC = () => {
     return (
         <PageWrapper>
-            <FooterContainer>
+            <FooterStyled>
                 <FooterText>© {new Date().getFullYear()} SkillSwap. Todos los derechos reservados.</FooterText>
-            </FooterContainer>
+            </FooterStyled>
         </PageWrapper>
     );
 };

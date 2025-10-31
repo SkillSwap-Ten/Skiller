@@ -11,7 +11,7 @@ const Th = styled.th`
 `;
 
 const Tr = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
 `;
 
 const TableHeaderUser: React.FC = () => {

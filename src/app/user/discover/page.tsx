@@ -123,7 +123,7 @@ const SearchContainer = styled.div`
       align-self: center;
       display: block;
       height: 1px;
-      border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
       width: 98%;
       padding-top: 0.5rem;
     }

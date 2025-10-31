@@ -60,8 +60,9 @@ const Container = styled.div`
     flex-direction: column; 
     align-items: flex-start;
     justify-content: end;
-    border-radius: none;
-    height: 552px;
+    min-height: 552px;
+    height: 77.5vh;
+    max-height: 842px;
   }
 `;
 
@@ -194,7 +195,6 @@ const SwitchButton = styled.button`
   @media (max-width: 1070px) {
     width: inherit; 
     padding: 0 20px !important;
-    font-size: 10px;
   }
 `;
 
@@ -211,6 +211,17 @@ const ResetPasswordButton = styled.button`
   padding-left: 0;
   display: block;
   width: 100%;
+`;
+
+const FooterContainer = styled.div`
+  width: 100%;
+  height: auto;
+
+  @media (max-width: 1070px) {
+    & div {
+      margin-top: 48px !important;
+    }
+  }
 `;
 
 export default function AuthPage() {
@@ -297,13 +308,13 @@ export default function AuthPage() {
               {isRegister ? (
                 <H1>
                   <SwitchButton onClick={() => setIsRegister(false)}>
-                    <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="INICIAR SESIÓN" />
+                    <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/auth" label="INICIAR SESIÓN" />
                   </SwitchButton>
                 </H1>
               ) : (
                 <H1>
                   <SwitchButton onClick={() => setIsRegister(true)}>
-                    <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="REGISTRO" />
+                    <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/auth" label="REGISTRO" />
                   </SwitchButton>
                 </H1>
               )}
@@ -311,8 +322,10 @@ export default function AuthPage() {
           </OverlayPanel>
         </OverlayContainer>
       </Container>
+      <FooterContainer>
+        <FooterMain />
+      </FooterContainer>
       <ModalResetPassword isOpen={isModalResetPasswordOpen} onClose={closeModalResetPassword} />
-      <FooterMain />
     </>
   );
 }

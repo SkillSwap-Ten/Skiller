@@ -1,8 +1,8 @@
 "use client"
 import { useState, useEffect } from "react";
 import { IDetailUserProps } from "@/src/features/users/types/detail.type";
-import { getCommunityInfo } from "@/src/lib/utils/getCommunityInfo";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { getCommunityInfo } from "@/src/lib/utils/getStaticData";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { FaArrowRight, FaExclamationTriangle, FaShieldAlt } from "react-icons/fa";
 import { MdQuestionMark } from "react-icons/md";
 import styled from "styled-components";
@@ -67,7 +67,7 @@ const UserName = styled.h1`
   text-transform: capitalize;
   font-size: 2.5rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   margin: 0;
 `;
 
@@ -77,7 +77,7 @@ const UserTitle = styled.h2`
   align-items: center;
   gap: 10px;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-weight: 400;
   margin-top: 0;
   
@@ -94,7 +94,7 @@ const ProfileImage = styled.div<{ urlImage: string }>`
   width: 4rem;
   height: 4rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   @media (max-width: 769px) {
       display: none;
@@ -110,7 +110,7 @@ const ProfileImageMobile = styled.div<{ urlImage: string }>`
   width: 100%;
   height: 18rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   margin-bottom: 1rem;
 
   @media (max-width: 769px) {
@@ -167,8 +167,8 @@ const Skills = styled.div`
   }
 
   & p{
-    color: ${({ theme }) => theme.colors.textBlack};
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textGrey};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
   }
 
    @media (max-width: 600px) {
@@ -183,7 +183,7 @@ const UserDescription = styled.div`
   min-height: 16rem;
   height: 100%;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
 
@@ -200,7 +200,7 @@ const H3 = styled.h3`
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const P = styled.p`
@@ -239,7 +239,7 @@ const DivRating = styled.div`
 `;
 
 const Star = styled.span`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 20px;
 `;
 
@@ -282,7 +282,7 @@ const DivContent = styled.div`
       display: block;
       width: 50%;
       height: 1px;
-      border-top: 1px solid ${({ theme }) => theme.colors.textBlack};
+      border-top: 1px solid ${({ theme }) => theme.colors.textGrey};
       margin: 1rem 5px;
       opacity: 0.5;
     }
@@ -295,10 +295,10 @@ const SendButton = styled.button`
   justify-content: end;
   align-items: center;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   padding: 14px 24px;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textGrey};
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s ease;
@@ -316,14 +316,14 @@ const SendButton = styled.button`
 const ButtonText = styled.p`
   font-size: 18px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const MediaContent = styled.div`
   width: 100%;
   height: 11.5rem !important;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
 
@@ -377,11 +377,11 @@ const Unknown = styled.span`
   gap: 3px;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   padding: 2px 10px;
   border-radius: 20px;
   text-align: center;
-  border: 1px solid ${({ theme }) => theme.colors.textBlack};
+  border: 1px solid ${({ theme }) => theme.colors.textGrey};
   font-size: 8px;
   font-weight: bold;
 `;
@@ -433,7 +433,7 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
           };
         };
 
-        if (userData && userData.urlImage && validateImageUrl(userData.urlImage)) {
+        if (userData && userData.urlImage && isValidImageUrl(userData.urlImage)) {
           checkImageUrl(userData.urlImage);
         } else {
           setImageUrl("/img/default-picture-full.webp");

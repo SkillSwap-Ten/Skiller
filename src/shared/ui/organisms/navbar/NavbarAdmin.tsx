@@ -154,7 +154,6 @@ const MenuToggleContainer = styled.div`
 `;
 
 const SidebarToggleContainer = styled.div`
-    width: 100px;
     list-style: none;
     cursor: pointer;
 

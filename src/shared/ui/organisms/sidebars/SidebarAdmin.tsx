@@ -8,7 +8,7 @@ import { getUsersForImages } from "../../../../app/api/users/users"
 import { FiFileText, FiLogOut, FiMessageSquare, FiUsers } from "react-icons/fi";
 import { ISidebarProps } from "@/src/shared/types/organisms/sidebar.type";
 import { getAuthData } from "@/src/lib/utils/getAuthData";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { IUserForImages } from "@/src/core/models/users/users.model";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -116,7 +116,7 @@ const ProfileHeader = styled.div`
 `;
 
 const Avatar = styled.div<{ urlImage: string }>`
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;
@@ -254,7 +254,7 @@ const SidebarAdmin: React.FC<ISidebarProps> = ({
       };
     };
 
-    if (userData && userData.urlImage && validateImageUrl(userData.urlImage)) {
+    if (userData && userData.urlImage && isValidImageUrl(userData.urlImage)) {
       checkImageUrl(userData.urlImage);
     } else {
       setImageUrl("/img/default-picture-full.webp");

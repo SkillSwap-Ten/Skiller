@@ -29,7 +29,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgOrange};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   height: 75%;
   max-height: 416px;

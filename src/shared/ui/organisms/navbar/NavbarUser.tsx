@@ -164,7 +164,7 @@ const SettingsNavItem = styled.li`
     align-items: start;
     font-size: 18px;
     cursor: pointer;
-    border-left: 2px solid ${({ theme }) => theme.colors.textDark};
+    border-left: 2px solid ${({ theme }) => theme.colors.borderDark};
     padding: 0 0.5rem;
     width: 100%;
 
@@ -203,7 +203,6 @@ const MenuToggleContainer = styled.div`
 `;
 
 const SidebarToggleContainer = styled.div`
-    width: 100px;
     list-style: none;
     cursor: pointer;
 

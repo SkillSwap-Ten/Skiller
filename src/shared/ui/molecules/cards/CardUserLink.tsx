@@ -4,7 +4,7 @@ import styled from "styled-components";
 import NavLink from "../../atoms/links/NavLinks";
 import SkillTagTinyList from "../../atoms/tags/SkillTagTiny";
 import { ICardUserProps } from "@/src/shared/types/molecules/card.type";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 // Contenedor de la tarjeta
 const CardContainer = styled.div`
@@ -51,7 +51,7 @@ const ImageCard = styled.article<{ urlImage?: string }>`
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  border: solid 1px ${({ theme }) => theme.colors.textDark};
+  border: solid 1px ${({ theme }) => theme.colors.borderDark};
 `;
 
 // Estilo para el nombre
@@ -107,7 +107,7 @@ const CardUserLink: React.FC<ICardUserProps> = ({
       };
     };
 
-    if (userData.urlImage && validateImageUrl(userData.urlImage)) {
+    if (userData.urlImage && isValidImageUrl(userData.urlImage)) {
       checkImageUrl(userData.urlImage);
     } else {
       setImageUrl("/img/default-picture-full.webp");

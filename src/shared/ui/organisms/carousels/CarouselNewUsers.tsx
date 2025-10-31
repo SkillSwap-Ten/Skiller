@@ -16,7 +16,7 @@ import "swiper/css/navigation";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 const CarouselWrapper = styled.div`
   width: 100%;
@@ -80,7 +80,7 @@ const AvatarWrapper = styled.div`
   padding: 0;
 
   img {
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -206,7 +206,7 @@ const CarouselNewUsers = () => {
     if (!allUsersData) return;
 
     allUsersData.forEach((user) => {
-      if (validateImageUrl(user.urlImage)) {
+      if (isValidImageUrl(user.urlImage)) {
         checkImageUrl(user.id, user.urlImage ?? "/img/default-picture-full.webp");
       } else {
         setImageUrls((prev) => ({ ...prev, [user.id]: "/img/default-picture-full.webp" }));

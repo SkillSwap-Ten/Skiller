@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/src/features/auth/authSlice";
+import { useDebouncedCallback } from "@/src/shared/hooks/useDebouncedState";
 import { IUserAuthResponse, IUserLoginRequest } from "../../../core/dto/auth/auth.dto"
 import { handlePageTheme } from "@/src/lib/utils/themeHandler";
 import { toast } from "react-toastify";
@@ -43,8 +44,8 @@ const BackLink = styled.div`
   padding-bottom: 5px;
 
   a {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     font-weight: 500;
   }
 `;
@@ -130,11 +131,17 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
     password: "",
   });
 
+  const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
+    console.log("Debounced value:", value);
+  },
+    500);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
+    handleChangeDebounced(e.target.value);
   };
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -183,7 +190,7 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
     <Container>
       <FormWrapper>
         <BackLink onClick={() => handlePageTheme("INICIO")}>
-          <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/" label="INICIO"></NavLink>
+          <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/" label="INICIO"></NavLink>
         </BackLink>
         <Title>Iniciar Sesión</Title>
         <form onSubmit={handleSubmit}>

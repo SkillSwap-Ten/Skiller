@@ -10,7 +10,7 @@ import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 
 // Styled Components para el formulario
 const PageContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgTertiary};
+  background-color: ${({ theme }) => theme.colors.bgNeutral};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@ const PageSideBanner = styled.div<{ urlImage: string }>`
   height: 100%;
   width: 50%;
 
-  @media (max-width: 950px) {
+  @media (max-width: 1000px) {
     display: none;
   }
 `;
@@ -38,6 +38,7 @@ const PageContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   height: 100%;
   width: 50%;
@@ -46,7 +47,7 @@ const PageContent = styled.div`
     width: 100%;
   }
 
-  @media (max-width: 950px) {
+  @media (max-width: 1000px) {
     width: 100%;
   }
 `;
@@ -56,25 +57,36 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
 `;
 
 const FormWrapper = styled.div`
   padding: 2rem;
-  background: #fff;
+  background: ${({ theme }) => theme.colors.bgWhite};
   border-radius: 10px;
-  border: 1px solid #00000033;
+  border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
   text-align: center;
-  width: 100%;
   max-width: 400px;
 
-  @media (min-width: 950px) {
-    text-align: start;
+  & label {
+    color: ${({ theme }) => theme.colors.textNeutral};
   }
 
   @media (max-width: 450px) {
     max-width: 80%;
+
+      & label {
+        font-size: 14px;
+    }
   }
+`;
+
+const Form = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -85,6 +97,27 @@ const Title = styled.h1`
   -webkit-text-fill-color: transparent;
   margin-bottom: 1rem;
   margin-top: 0;
+  display: inline-block;
+  transform-origin: center;
+  animation: wavePerspective 3.5s ease-in-out infinite;
+
+  @keyframes wavePerspective {
+    0% {
+      transform: perspective(400px) rotateY(6deg) skewX(2deg) scale(1);
+    }
+    25% {
+      transform: perspective(400px) rotateY(3deg) skewX(-1deg) scale(1.02);
+    }
+    50% {
+      transform: perspective(400px) rotateY(-6deg) skewX(-2deg) scale(1);
+    }
+    75% {
+      transform: perspective(400px) rotateY(-3deg) skewX(1deg) scale(1.02);
+    }
+    100% {
+      transform: perspective(400px) rotateY(6deg) skewX(2deg) scale(1);
+    }
+  }
 `;
 
 const Input = styled.input`
@@ -92,12 +125,14 @@ const Input = styled.input`
   padding: 0.7rem;
   margin-top: 0.5rem;
   margin-bottom: 1.2rem;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
+  color: ${({ theme }) => theme.colors.textNeutral};
+  background-color: ${({ theme }) => theme.colors.bgWhite};
   border-radius: 5px;
   font-size: 1rem;
 
     @media (max-width: 450px) {
-    padding: 0.6rem 0.7rem;
+    padding: 0.5rem 0.7rem;
   }
 `;
 
@@ -113,47 +148,63 @@ const Arrow = styled.span`
 `;
 
 const BackLink = styled.div` 
-  opacity: 0.6;
+  color: ${({ theme }) => theme.colors.textNeutral};
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
   border: none;
-  padding-top: 3rem;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.textBlack};
   text-decoration: none;
   gap:4px;
   margin: 0;
-  padding-bottom: 5px;
+  padding-top: 48px;
+  padding-bottom: 8px;
   max-width: 400px;
+
+  a {
+    color: ${({ theme }) => theme.colors.textNeutral};
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+
+  }
 
   @media (max-width: 450px) {
     max-width: 80%;
   }
-
-  a {
-    color: ${({ theme }) => theme.colors.textBlack};
-    padding: 0 !important;
-    margin: 0 !important;
-    font-weight: 500;
-  }
 `;
 
 const SubmitButton = styled.button`
-  width: 100%;
-  padding: 0.8rem;
-  background-color: #222;
-  color: ${({ theme }) => theme.colors.textWhite};
-  border: none;
+  border-radius: 20px;
+  width: 150px;
+  background-color: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  transition: 0.5s ease-in-out;
+  display: flex;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.textOrange};
+  color: ${({ theme }) => theme.colors.textOrange};
 
   &:hover {
-    background-color: #000;
+    transform: scale(0.95);
+    transition: 0.5s ease-in-out;
+  }
+`;
+
+const FooterContainer = styled.div`
+  width: 100%;
+  height: auto;
+
+  & div {
+    margin-top: 52px !important;
   }
 `;
 
@@ -232,7 +283,7 @@ function ResetPassword() {
           </BackLink>
           <FormWrapper>
             <Title>SkillSwap</Title>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <label htmlFor="password">Crear nueva contraseña</label>
               <Input
                 type="password"
@@ -249,11 +300,13 @@ function ResetPassword() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              <SubmitButton type="submit">ENVIAR</SubmitButton>
-            </form>
+              <SubmitButton type="submit">RESTAURAR</SubmitButton>
+            </Form>
           </FormWrapper>
         </FormContainer>
-        <FooterMain />
+        <FooterContainer>
+          <FooterMain />
+        </FooterContainer>
       </PageContent>
     </PageContainer>
   );

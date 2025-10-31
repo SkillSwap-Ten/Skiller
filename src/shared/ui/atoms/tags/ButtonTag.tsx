@@ -7,7 +7,7 @@ import { ITagProps } from '@/src/shared/types/atoms/tag.type';
 const StyledButtonTag = styled.button`
   background-color: transparent;
   padding: 10px 15px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 5px;
   color: ${({ theme }) => theme.colors.textSecondary};
   font-size: 0.8rem;

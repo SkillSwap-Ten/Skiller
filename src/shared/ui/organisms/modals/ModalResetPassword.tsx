@@ -76,6 +76,7 @@ const SubmitButton = styled.button`
   background-color: #222;
   color: ${({ theme }) => theme.colors.textWhite};
   border-radius: 8px;
+  border: none;
   cursor: pointer;
   font-size: 0.9rem;
 `;

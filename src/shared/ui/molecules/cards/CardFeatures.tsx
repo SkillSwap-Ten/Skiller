@@ -34,7 +34,7 @@ const ProfileCardContent = styled.div`
   padding: 1rem;
   padding-top: 0;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   & a {
     &:hover {
@@ -46,7 +46,7 @@ const ProfileCardContent = styled.div`
 
 const FeaturesCardContent = styled.div`
   background: ${({ theme }) => theme.colors.bgSidebar};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 100%;
   height: 55%;
   display: flex;

@@ -27,7 +27,7 @@ const Input = styled.input`
   max-width: 1000px;
   padding: 10px 20px;
   font-size: 15px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 5px;
   margin: 0;
 

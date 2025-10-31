@@ -12,7 +12,7 @@ const StyledInputContainer = styled.div`
 `;
 
 const StyledInputTable = styled.input`
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
     color: ${({ theme }) => theme.colors.textSecondary};
     width: 100%;  
     height: 100%;        

@@ -1,7 +1,7 @@
 'use client';
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { FaExclamationTriangle, FaShieldAlt } from "react-icons/fa";
 import { ISliderMatchProps } from "@/src/shared/types/organisms/slider.type";
 import { PiHandshake } from "react-icons/pi";
@@ -69,7 +69,7 @@ const SliderImage = styled.div<{ urlImage: string }>`
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
-  border: solid 1px ${({ theme }) => theme.colors.textDark};
+  border: solid 1px ${({ theme }) => theme.colors.borderDark};
 `;
 
 const Title = styled.h3`
@@ -206,7 +206,7 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
       };
     };
 
-    if (user && user.urlImage && validateImageUrl(user.urlImage)) {
+    if (user && user.urlImage && isValidImageUrl(user.urlImage)) {
       checkImageUrl(user.urlImage);
     } else {
       setImageUrl("/img/default-picture-full.webp");

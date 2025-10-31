@@ -28,7 +28,6 @@ const NavbarContainer = styled.nav`
 `;
 
 const AuthLink = styled.span`
-    width: 100px;
     cursor: pointer;
     list-style: none;
 

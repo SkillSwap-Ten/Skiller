@@ -24,7 +24,7 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgOrange};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   border-radius: 10px;
   height: 75%;
@@ -120,7 +120,7 @@ const ModalContent = styled.div`
   flex: 1;
   width: 100%;
   height: fit-content;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-color: #fff;
 
   @media (max-width: 1200px) {
@@ -142,7 +142,7 @@ const LeftSection = styled.div`
 
   @media (max-width: 1200px) {
     border-bottom-left-radius: 0;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
     width: 100%;
     height: auto;
   }
@@ -158,7 +158,7 @@ const RightSection = styled.div`
   height: 100%;
   width: 40%;
   flex: 1;
-  border-left: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-left: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   & article {
     height: 100%;
