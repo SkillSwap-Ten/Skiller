@@ -1,6 +1,6 @@
 'use client';
-import React, { useState } from "react";
 import styled from "styled-components";
+import React, { useState } from "react";
 import { ISelectProps } from "@/src/shared/types/atoms/select.type";
 import { LuAppWindow, LuBarChart, LuCode2, LuPencil } from "react-icons/lu";
 import { IoChatbubblesOutline } from "react-icons/io5";
@@ -107,7 +107,7 @@ const SelectAuth: React.FC<ISelectProps> = ({
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
-            Bienvenido a {opt.value}
+            {opt.value}
           </option>
         ))}
       </SelectStyled>

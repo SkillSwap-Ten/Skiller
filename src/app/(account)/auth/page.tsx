@@ -61,7 +61,7 @@ const Container = styled.div`
     align-items: flex-start;
     justify-content: end;
     min-height: 552px;
-    height: 77.5vh;
+    height: 77vh;
     max-height: 842px;
   }
 `;
