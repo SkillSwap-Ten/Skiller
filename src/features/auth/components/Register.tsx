@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../authSlice';
 import { IUserAuthResponse, IUserRegisterRequest } from '@/src/core/dto/auth/auth.dto';
 import { AppDispatch, RootState } from '../../../lib/store';
+import { useDebouncedCallback } from '@/src/shared/hooks/useDebouncedState';
 import { handlePageTheme } from '@/src/lib/utils/themeHandler';
 import { useRouter } from 'next/navigation';
+import { getAllSkills } from '@/src/lib/utils/getStaticData';
 import { toast } from 'react-toastify';
+import SelectSkills from '@/src/shared/ui/molecules/selects/SelectSkills';
 import InputAuth from "../../../shared/ui/atoms/inputs/InputAuth";
 import Label from "../../../shared/ui/atoms/labels/LabelAuth";
-import Select from "../../../shared/ui/atoms/selects/SelectAuth";
-import TextArea from "../../../shared/ui/atoms/textareas/TextAreaAuth";
+import SelectAuth from "../../../shared/ui/molecules/selects/SelectAuth";
+import TextAreaAuth from "../../../shared/ui/atoms/textareas/TextAreaAuth";
 import ButtonAuth from '../../../shared/ui/atoms/buttons/ButtonAuth';
 import NavLink from '../../../shared/ui/atoms/links/NavLinks';
 import Indicator from '../../../shared/ui/molecules/indicators/Indicator';
@@ -27,7 +30,7 @@ const Arrow = styled.span`
   transform: scaleX(0.5);
 `;
 
-const BackLink = styled.div` 
+const BackLink = styled.span` 
   opacity: 0.6;
   display: flex;
   align-items: center;
@@ -44,8 +47,8 @@ const BackLink = styled.div`
   padding-bottom: 5px;
 
   a {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     font-weight: 500;
   }
 `;
@@ -134,20 +137,6 @@ const Title = styled.h2`
 
 `;
 
-const DivButtonLogin = styled.div`
-  position: absolute;
-  bottom: 3.2rem;
-  display: flex;
-  gap: 20px;
-  border: none;
-
-  @media (max-width: 1070px) { 
-    width: inherit;
-    display: flex;
-    justify-content: center;
-  }
-`;
-
 const DivUserData = styled.div`
   width: 100%;
   height: inherit;
@@ -218,11 +207,10 @@ const ErrorText = styled.sub`
 `;
 
 export default function RegisterPage() {
+  const allSkills = getAllSkills();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error } = useSelector((state: RootState) => state.auth);
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  const [skills, setSkills] = useState<string>("");
   const [currentStep, setCurrentStep] = useState(0);
   const [form, setForm] = useState<IUserRegisterRequest>({
     email: "",
@@ -241,28 +229,12 @@ export default function RegisterPage() {
     abilities: "",
   });
 
-  // Manejar el select
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
-    setSelectedOption(value);
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
+  const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
+    console.log("Debounced value:", value);
+  },
+    500);
 
-  // Manejar el textarea
-  const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setSkills(value);
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  // Manejar cambios en los inputs
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     if (name === "birthdate") {
@@ -276,6 +248,7 @@ export default function RegisterPage() {
         [name]: value,
       }));
     }
+    handleChangeDebounced(e.target.value);
   };
 
   // Convierte una fecha a formato YYYY-MM-DD
@@ -306,7 +279,7 @@ export default function RegisterPage() {
               name="email"
               placeholder="Escribe tu email..."
               value={form.email}
-              onChange={handleInputChange}
+              onChange={handleChange}
               required
               autoComplete="email"
             />
@@ -317,7 +290,7 @@ export default function RegisterPage() {
               name="password"
               placeholder="Escribe tu contraseña..."
               value={form.password}
-              onChange={handleInputChange}
+              onChange={handleChange}
               required
               autoComplete="new-password"
             />
@@ -339,7 +312,7 @@ export default function RegisterPage() {
                 name="name"
                 placeholder="Escribe tu nombre..."
                 value={form.name}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="given-name"
               />
@@ -352,10 +325,11 @@ export default function RegisterPage() {
                 name="lastName"
                 placeholder="Escribe tus apellidos..."
                 value={form.lastName}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="family-name"
               />
+              <sub>Los campos con (*) son requeridos.</sub>
             </DivUserInput>
           </DivUserData>
         );
@@ -374,7 +348,7 @@ export default function RegisterPage() {
                 name="birthdate"
                 placeholder="Escribe tu fecha de nacimiento..."
                 value={form.birthdate ? formatDate(form.birthdate) : ""}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="birthdate"
               />
@@ -387,52 +361,15 @@ export default function RegisterPage() {
                 name="urlImage"
                 placeholder="https://..."
                 value={form.urlImage}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="url-image"
               />
+              <sub>Los campos con (*) son requeridos.</sub>
             </DivUserInput>
           </DivUserData>
         );
       case 3:
-        return (
-          <DivUserData>
-            <Indicator currentStep={currentStep} />
-            <DivUserTitle>
-              <Title>Habilidades</Title>
-            </DivUserTitle>
-            <DivUserInput>
-              <Label htmlFor="category" text="Comunidad *" />
-              <Select
-                title='category'
-                id="category"
-                value={selectedOption}
-                onChange={handleSelectChange}
-                ariaLabel="Select area"
-                name="category"
-                required
-                autoComplete="category"
-              />
-            </DivUserInput>
-            <DivUserInput>
-              <Label htmlFor="abilities" text="Skills *" />
-              <TextArea
-                id="abilities"
-                title="abilities"
-                value={skills}
-                onChange={handleTextAreaChange}
-                ariaLabel="Escribe tus habilidades"
-                name="abilities"
-                placeholder="Escribe aquí tus habilidades separadas por coma (máx. 200 caracteres) ..."
-                required
-                maxLength={200}
-                autoComplete="abilities"
-              />
-              <sub>{skills.length} / 200 caracteres</sub>
-            </DivUserInput>
-          </DivUserData>
-        );
-      case 4:
         return (
           <DivUserData>
             <Indicator currentStep={currentStep} />
@@ -447,30 +384,74 @@ export default function RegisterPage() {
                 name="jobTitle"
                 placeholder="Título de tu trabajo..."
                 value={form.jobTitle}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 required
                 autoComplete="organization-title"
               />
             </DivUserInput>
             <DivUserInput>
               <Label htmlFor="description" text="Descripción *" />
-              <TextArea
+              <TextAreaAuth
                 id="description"
                 title="description"
                 value={form.description}
-                onChange={handleTextAreaChange}
-                ariaLabel="Escribe tus habilidades"
+                onChange={handleChange}
+                ariaLabel="Describe tu experiencia profesional o académica..."
                 name="description"
                 placeholder="Describe tu experiencia profesional o académica..."
                 required
                 maxLength={500}
                 autoComplete="description"
               />
-              <sub>{form.description.length} / 500 caracteres</sub>
+              <sub>{form.description.length} / 500 caracteres.</sub>
+            </DivUserInput>
+          </DivUserData>
+        );
+      case 4:
+        return (
+          <DivUserData>
+            <Indicator currentStep={currentStep} />
+            <DivUserTitle>
+              <Title>Experiencia</Title>
+            </DivUserTitle>
+            <DivUserInput>
+              <Label htmlFor="category" text="Comunidad *" />
+              <SelectAuth
+                title='category'
+                id="category"
+                value={form.category}
+                onChange={handleChange}
+                ariaLabel="Select area"
+                name="category"
+                required
+                autoComplete="category"
+              />
             </DivUserInput>
           </DivUserData>
         );
       case 5:
+        return (
+          <DivUserData>
+            <Indicator currentStep={currentStep} />
+            <DivUserTitle>
+              <Title>Experiencia</Title>
+            </DivUserTitle>
+            <DivUserInput>
+              <Label htmlFor="abilities" text="Habilidades *" />
+              <SelectSkills
+                ariaLabel="abilities"
+                id="abilities"
+                title="abilities"
+                name="abilities"
+                allSkills={allSkills}
+                value={form.abilities || ""}
+                onChange={handleChange} />
+              <sub>{form.abilities.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
+            </DivUserInput>
+          </DivUserData>
+        );
+
+      case 6:
         return (
           <DivUserData>
             <Indicator currentStep={currentStep} />
@@ -485,7 +466,7 @@ export default function RegisterPage() {
                 name="phoneNumber"
                 placeholder="Escribe tu número de teléfono..."
                 value={form.phoneNumber || ""}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 autoComplete="phone-number"
               />
             </DivUserInput>
@@ -497,13 +478,13 @@ export default function RegisterPage() {
                 name="urlLinkedin"
                 placeholder="https://linkedin.com/in/..."
                 value={form.urlLinkedin || ""}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 autoComplete="url"
               />
             </DivUserInput>
           </DivUserData>
         );
-      case 6:
+      case 7:
         return (
           <DivUserData>
             <Indicator currentStep={currentStep} />
@@ -518,7 +499,7 @@ export default function RegisterPage() {
                 name="urlBehance"
                 placeholder="https://behance.net/..."
                 value={form.urlBehance || ""}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 autoComplete="url"
               />
             </DivUserInput>
@@ -530,7 +511,7 @@ export default function RegisterPage() {
                 name="urlGithub"
                 placeholder="https://github.com/..."
                 value={form.urlGithub || ""}
-                onChange={handleInputChange}
+                onChange={handleChange}
                 autoComplete="url"
               />
             </DivUserInput>
@@ -545,7 +526,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<boolean> => {
     e.preventDefault();
 
-    if (currentStep < 7) {
+    if (currentStep < 8) {
       return false;
     }
 
@@ -554,8 +535,9 @@ export default function RegisterPage() {
       0: ["email", "password"],
       1: ["name", "lastName"],
       2: ["birthdate", "urlImage"],
-      3: ["category", "abilities"],
-      4: ["jobTitle", "description"],
+      3: ["jobTitle", "description"],
+      4: ["category"],
+      5: ["abilities"],
       // Los steps 5 y 6 no tienen campos estrictamente obligatorios
     };
 
@@ -621,7 +603,6 @@ export default function RegisterPage() {
       <FormWrapper>
         <Form onSubmit={handleSubmit}>
           {renderStep()}
-          <DivButtonLogin />
           <DivButtonSignUp>
             {currentStep > 0 && (
               <ButtonAuth
@@ -632,7 +613,7 @@ export default function RegisterPage() {
                 ATRÁS
               </ButtonAuth>
             )}
-            {currentStep < 6 ? (
+            {currentStep < 7 ? (
               <ButtonAuth
                 type="button"
                 onClick={() => setCurrentStep(currentStep + 1)}
@@ -645,7 +626,7 @@ export default function RegisterPage() {
                   Registrando...
                 </ButtonAuth>
               ) : (
-                <ButtonAuth type="submit" onClick={() => setCurrentStep(7)}>
+                <ButtonAuth type="submit" onClick={() => setCurrentStep(8)}>
                   ENVIAR
                 </ButtonAuth>
               )

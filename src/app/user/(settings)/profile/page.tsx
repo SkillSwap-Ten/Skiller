@@ -13,10 +13,10 @@ import { IUser } from "../../../../core/models/users/users.model";
 import { getUserById, putUserByUser } from "../../../api/users/users";
 import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 import { FaLinkedin, FaGithubSquare, FaBehanceSquare, FaEdit } from "react-icons/fa";
-import { getMyCommunityInfo } from "@/src/lib/utils/getCommunityInfo";
+import { getMyCommunityInfo } from "@/src/lib/utils/getStaticData";
 import { getGitHubRepos } from "@/src/app/api/github/github";
 import { GrStatusGoodSmall } from "react-icons/gr";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { toast } from "react-toastify";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -89,7 +89,7 @@ const UserName = styled.h1`
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: capitalize;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   margin: 0;
 `;
 
@@ -99,7 +99,7 @@ const UserTitle = styled.h2`
   text-transform: capitalize;
   gap: 10px;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-weight: 400;
   margin-top: 0;
   
@@ -116,7 +116,7 @@ const ProfileImage = styled.div<{ urlImage: string }>`
   width: 4rem;
   height: 4rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   @media (max-width: 769px) {
       display: none;
@@ -131,7 +131,7 @@ const ProfileImageMobile = styled.div<{ urlImage: string }>`
   width: 100%;
   height: 18rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   margin-bottom: 1rem;
 
   @media (max-width: 768px) {
@@ -154,8 +154,8 @@ const Skills = styled.div`
   }
 
   & p{
-    color: ${({ theme }) => theme.colors.textBlack};
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textGrey};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
   }
 
   @media (max-width: 768px) {
@@ -169,7 +169,7 @@ const UserDescription = styled.div`
   padding-bottom: 0.5rem;
   min-height: 29rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -188,7 +188,7 @@ const H3 = styled.h3`
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const P = styled.p`
@@ -274,7 +274,7 @@ const MediaContent = styled.div`
   width: 100%;
   min-height: 7.5rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   @media (max-width: 768px) {
     min-height: 10.5rem;
@@ -297,18 +297,18 @@ const SocialButtons = styled.div`
 const SocialButton = styled.div`
   border-radius: 5px;
   padding: 0.3rem 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   font-weight: 500;
   word-wrap: break-word;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
 
   a {
     padding: 0;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
     font-size: 0.9rem
   }
 `;
@@ -342,7 +342,7 @@ const EditButton = styled(ButtonFeature)`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 2rem;
   cursor: pointer;
   background: transparent;
@@ -404,7 +404,7 @@ const UserProfile = () => {
         };
       };
 
-      if (data.urlImage && validateImageUrl(data.urlImage)) {
+      if (data.urlImage && isValidImageUrl(data.urlImage)) {
         checkImageUrl(data.urlImage);
       } else {
         setImageUrl("/img/default-picture-full.webp");

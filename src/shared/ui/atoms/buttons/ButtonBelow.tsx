@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   padding: 8px 12px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.textSecondary};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   cursor: pointer;
   transition: 0.4s;
   border-radius: 5px;

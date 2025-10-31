@@ -6,9 +6,9 @@ import styled from "styled-components";
 // Estilos para el textarea usando styled-components
 const TextAreaStyled = styled.textarea`
   padding: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.bgSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.textWhite};
   color: ${({ theme }) => theme.colors.textWhite};
-  background: ${({ theme }) => theme.colors.gradientPrimary};
+  background: transparent;
   border-radius: 10px;
   font-size: 16px;
   width: 100%;
@@ -21,12 +21,12 @@ const TextAreaStyled = styled.textarea`
   } 
 
   @media (max-width: 1070px) {
-    height: 100px; 
+    height: 80px; 
   }
 `;
 
 // Componente TextArea
-const TextArea: React.FC<ITextAreaProps> = ({
+const TextAreaAuth: React.FC<ITextAreaProps> = ({
   id,
   value,
   title,
@@ -58,4 +58,4 @@ const TextArea: React.FC<ITextAreaProps> = ({
   );
 };
 
-export default TextArea;
+export default TextAreaAuth;

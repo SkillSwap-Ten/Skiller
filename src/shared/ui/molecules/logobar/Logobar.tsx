@@ -24,11 +24,32 @@ const LogobarStyled = styled.div`
 
     & h2 {
         margin: 0;
-        font-size: 1.8em;
+        font-size: 1.7em;
         background: ${({ theme }) => theme.colors.gradientSecondary};
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
+        display: inline-block;
+        transform-origin: center;
+        animation: wavePerspective 3.5s ease-in-out infinite;
+
+        @keyframes wavePerspective {
+            0% {
+            transform: perspective(400px) rotateY(6deg) skewX(2deg) scale(1);
+            }
+            25% {
+            transform: perspective(400px) rotateY(3deg) skewX(-1deg) scale(1.02);
+            }
+            50% {
+            transform: perspective(400px) rotateY(-6deg) skewX(-2deg) scale(1);
+            }
+            75% {
+            transform: perspective(400px) rotateY(-3deg) skewX(1deg) scale(1.02);
+            }
+            100% {
+            transform: perspective(400px) rotateY(6deg) skewX(2deg) scale(1);
+            }
+        }
 
         @media (max-width: 768px) {
             font-size: 1.5em;

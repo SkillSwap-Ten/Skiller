@@ -19,6 +19,10 @@ const StyledInputAuth = styled.input`
     opacity: 0.7;
     color: ${({ theme }) => theme.colors.textWhite}!important;
   }
+
+  & * {
+    color: ${({ theme }) => theme.colors.textWhite}!important;
+  }
 `;
 
 const InputAuth: React.FC<IInputProps> = ({

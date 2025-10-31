@@ -2,11 +2,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { IUserFormProps } from "@/src/shared/types/organisms/form.type";
 import { IUser } from "../../../../core/models/users/users.model";
+import { getAllSkills } from "@/src/lib/utils/getStaticData";
+import { useDebouncedCallback } from "@/src/shared/hooks/useDebouncedState";
 import styled from "styled-components";
 import Label from "../../atoms/labels/Label";
 import TextArea from "../../atoms/textareas/TextArea";
 import Input from "../../atoms/inputs/Input";
-import Select from "../../atoms/selects/Select";
+import Select from "../../molecules/selects/Select";
+import SelectSkills from "../../molecules/selects/SelectSkills";
 
 //Formulario
 const Form = styled.form`
@@ -75,23 +78,24 @@ const DivContent = styled.div`
   gap: 50px;
 `;
 const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose, setDataToEdit }) => {
+  const allSkills = getAllSkills();
   const initialFormState = useMemo<IUser>(() => ({
     id: dataToEdit?.id ?? 0,
     name: dataToEdit?.name ?? "",
     lastName: dataToEdit?.lastName ?? "",
     abilities: dataToEdit?.abilities ?? "",
     category: dataToEdit?.category ?? "",
+    email: dataToEdit?.email ?? "",
     password: dataToEdit?.password ?? "",
-    idStateUser: dataToEdit?.idStateUser ?? 0,
-    idRoleUser: dataToEdit?.idRoleUser ?? 0,
-    suspensionDate: dataToEdit?.suspensionDate ?? null,
-    reactivationDate: dataToEdit?.reactivationDate ?? null,
     urlImage: dataToEdit?.urlImage ?? "",
     birthdate: dataToEdit?.birthdate ?? "",
     jobTitle: dataToEdit?.jobTitle ?? "",
     description: dataToEdit?.description ?? "",
-    email: dataToEdit?.email ?? "",
     phoneNumber: dataToEdit?.phoneNumber ?? "",
+    idStateUser: dataToEdit?.idStateUser ?? 0,
+    idRoleUser: dataToEdit?.idRoleUser ?? 0,
+    suspensionDate: dataToEdit?.suspensionDate ?? null,
+    reactivationDate: dataToEdit?.reactivationDate ?? null,
     urlLinkedin: dataToEdit?.urlLinkedin ?? "",
     urlGithub: dataToEdit?.urlGithub ?? "",
     urlBehance: dataToEdit?.urlBehance ?? "",
@@ -123,13 +127,23 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
     setHasChanges(changedFields.length > 0 && changedFields.length < totalFields);
   }, [form, dataToEdit, initialFormState]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: name === "suspensionDate" || name === "reactivationDate" ? (value ? value : null) : value,
-    }));
-  };
+  const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
+    console.log("Debounced value:", value);
+  },
+    500);
+
+  const handleChange =
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const { name, value } = e.target;
+      setForm((prev) => ({
+        ...prev,
+        [name]:
+          name === "suspensionDate" || name === "reactivationDate"
+            ? value || null
+            : value,
+      }));
+      handleChangeDebounced(e.target.value);
+    };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -145,7 +159,7 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
 
   const handleReset = () => {
     setForm(initialFormState);
-    setDataToEdit(null);
+    setDataToEdit(initialFormState);
   };
 
   const getButtonText = () => {
@@ -194,13 +208,13 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
         <Div>
           <Label htmlFor="description" text="Descripción o Biografía" />
           <TextArea ariaLabel="description" title="description" maxLength={300} name="description" id="description" value={form.description!} onChange={handleChange} />
-          <sub>{form.description!.length} / 300 caracteres</sub>
+          <sub>{form.description!.length} / 300 caracteres.</sub>
         </Div>
 
         <Div>
           <Label htmlFor="abilities" text="Habilidades" />
-          <TextArea ariaLabel="abilities" title="abilities" maxLength={200} name="abilities" id="abilities" value={form.abilities!} onChange={handleChange} />
-          <sub>{form.abilities!.length} / 200 caracteres</sub>
+          <SelectSkills ariaLabel="abilities" id="abilities" title="abilities" name="abilities" allSkills={allSkills} value={form.abilities || ""} onChange={handleChange} />
+          <sub>{form.abilities!.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
         </Div>
 
         <Div>

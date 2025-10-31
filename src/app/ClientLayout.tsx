@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { usePathname, useRouter } from 'next/navigation';
+import { isValidToken } from "../lib/utils/tokenValidator";
 import { Navbar } from "../shared/ui/organisms/navbar/NavbarOffline";
 import { Logobar } from "../shared/ui/molecules/logobar/Logobar";
 import { clearStorage } from "../lib/utils/storageCleaner";
@@ -16,7 +17,7 @@ const LayoutContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-    margin: 0;         
+    margin: 0;
     padding: 0;
 `;
 
@@ -30,37 +31,53 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const [definedTheme, setDefinedTheme] = useState<IGlobalTheme | null>(null);
 
     const isAuth = pathname.startsWith('/auth');
-    const isOffline = pathname.startsWith('/auth') || pathname.startsWith('/legal');
 
     useEffect(() => {
-        const storedToken = globalThis.window === undefined ? null : getAuthData('token');
+        // Validar token inmediatamente al montar
+        const storedToken = globalThis.window === undefined ? null : getAuthData("token");
         setToken(storedToken);
-        console.log(storedToken);
 
-        const handleStart = () => setLoading(true);
-        const handleComplete = () => {
-            setTimeout(() => setLoading(false), 3000);
-        };
-
-        if (!storedToken) {
-            clearStorage();
-
-            if (!isOffline) {
-                router.push("/");
-                return;
+        if (storedToken) {
+            try {
+                if (!isValidToken(storedToken)) {
+                    clearStorage();
+                }
+            } catch (e) {
+                console.warn("Error al validar token:", e);
             }
         }
 
-        router.prefetch(pathname);
+        // Validación periódica (cada 5 minutos)
+        const interval = setInterval(() => {
+            const tokenCheck = globalThis.window === undefined ? null : getAuthData("token");
+            if (tokenCheck) {
+                try {
+                    if (!isValidToken(tokenCheck)) {
+                        clearStorage();
+                    }
+                } catch (e) {
+                    console.warn("Error al validar token:", e);
+                }
+            }
+        }, 5 * 60 * 1000);
 
-        handleStart();
-        handleComplete();
-    }, [pathname, router, isOffline]);
+        // Prefetch y animación de carga
+        router.prefetch(pathname);
+        setLoading(true);
+        const timeout = setTimeout(() => setLoading(false), 3000);
+
+        // Limpiar cuando el componente se desmonta
+        return () => {
+            clearInterval(interval);
+            clearTimeout(timeout);
+        };
+    }, [pathname, router]);
 
     useEffect(() => {
-        const themeToUse = (pathname === '/auth') ? themeAuth : theme;
+        // Aplicar tema según la ruta actual
+        const themeToUse = isAuth ? themeAuth : theme;
         setDefinedTheme(themeToUse);
-    }, [themeAuth, theme, token, pathname]);
+    }, [themeAuth, theme, token, pathname, isAuth]);
 
     if (loading) {
         return <LoadingScreen />;

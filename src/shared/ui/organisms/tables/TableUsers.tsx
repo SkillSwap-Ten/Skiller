@@ -34,7 +34,7 @@ const TableContainer = styled.div`
   flex-direction: column; 
   overflow-x: auto;
   padding: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
 `;
 
@@ -55,7 +55,7 @@ const Td = styled.td`
 `;
 
 const Tr = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   &:hover {
     background-color: #eee;

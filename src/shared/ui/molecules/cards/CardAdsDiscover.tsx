@@ -4,7 +4,7 @@ import styled from "styled-components";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
 import InfoTag from "../../atoms/tags/InfoTag";
 import NavLink from "../../atoms/links/NavLinks";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { ICardAdsDiscoverProps } from "@/src/shared/types/molecules/card.type";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -21,7 +21,7 @@ const ProfileHeader = styled.div`
 `;
 
 const Avatar = styled.div<{ urlImage: string }>`
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
     background-image: url(${(props) => props.urlImage});
     background-size: cover;
     background-position: center;
@@ -35,7 +35,7 @@ const ProfileName = styled.div`
     font-size: 1rem;
     font-weight: bold;
     margin-bottom: 5px;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const JobTitle = styled.div`
@@ -52,7 +52,7 @@ const CardContainer = styled.div`
     background-color: ${({ theme }) => theme.colors.textWhite};
     padding: 1rem;
     border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
     & a {
         &:hover {
@@ -110,7 +110,7 @@ const CardAdsDiscover: React.FC<ICardAdsDiscoverProps> = ({ loading, error, user
             };
         };
 
-        if (user && user.urlImage && validateImageUrl(user.urlImage)) {
+        if (user && user.urlImage && isValidImageUrl(user.urlImage)) {
             checkImageUrl(user.urlImage);
         } else {
             setImageUrl("/img/default-picture-full.webp");

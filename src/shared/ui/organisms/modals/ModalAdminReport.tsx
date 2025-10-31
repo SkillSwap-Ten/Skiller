@@ -30,7 +30,7 @@ const ModalOverlay = styled.div<{ isOpen: boolean }>`
 
 const ModalContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   border-radius: 10px;
   height: 75%;
@@ -124,7 +124,7 @@ const ModalContent = styled.div`
   flex: 1;
   width: 100%;
   height: fit-content;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-color: #fff;
 
   @media (max-width: 1200px) {
@@ -161,12 +161,12 @@ const RightSection = styled.div`
   height: 100%;
   width: 40%;
   flex: 1;
-  border-left: 1px solid ${({ theme }) => theme.colors.textDark};
+  border-left: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
 
   @media (max-width: 1200px) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.textDark};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
     border-top-left-radius: 10px;
     border-bottom-right-radius: 0;
     width: 100%;
@@ -218,7 +218,7 @@ const ReportMainInfo = styled.div`
 `;
 
 const Avatar = styled.div<{ urlImage: string }>`
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;

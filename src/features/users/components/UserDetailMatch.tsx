@@ -1,12 +1,12 @@
 "use client"
 import { useState, useEffect } from "react";
 import { IDetailUserProps } from "@/src/features/users/types/detail.type";
-import { getCommunityInfo } from "@/src/lib/utils/getCommunityInfo";
+import { getCommunityInfo } from "@/src/lib/utils/getStaticData";
 import { FaLinkedin, FaGithubSquare, FaBehanceSquare, FaShieldAlt, FaExclamationTriangle } from "react-icons/fa";
 import { IoFlowerOutline } from "react-icons/io5";
 import { getGitHubUser } from "@/src/lib/utils/getGitHubUser";
 import { getGitHubRepos } from "@/src/app/api/github/github";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import styled from "styled-components";
 import NavLink from "../../../shared/ui/atoms/links/NavLinks";
 import SkillTag from "../../../shared/ui/atoms/tags/SkillTag";
@@ -70,7 +70,7 @@ const UserName = styled.h1`
   text-transform: capitalize;
   font-size: 2.5rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   margin: 0;
 `;
 
@@ -80,7 +80,7 @@ const UserTitle = styled.h2`
   align-items: center;
   gap: 10px;
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-weight: 400;
   margin-top: 0;
   
@@ -97,7 +97,7 @@ const ProfileImage = styled.div<{ urlImage: string }>`
   width: 4rem;
   height: 4rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   @media (max-width: 769px) {
       display: none;
@@ -113,7 +113,7 @@ const ProfileImageMobile = styled.div<{ urlImage: string }>`
   width: 100%;
   height: 18rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   margin-bottom: 1rem;
 
   @media (max-width: 769px) {
@@ -170,8 +170,8 @@ const Skills = styled.div`
   }
 
   & p{
-    color: ${({ theme }) => theme.colors.textBlack};
-    border: 1px solid ${({ theme }) => theme.colors.textDark};
+    color: ${({ theme }) => theme.colors.textGrey};
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
   }
 
     @media (max-width: 600px) {
@@ -185,7 +185,7 @@ const UserDescription = styled.div`
   padding-bottom: 0.5rem;
   min-height: 16rem;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -203,7 +203,7 @@ const H3 = styled.h3`
     margin: 0;
     font-size: 18px;
     font-weight: 500;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const P = styled.p`
@@ -242,7 +242,7 @@ const DivRating = styled.div`
 `;
 
 const Star = styled.span`
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
   font-size: 20px;
 `;
 
@@ -318,7 +318,7 @@ const MediaContent = styled.div`
   min-height: 7.5rem !important;
   height: 50%;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   gap: 1rem;
 
     @media (max-width: 950px) {
@@ -342,18 +342,18 @@ const SocialButtons = styled.div`
 const SocialButton = styled.div`
   border-radius: 5px;
   padding: 0.3rem 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   font-weight: 500;
   word-wrap: break-word;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.textBlack};
+  color: ${({ theme }) => theme.colors.textGrey};
 
   a {
     padding: 0;
-    color: ${({ theme }) => theme.colors.textBlack};
+    color: ${({ theme }) => theme.colors.textGrey};
     font-size: 0.9rem
   }
 `;
@@ -453,7 +453,7 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
         const tasks: Promise<void>[] = [];
 
         // Imagen
-        if (userData.urlImage && validateImageUrl(userData.urlImage)) {
+        if (userData.urlImage && isValidImageUrl(userData.urlImage)) {
           tasks.push(checkImageUrl(userData.urlImage));
         } else {
           setImageUrl("/img/default-picture-full.webp");

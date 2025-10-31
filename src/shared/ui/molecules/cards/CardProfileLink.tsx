@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NavLink from "../../atoms/links/NavLinks";
 import { ICardProfileProps } from "@/src/shared/types/molecules/card.type";
-import { validateImageUrl } from "@/src/lib/utils/imageValidator";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 const CardContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const ProfileHeader = styled.div`
 `;
 
 const Avatar = styled.div<{ urlImage: string }>`
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-image: url(${(props) => props.urlImage}); 
   background-size: cover;
   background-position: center;
@@ -95,7 +95,7 @@ const RatingStars = styled.div`
 `;
 
 const Star = styled.span`
-  color:  ${({ theme }) => theme.colors.textBlack};
+  color:  ${({ theme }) => theme.colors.textGrey};
   font-size: 16px;
 `;
 
@@ -118,7 +118,7 @@ const CardProfileLink: React.FC<ICardProfileProps> = ({
       };
     };
 
-    if (userData && userData.urlImage && validateImageUrl(userData.urlImage)) {
+    if (userData && userData.urlImage && isValidImageUrl(userData.urlImage)) {
       checkImageUrl(userData.urlImage);
     } else {
       setImageUrl("/img/default-picture-full.webp");

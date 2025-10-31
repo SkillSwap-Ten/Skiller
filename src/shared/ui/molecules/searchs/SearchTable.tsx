@@ -21,7 +21,7 @@ const InputContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  border: 1px solid ${({ theme }) => theme.colors.textDark};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 50px;
   height: 50px;
 `;

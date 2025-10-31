@@ -4,9 +4,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const IndicatorContainer = styled.div`
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 10px;
 `;
 
@@ -17,21 +18,22 @@ const Step = styled.div`
 `;
 
 const Circle = styled.div<{ active: boolean; completed: boolean }>`
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
     background-color: ${({ active, completed }) => (active || completed ? '#ffffffcc' : '#ffffff4c')};
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${({ theme }) => theme.colors.textOrange};
+    color: ${({ active, completed, theme}) => (active || completed ? theme.colors.textOrange : theme.colors.textWhite)};
     font-weight: bold;
     font-size: 10px;
     transition: background-color 0.3s;
+    cursor: default;
 `;
 
 const Indicator: React.FC<IIndicatorProps> = ({ currentStep }) => {
-    const totalSteps = 7;
+    const totalSteps = 8;
 
     return (
         <IndicatorContainer>
