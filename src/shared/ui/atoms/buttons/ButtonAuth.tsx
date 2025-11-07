@@ -21,7 +21,7 @@ const StyledButtonAuth = styled.button`
 
 const ButtonAuth: React.FC<IButtonAuthProps> = ({ type, className, disabled = false, onClick, children }) => {
   return (
-    <StyledButtonAuth className={className} type={type} disabled={disabled} onClick={onClick}>
+    <StyledButtonAuth aria-label={'Auth Button'} className={className} type={type} disabled={disabled} onClick={onClick}>
       {children}
     </StyledButtonAuth>
   );

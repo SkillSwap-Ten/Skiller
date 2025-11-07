@@ -578,7 +578,7 @@ const VideoContainer = styled.div`
     text-align: start;
   }
 
-  & h4 {
+  & h3 {
     text-align: start;
     width: 100%;
     margin: 0;
@@ -800,7 +800,7 @@ const Home = () => {
         <h2>
           COMUNIDAD <Italic>skill 10&apos;</Italic>{" "}
         </h2>
-        <h4>Elige como conectar con los profesionales de tu interés.</h4>
+        <h3>Elige como conectar con los profesionales de tu interés.</h3>
         <br />
         <small>
           *Secuencias abreviadas y simuladas. Resultados solo con fines

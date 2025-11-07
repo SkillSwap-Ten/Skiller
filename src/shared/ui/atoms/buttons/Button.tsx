@@ -30,7 +30,7 @@ const StyledButton = styled.button`
 
 const Button: React.FC<IButtonProps> = ({ children, className, label, type, icon, onClick }) => {
   return (
-    <StyledButton className={className} type={type} onClick={onClick}>
+    <StyledButton aria-label={label ? label : 'Button'} className={className} type={type} onClick={onClick}>
       {icon}{label}{children}
     </StyledButton>
   );
