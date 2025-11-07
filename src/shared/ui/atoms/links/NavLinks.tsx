@@ -66,6 +66,7 @@ const NavLink: React.FC<ILinkProps> = ({ href, hover, className, label, onClick,
 
   return (
     <NavLinkComponent
+      aria-label={label ? label : 'Navigation Link'}
       href={href}
       className={className}
       hover={hover}

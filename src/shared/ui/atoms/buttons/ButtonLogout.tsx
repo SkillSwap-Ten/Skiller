@@ -53,7 +53,7 @@ const LogoutButton: React.FC<IButtonProps> = ({ children, type }) => {
   };
 
   return (
-    <Button type={type} onClick={handleLogout}>
+    <Button aria-label={'Logout Button'} type={type} onClick={handleLogout}>
       {children} Cerrar sesión
     </Button>
   );

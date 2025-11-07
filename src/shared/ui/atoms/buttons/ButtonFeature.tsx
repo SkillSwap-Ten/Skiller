@@ -23,7 +23,7 @@ const StyledButton = styled.button`
 
 const ButtonFeature: React.FC<IButtonProps> = ({ children, onClick, className, type, label, disabled }) => {
   return (
-    <StyledButton type={type} onClick={onClick} className={className} disabled={disabled}>
+    <StyledButton aria-label={label ? label : 'Features Button'} type={type} onClick={onClick} className={className} disabled={disabled}>
       {children}
       <small>{label}</small>
     </StyledButton>

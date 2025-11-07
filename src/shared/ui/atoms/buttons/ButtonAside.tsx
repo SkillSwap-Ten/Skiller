@@ -36,7 +36,7 @@ const StyledButton = styled.button`
 
 const ButtonAside: React.FC<IButtonProps> = ({ children, onClick, className, type, label, disabled }) => {
   return (
-    <StyledButton type={type} onClick={onClick} className={className} disabled={disabled}>
+    <StyledButton aria-label={label ? label : 'Aside Button'} type={type} onClick={onClick} className={className} disabled={disabled}>
       {children}
       <small>{label}</small>
     </StyledButton>

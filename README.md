@@ -311,9 +311,13 @@ Make sure to keep your token private. If you believe it has been compromised, re
 
 --------------------------------------------------------------------------------------------------------
 
+<br>
+
 <div align="center">
-  <img src="./public/img/skillswap-isotype.png" alt="Skillswap-Isotype" width="400" />
+  <img src="./public/img/skillswap-isotype.png" alt="Skillswap-Isotype" width="360" />
 </div>
+
+<br>
 
 <div align="center">
     <em>
