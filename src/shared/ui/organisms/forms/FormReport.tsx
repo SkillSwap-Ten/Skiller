@@ -137,7 +137,7 @@ const ReportForm: React.FC<IReportFormProps> = ({ closeModal, reportedUser }) =>
         name="description"
         autoComplete="off"
       />
-      <SubmitButton type="submit">ENVIAR</SubmitButton>
+      <SubmitButton aria-label="Control Button" type="submit">ENVIAR</SubmitButton>
     </FormContainer>
   );
 };

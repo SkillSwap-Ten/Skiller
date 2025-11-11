@@ -233,7 +233,7 @@ const ModalAdminReport: React.FC<IModalReportFormProps> = ({ onUpdateData, dataT
       <ModalContainer>
         <ModalHeader>
           <div>Gestionar<article>Reporte</article></div>
-          <ModalCloseButton onClick={onClose}>×</ModalCloseButton>
+          <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
         </ModalHeader>
         <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>

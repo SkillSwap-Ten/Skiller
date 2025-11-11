@@ -196,6 +196,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
           className="first-button"
+          aria-label="Pagination Button"
           title="Página Anterior"
         >
           <FaAngleLeft />
@@ -222,6 +223,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
                 key={index}
                 onClick={() => paginate(item)}
                 className={item === currentPage ? "active" : ""}
+                aria-label="Pagination Button"
                 title={`Ir a página ${item}`}
               >
                 {item}
@@ -235,6 +237,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="last-button"
+          aria-label="Pagination Button"
           title="Página Siguiente"
         >
           <FaAngleRight />

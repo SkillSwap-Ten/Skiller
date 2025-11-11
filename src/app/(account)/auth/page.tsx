@@ -259,7 +259,7 @@ export default function AuthPage() {
             style={isRegister ? { width: "50%", visibility: "hidden" } : { width: "50%", visibility: "visible" }}
           >
             <LoginPage resetPasswordProp={
-              <ResetPasswordButton type="button" onClick={openModalResetPassword}>
+              <ResetPasswordButton aria-label="Control Button" type="button" onClick={openModalResetPassword}>
                 ¿Olvidaste tu contraseña?
               </ResetPasswordButton>
             } />
@@ -307,7 +307,7 @@ export default function AuthPage() {
             <Div>
               {isRegister ? (
                 <H1>
-                  <SwitchButton onClick={() => setIsRegister(false)}>
+                  <SwitchButton aria-label="Control Button" onClick={() => setIsRegister(false)}>
                     <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/auth" label="INICIAR SESIÓN" />
                   </SwitchButton>
                 </H1>

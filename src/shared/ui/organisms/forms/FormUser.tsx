@@ -260,8 +260,8 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
         </Div>
 
         <DivButton>
-          <Button type="submit">{getButtonText()}</Button>
-          <Button type="button" onClick={handleReset}>
+          <Button aria-label="Control Button" type="submit">{getButtonText()}</Button>
+          <Button aria-label="Control Button" type="button" onClick={handleReset}>
             Limpiar
           </Button>
         </DivButton>

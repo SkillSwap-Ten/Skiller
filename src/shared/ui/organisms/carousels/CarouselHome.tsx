@@ -321,7 +321,7 @@ const CarouselHome: React.FC = () => {
           ))}
         </CardsContainer>
         <article>
-      <ControlButton onClick={handleNext}><GrNext /></ControlButton>
+      <ControlButton aria-label="Control Button" onClick={handleNext}><GrNext /></ControlButton>
       </article>
       </CarouselWrapper>
     </Container>

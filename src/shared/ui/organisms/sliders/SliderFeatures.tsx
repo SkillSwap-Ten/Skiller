@@ -231,7 +231,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
           navigator.share({
             title: "Visita SkillSwap · Looking for Skill",
             text: "✨ ¡Ya hago parte de la comunidad SkillSwap! 🚀 Aventúrate también a intercambiar habilidades digitales.",
-            url: "https://skillswapten.vercel.app/",
+            url: "https://skill-swap-ten.vercel.app/",
           }).catch(() => {});
         } else {
           toast.error("Tu navegador no soporta la opción de compartir directamente.");
@@ -340,7 +340,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
       <>
         <Title>{s.title}</Title>
         <Description>{s.description}</Description>
-        <ActionButton onClick={s.action}>
+        <ActionButton aria-label="Action Button" onClick={s.action}>
           {s.buttonIcon}
           {s.buttonText}
         </ActionButton>

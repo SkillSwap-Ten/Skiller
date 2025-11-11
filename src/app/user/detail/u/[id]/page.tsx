@@ -67,7 +67,7 @@ const DetailAboutUser = () => {
   // --------------------------------------------------------------------------
 
   // NOTA: ID referente al usuario seleccinado para el detalle
-  // (Se toma de la ruta https://skillswapten.vercel.app//user/detail/u/[id])
+  // (Se toma de la ruta https://skill-swap-ten.vercel.app/user/detail/u/[id])
 
   const { id } = useParams();
 

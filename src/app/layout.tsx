@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   publisher: "SkillSwap Ten",
   category: "Digital Networking",
   verification: {
-    google: "zeXzYez8ujuU90o-IEw2CjluRDBMHaT0bnc-3IcjuAI",
+    google: "-OmKz-uTTgsQHQVsVnofFirPo8N0j7r9WWoO7--SUOc",
   },
   keywords: [
     "Skills", "SkillSwap", "Skill-Swap", "Skill 10", "Skill-10", "Skill-Ten", "Skill Ten", "Skiller", "SkillSwap Ten", "SkillSwap-Ten", "Skill-Swap-Ten", "Swap", "skillswapten",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "Solicitar", "Mensajes", "Messages", "Compartir", "Share", "DevOps", "Frontend", "Backend", ".NET", "Csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional",
     "intercambio de habilidades", "aprendizaje digital", "comunidad creativa", "red de habilidades", "plataforma de habilidades", "colaboración en habilidades", "desarrollo de habilidades",
     "trueque de conocimientos", "networking digital", "Skill exchange", "digital skills marketplace", "creative skills hub", "online skills sharing", "professional skills network",
-    "collaborative learning platform", "tech skills swap", "digital talent exchange", "Skill10"
+    "collaborative learning platform", "tech skills swap", "digital talent exchange", "Skill10", "Skill10'", "Skill 10'"
   ],
   robots: {
     index: true,
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: 'https://skillswapten.vercel.app/favicon.ico',
-    shortcut: 'https://skillswapten.vercel.app/favicon.ico',
-    apple: 'https://skillswapten.vercel.app/favicon.ico',
+    icon: 'https://skill-swap-ten.vercel.app/favicon.ico',
+    shortcut: 'https://skill-swap-ten.vercel.app/favicon.ico',
+    apple: 'https://skill-swap-ten.vercel.app/favicon.ico',
   },
   twitter: {
     card: 'summary_large_image',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     creatorId: '1664752708694208515',
     siteId: '1664752708694208515',
     description: 'Aventúrate a intercambiar habilidades digitales con SkillSwap.',
-    images: ['https://skillswapten.vercel.app/img/skillswap-opengraph-tw.png'],
+    images: ['https://skill-swap-ten.vercel.app/img/skillswap-opengraph-tw.png'],
   },
   facebook: {
     appId: "804095175706410",
@@ -68,21 +68,21 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SkillSwap · Looking for Skill",
     description: "Aventúrate a intercambiar habilidades digitales con SkillSwap.",
-    url: "https://skillswapten.vercel.app",
+    url: "https://skill-swap-ten.vercel.app",
     siteName: "SkillSwap",
     type: "website",
     images: [
       {
-        url: "https://skillswapten.vercel.app/img/skillswap-opengraph-og.png",
+        url: "https://skill-swap-ten.vercel.app/img/skillswap-opengraph-og.png",
         width: 1200,
         height: 630,
         alt: "SkillSwap-Ten",
       },
     ],
   },
-  metadataBase: new URL("https://skillswapten.vercel.app"),
+  metadataBase: new URL("https://skill-swap-ten.vercel.app"),
   alternates: {
-    canonical: "https://skillswapten.vercel.app",
+    canonical: "https://skill-swap-ten.vercel.app",
   },
 };
 
@@ -99,7 +99,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <meta name="sitedomain" content="https://skillswapten.vercel.app" />
+        <meta name="sitedomain" content="https://skill-swap-ten.vercel.app" />
         <meta name="organization" content="SkillSwap-Ten, frn!, riwi" />
         <meta name="designer" content="David Francisco Blandón Mena, Luisa Fernanda Ramírez Cardona, Joan Sebastián Zapata Caro" />
         <meta name="copyright" content="© 2024 SkillSwap. Todos los derechos reservados." />
@@ -111,7 +111,9 @@ export default function RootLayout({
             {children}
           </RouteHandler>
         </Providers>
-        <ToastContainer />
+        <ToastContainer
+          theme="colored"
+        />
       </body>
     </html>
   );

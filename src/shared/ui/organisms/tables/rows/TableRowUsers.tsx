@@ -297,7 +297,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
         </SocialButtons>
       </Td>
       <Td>
-        <EditButton onClick={() => setDataToEdit(user)}>Editar</EditButton>
+        <EditButton onClick={() => setDataToEdit(user)} aria-label="Control Button">Editar</EditButton>
         <ReportButton
           onClick={() =>
             setDataToReport({
@@ -305,10 +305,11 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
               id: user.id ?? 0,
             })
           }
+          aria-label="Control Button"
         >
           Reportar
         </ReportButton>
-        <DeleteButton onClick={() => onDeleteData(user.id!)}>Eliminar</DeleteButton>
+        <DeleteButton onClick={() => onDeleteData(user.id!)} aria-label="Control Button">Eliminar</DeleteButton>
       </Td>
     </Tr>
   );

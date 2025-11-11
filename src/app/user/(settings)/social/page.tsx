@@ -465,11 +465,13 @@ const UserRequests = () => {
                           <ButtonsContainer>
                             <NoRequestButton
                               onClick={() => handleReject(request.id)}
+                              aria-label="No To Request Button"
                             >
                               <IoTrashBinOutline />Rechazar
                             </NoRequestButton>
                             <RequestButton
                               onClick={() => handleAccept(request.id)}
+                              aria-label="Request Button"
                             >
                               <PiUserCirclePlus />Aceptar
                             </RequestButton>

@@ -210,7 +210,7 @@ const SidebarOffline: React.FC<ISidebarProps> = ({ isOpen, onClose }) => {
             </ProfileHeader>
           </OfflineProfile>
           <H2>Atrévete a hacer parte de nuestras <strong>Comunidades</strong>.</H2>
-          <Button onClick={() => handlePageTheme('INICIAR SESIÓN')}>
+          <Button aria-label="Control Button" onClick={() => handlePageTheme('INICIAR SESIÓN')}>
             <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/auth" label="COMENZAR" />
           </Button>
         </Disclaimer>

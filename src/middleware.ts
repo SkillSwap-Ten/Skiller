@@ -91,6 +91,7 @@ export function middleware(req: NextRequest) {
 // Configuración global del matcher (se aplica a todas las rutas)
 export const config = {
     matcher: [
+        '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
         "/",
         "/auth/:path*",
         "/legal/:path*",

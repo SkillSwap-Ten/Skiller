@@ -74,11 +74,11 @@ const ModalConfirm: React.FC<IModalConfirmProps> = ({ isOpen, onClose, onConfirm
       <ModalContent>
         <ModalHeader>
           <h2>Confirmación</h2>
-          <CloseButton onClick={onClose}>×</CloseButton>
+          <CloseButton aria-label="Control Button" onClick={onClose}>×</CloseButton>
         </ModalHeader>
         <p>¿Estas completamente seguro de que quieres ejecutar esta acción? En caso de que te arrepientas podrás deshacerlo, pero solo después de un día.</p>
         <div>
-          <ConfirmButton type="button" onClick={onConfirm}>CONFIRMAR</ConfirmButton>
+          <ConfirmButton aria-label="Control Button" type="button" onClick={onConfirm}>CONFIRMAR</ConfirmButton>
         </div>
       </ModalContent>
     </ModalOverlay>

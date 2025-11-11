@@ -448,6 +448,7 @@ const UserInfo = () => {
               <DivDeactivateAccount>
                 <ButtonDeactivate
                   color={changeStateBtnColor()}
+                  aria-label="Deactivate Button"
                   onClick={() => setIsModalOpen(true)}
                   disabled={accountState === "Suspendido"}
                 >

@@ -115,7 +115,7 @@ const ModalResetPassword: React.FC<IModalResetPasswordProps> = ({ isOpen, onClos
       <ModalContent>
         <ModalHeader>
         <h2>Restablecer contraseña</h2>
-        <CloseButton onClick={onClose}>×</CloseButton>
+        <CloseButton aria-label="Control Button" onClick={onClose}>×</CloseButton>
         </ModalHeader>
         <form onSubmit={handleSubmit}>
           <FormLabel htmlFor="email-recovery">Ingresa tu correo electrónico:</FormLabel>
@@ -127,7 +127,7 @@ const ModalResetPassword: React.FC<IModalResetPasswordProps> = ({ isOpen, onClos
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <SubmitButton type="submit">
+          <SubmitButton aria-label="Control Button" type="submit">
             ENVIAR
           </SubmitButton>
         </form>

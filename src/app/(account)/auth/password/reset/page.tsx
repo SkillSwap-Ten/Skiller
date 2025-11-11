@@ -300,7 +300,7 @@ function ResetPassword() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              <SubmitButton type="submit">RESTAURAR</SubmitButton>
+              <SubmitButton aria-label="Submit Button" type="submit">RESTAURAR</SubmitButton>
             </Form>
           </FormWrapper>
         </FormContainer>

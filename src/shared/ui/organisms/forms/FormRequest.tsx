@@ -76,7 +76,7 @@ const RequestForm: React.FC<IRequestFormProps> = ({ receivingUser, onClose }) =>
         onChange={(e) => setMessage(e.target.value)} 
         disabled={loading}
       />
-      <SendButton type="submit" disabled={loading}>
+      <SendButton aria-label="Control Button" type="submit" disabled={loading}>
         {loading ? "Enviando..." : "ENVIAR"}
       </SendButton>
     </FormContainer>
