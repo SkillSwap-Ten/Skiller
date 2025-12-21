@@ -199,7 +199,7 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
             type="email"
             id="email-login"
             name="email"
-            placeholder="Email"
+            placeholder="Escribe tu correo..."
             value={form.email}
             onChange={handleChange}
             required
@@ -210,7 +210,7 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
             type="password"
             id="password-login"
             name="password"
-            placeholder="Contraseña"
+            placeholder="Escribe tu clave..."
             value={form.password}
             onChange={handleChange}
             required

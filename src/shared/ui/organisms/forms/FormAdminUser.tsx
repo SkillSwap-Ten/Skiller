@@ -169,17 +169,17 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
       <Form onSubmit={handleSubmit}>
         <Div>
           <Label htmlFor="id" text="ID del Usuario" />
-          <Input placeholder="ID del Usuario" readOnly type="number" name="id" id="id" value={form.id} onChange={handleChange} required />
+          <Input placeholder="001..." readOnly type="number" name="id" id="id" value={form.id} onChange={handleChange} required />
         </Div>
 
         <Div>
           <Label htmlFor="name" text="Nombre del Usuario" />
-          <Input placeholder="Nombre del Usuario" type="text" name="name" id="name" value={form.name} onChange={handleChange} required />
+          <Input placeholder="John..." type="text" name="name" id="name" value={form.name} onChange={handleChange} required />
         </Div>
 
         <Div>
           <Label htmlFor="lastName" text="Apellidos del Usuario" />
-          <Input placeholder="Apellidos del Usuario" type="text" name="lastName" id="lastName" value={form.lastName} onChange={handleChange} required />
+          <Input placeholder="Doe..." type="text" name="lastName" id="lastName" value={form.lastName} onChange={handleChange} required />
         </Div>
 
         <Div>
@@ -189,7 +189,7 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
 
         <Div>
           <Label htmlFor="email" text="Correo Electrónico" />
-          <Input placeholder="example@correo.com" readOnly type="email" name="email" id="email" value={form.email} onChange={handleChange} required />
+          <Input placeholder="ejemplo@correo.com" readOnly type="email" name="email" id="email" value={form.email} onChange={handleChange} required />
         </Div>
 
         <Div>
@@ -199,12 +199,12 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
 
         <Div>
           <Label htmlFor="jobTitle" text="Cargo / Rol Profesional" />
-          <Input placeholder="Cargo / Rol Profesional" type="text" name="jobTitle" id="jobTitle" value={form.jobTitle} onChange={handleChange} />
+          <Input placeholder="Trabajo como..." type="text" name="jobTitle" id="jobTitle" value={form.jobTitle} onChange={handleChange} />
         </Div>
 
         <Div>
           <Label htmlFor="description" text="Descripción o Biografía" />
-          <TextArea ariaLabel="description" title="description" maxLength={300} name="description" id="description" value={form.description!} onChange={handleChange} />
+          <TextArea placeholder="Describe tu experiencia profesional o académica..." ariaLabel="description" title="description" maxLength={300} name="description" id="description" value={form.description!} onChange={handleChange} />
           <sub>{form.description!.length} / 300 caracteres.</sub>
         </Div>
 

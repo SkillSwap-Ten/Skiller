@@ -203,7 +203,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
             name="id"
             id="id"
             value={form.id}
-            placeholder="ID del Reporte"
+            placeholder="001..."
             readOnly
           />
         </Div>
@@ -214,7 +214,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
             type="text"
             name="titleReport"
             id="titleReport"
-            placeholder="Título del Reporte"
+            placeholder="¿Qué sucedió?..."
             value={form.titleReport}
             readOnly
           />
