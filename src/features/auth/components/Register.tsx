@@ -277,7 +277,7 @@ export default function RegisterPage() {
               type="email"
               id="email"
               name="email"
-              placeholder="Escribe tu email..."
+              placeholder="Escribe tu correo..."
               value={form.email}
               onChange={handleChange}
               required
@@ -288,7 +288,7 @@ export default function RegisterPage() {
               type="password"
               id="password"
               name="password"
-              placeholder="Escribe tu contraseña..."
+              placeholder="Escribe tu clave..."
               value={form.password}
               onChange={handleChange}
               required
