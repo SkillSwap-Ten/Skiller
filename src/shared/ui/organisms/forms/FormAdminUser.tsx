@@ -198,7 +198,7 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
         </Div>
 
         <Div>
-          <Label htmlFor="jobTitle" text="Cargo / Rol Profesional" />
+          <Label htmlFor="jobTitle" text="Trabajo / Titulación" />
           <Input placeholder="Trabajo como..." type="text" name="jobTitle" id="jobTitle" value={form.jobTitle} onChange={handleChange} />
         </Div>
 
