@@ -7,6 +7,8 @@ import { IMatchedUserCarouselProps } from "@/src/shared/types/organisms/carousel
 import { getUsersForImages } from "../../../../app/api/users/users";
 import { handlePageTheme } from "@/src/lib/utils/themeHandler";
 import { IoFlowerOutline } from "react-icons/io5";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
+import { IUserForImages } from "@/src/core/models/users/users.model";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
 import Picture from "../../atoms/pictures/Picture";
 import styled from "styled-components";
@@ -16,8 +18,6 @@ import "swiper/css/navigation";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
-import { IUserForImages } from "@/src/core/models/users/users.model";
 
 const CarouselWrapper = styled.div`
   width: 100%;
@@ -64,6 +64,12 @@ const CustomSwiper = styled(Swiper)`
 
   & a{
     text-decoration: none;
+  }
+
+  .remove-item {
+    @media (max-width: 400px) {
+      display: none !important;
+    }
   }
 `;
 
@@ -245,7 +251,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
     });
   }, [allUsersData]);
 
-  if (loading) return (
+  if (loading || userId === -1) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       <CarouselWrapper>
         <CustomSwiper modules={[Navigation]}
@@ -276,7 +282,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
                 : Number(swiper.params.slidesPerView) || currentSlidesPerView;
             setCurrentSlidesPerView(spv);
           }}>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }}>
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />
@@ -284,7 +290,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
               <Skeleton width={50} height={14} />
             </UserCard>
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }}>
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />
@@ -292,7 +298,7 @@ const CarouselMatched: React.FC<IMatchedUserCarouselProps> = ({ userId }) => {
               <Skeleton width={50} height={14} />
             </UserCard>
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }} className="remove-item">
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />

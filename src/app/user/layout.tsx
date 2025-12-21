@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavbarUser } from '../../shared/ui/organisms/navbar/NavbarUser';
-import { Logobar } from '@/src/shared/ui/molecules/logobar/Logobar';
+import { Bottombar } from '@/src/shared/ui/molecules/bottombar/Bottombar';
 
 const LayoutContainer = styled.div`
     display: flex;
@@ -23,7 +23,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
             <ContentContainer>
                 <NavbarUser />
                 {children}
-                <Logobar />
+                <Bottombar />
             </ContentContainer>
         </LayoutContainer>
     );

@@ -70,7 +70,7 @@ const NavList = styled.ul`
 
     @media (max-width: 790px) {
         background-color: ${({ theme }) => theme.colors.bgPrimary};
-        border: 1px solid ${({ theme }) => theme.colors.borderLogobar};
+        border: 1px solid ${({ theme }) => theme.colors.borderBottombar};
         display: flex;
         flex-direction: column;
         align-items: start;

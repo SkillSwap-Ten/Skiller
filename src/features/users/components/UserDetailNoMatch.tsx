@@ -573,7 +573,7 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
                 <P>{getCommunityInfo(userDetail?.category)}</P>
               </MediaContent>
               <span></span>
-              <SendButton onClick={openModalMatch}>
+              <SendButton aria-label="Request Button" onClick={openModalMatch}>
                 <ButtonText>ENVIAR SOLICITUD</ButtonText><FaArrowRight />
               </SendButton>
               <span></span>

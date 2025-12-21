@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from 'next/navigation';
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../../../features/auth/authSlice"; 
+import { logoutUser } from "../../../../features/auth/authSlice";
 import { IButtonProps } from "@/src/shared/types/atoms/button.type";
 import { clearStorage } from "@/src/lib/utils/storageCleaner";
 
@@ -49,7 +49,9 @@ const LogoutButton: React.FC<IButtonProps> = ({ children, type }) => {
     globalThis.dispatchEvent(new Event('storage'));
 
     router.push("/auth");
-    router.refresh();
+    setTimeout(() => {
+      router.refresh();
+    }, 50);
   };
 
   return (
