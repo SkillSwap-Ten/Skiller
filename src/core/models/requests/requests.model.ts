@@ -1,3 +1,5 @@
+// ------------------------------------------------------------------------------
+
 import { IUser } from "../users/users.model";
 
 // Traducir al inglés
@@ -19,9 +21,9 @@ export interface IRequestMetricsDetails {
 // solo es una consulta hecha a la entidad 'Requests'
 
 export interface IRequestMetrics {
-  idUsuario: number;
-  nombreUsuario: string;
-  solicitudes: IRequestMetricsDetails;
+    idUsuario: number;
+    nombreUsuario: string;
+    solicitudes: IRequestMetricsDetails;
 }
 
 export interface IRequests {
@@ -53,7 +55,10 @@ export interface IRequests {
 // idStateRequest = 3 (Rechazar)
       // Equivalente a que receivingUser rechace
 
+// ----------------------------------------------------------------------------------------
+
 // CAMBIAR ENDPOINT DE CHECKEO DE CONEXIÓN:
+
 // Actualmente solo devuelve 'true' si hace conexión, y 'false' si no.
 // Es mejor que devuelva un objeto con 
 //  {
@@ -66,18 +71,26 @@ export interface IRequests {
 // request (pues con el patchRequestById(idRequest: number, idStateRequest: number)
 // se actualizaría este registro por única vez) y cuando se solicitó
 
+// ----------------------------------------------------------------------------------------
+
 // AHORA... en caso de querer añadir un chat, se deberá de crear otra entidad, llamada
 // Messages, y esta contendrá registros de los mensajes que se vayan enviando, ahí si
 // de la manera corta, y para traer los mensajes, en este caso se traerían todos los 
 // registros que coincidad con requestingUser.id y receivingUser.id de forma simultanea
 // en una funcion getRequestsByUserId(firstUserId: number, secondUserId: number)
 
-
 // ES DECIR, debe hacerse de manera que se compruebe:
 
     // Traeme los registros en Messages 
     // WHERE (firstUserId == requestingUser.id || firstUserId == receivingUser.id) &&
     // (secondUserId == requestingUser.id || secondUserId == receivingUser.id)
+
+// ----------------------------------------------------------------------------------------
+
+// REVISAR SI existe la necesidad de utilizar SignalR o WebSockets para el chat en 
+// tiempo real
+
+// ----------------------------------------------------------------------------------------
 
 export interface IMessagesNEW {
     id: number;

@@ -1,7 +1,8 @@
 // ------------------------------------------------------------------------------
+
 // LOGICA ERRONEA: Actualmente se envia actionTaken como si fuera la descripción
 // de la accion, pero en realidad actionTaken solo tiene 3 tipos, que son los
-// mismo del estado de cuenta del usuario que ha sido reportado:
+// mismos del estado de cuenta del usuario que ha sido reportado:
 
     // 1. Activo, 2. Inactivo, 3. Suspendido
 

@@ -377,12 +377,12 @@ export default function RegisterPage() {
               <Title>Experiencia</Title>
             </DivUserTitle>
             <DivUserInput>
-              <Label htmlFor="jobTitle" text="Trabajo/título *" />
+              <Label htmlFor="jobTitle" text="Trabajo / Titulación *" />
               <InputAuth
                 type="text"
                 id="jobTitle"
                 name="jobTitle"
-                placeholder="Título de tu trabajo..."
+                placeholder="Escribe tu cargo..."
                 value={form.jobTitle}
                 onChange={handleChange}
                 required
