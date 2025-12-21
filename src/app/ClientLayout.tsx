@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { usePathname, useRouter } from 'next/navigation';
 import { isValidToken } from "../lib/utils/tokenValidator";
 import { Navbar } from "../shared/ui/organisms/navbar/NavbarOffline";
-import { Logobar } from "../shared/ui/molecules/logobar/Logobar";
+import { Bottombar } from "../shared/ui/molecules/bottombar/Bottombar";
 import { clearStorage } from "../lib/utils/storageCleaner";
 import { getAuthData } from "../lib/utils/getAuthData";
 import { useTheme } from "../shared/hooks/useTheme";
@@ -24,18 +24,21 @@ const LayoutContainer = styled.div`
 const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
     const router = useRouter();
-    const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [theme] = useTheme();
     const [themeAuth] = useThemeAuth();
     const [definedTheme, setDefinedTheme] = useState<IGlobalTheme | null>(null);
+    const [isAuthRoute, setIsAuthRoute] = useState(false);
 
-    const isAuth = pathname.startsWith('/auth');
+    // Effect exclusivo para detectar rutas /auth
+    useEffect(() => {
+        setIsAuthRoute(pathname.startsWith('/auth'));
+    }, [pathname]);
 
+    // Effect con toda la lógica de token / loading / prefetch
     useEffect(() => {
         // Validar token inmediatamente al montar
         const storedToken = globalThis.window === undefined ? null : getAuthData("token");
-        setToken(storedToken);
 
         if (storedToken) {
             try {
@@ -73,27 +76,23 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         };
     }, [pathname, router]);
 
+    // Effect para aplicar el tema correcto
     useEffect(() => {
         // Aplicar tema según la ruta actual
-        const themeToUse = isAuth ? themeAuth : theme;
+        const themeToUse = isAuthRoute ? themeAuth : theme;
         setDefinedTheme(themeToUse);
-    }, [themeAuth, theme, token, pathname, isAuth]);
+    }, [themeAuth, theme, isAuthRoute]);
 
-    if (loading) {
-        return <LoadingScreen />;
-    }
-
-    if (!definedTheme) {
-        return null;
-    }
+    if (loading) return <LoadingScreen />;
+    if (!definedTheme) return null;
 
     return (
         <ThemeProvider theme={definedTheme}>
             <GlobalStyle />
             <LayoutContainer>
-                {!isAuth && <Navbar />}
+                {!isAuthRoute && <Navbar />}
                 {children}
-                {!isAuth && <Logobar />}
+                {!isAuthRoute && <Bottombar />}
             </LayoutContainer>
         </ThemeProvider>
     );

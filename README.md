@@ -87,7 +87,8 @@ Facilitate continuous learning and collaborative teaching, creating a vibrant co
 
 <h1 align="center">Tech Stack</h1>
 <p align="center">
-   <img src="https://img.shields.io/badge/*-TypeScript-yellow?logo=typescript&logoColor=white" alt="tech-stack-logo"> 
+   <img src="https://img.shields.io/badge/*-TypeScript-yellow?logo=typescript&logoColor=white" alt="tech-stack-logo">
+    <img src="https://img.shields.io/badge/*-MySQL-orange?logo=mysql&logoColor=white" alt="tech-stack-logo"> 
    <img src="https://img.shields.io/badge/*-Next.js-red?logo=next.js&logoColor=white" alt="tech-stack-logo"> 
    <img src="https://img.shields.io/badge/*-Docker-purple?logo=docker&logoColor=white" alt="tech-stack-logo"> 
    <img src="https://img.shields.io/badge/*-Dotnet-blue?logo=dotnet&logoColor=white" alt="tech-stack-logo"> 
@@ -119,6 +120,8 @@ Facilitate continuous learning and collaborative teaching, creating a vibrant co
 - `Docker`
 
 - `Swagger`
+
+- `MySQL`
 
 - `Azure`
 
@@ -171,7 +174,7 @@ Facilitate continuous learning and collaborative teaching, creating a vibrant co
     - [Go to Figma](https://www.figma.com/design/FEDH5WgaGXBLSr2xBBA8OV/SkillSwap.ts-Mockup?node-id=0-1&t=mbwWpVTL1rtoLHnZ-1)
 
 4. In this link, you can view our project deployed on Vercel:
-    - [Go to SkillSwap](https://skillswapten.vercel.app)
+    - [Go to SkillSwap](https://skill-swap-ten.vercel.app)
 
 5. In this link, you can explore the team's repository for backend develop and deploy:
     - [Go to Backend Repository](https://github.com/SkillSwap-Ten/SkillSwap)
