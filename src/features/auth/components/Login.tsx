@@ -134,7 +134,7 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
   const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
     console.log("Debounced value:", value);
   },
-    500);
+    300);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
