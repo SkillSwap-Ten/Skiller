@@ -1,3 +1,5 @@
+// ------------------------------------------------------------------------------
+
 // Estas tres interfaces de User se deben de integrar en una sola que traiga todos estos atributos
 // y al final de 4 solo quedarían 2 ENDPOINTS (AllUsers (trae Array con IUser[]) 
 // y UserById (trae Object con IUser))

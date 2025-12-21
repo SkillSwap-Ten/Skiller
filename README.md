@@ -16,6 +16,10 @@ Facilitate continuous learning and collaborative teaching, creating a vibrant co
 
 ## Project Structure
 
+For this project, we applied the __Atomic Design__ pattern along with feature-oriented programming, as recommended for _Next.js_ applications using _Redux_. We also drew inspiration from the Presentation–Domain–Data architectural pattern, following __Clean Architecture__ principles to clearly separate UI concerns, business logic, and data access.
+
+Additionally, we adhered to __DevOps Culture__ practices and a __SCRUM__ oriented project structure to efficiently define, design, develop, and deploy the frontend solutions required by our business model.
+
 ```bash
 ├── /public
 │   ├── /img
