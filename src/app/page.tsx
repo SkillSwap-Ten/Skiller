@@ -606,7 +606,7 @@ const VideoContainer = styled.div`
       padding: 0 50px;
     }
 
-    & h4 {
+    & h3 {
       font-weight: 300;
       padding: 0 50px;
       color: ${({ theme }) => theme.colors.textSecondary};
@@ -819,11 +819,11 @@ const Home = () => {
           <DecorationTwo urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationTwo>
         </article>
         <section>
-          <ControlsButton onClick={handleReplay}>
+          <ControlsButton aria-label="Control Button" onClick={handleReplay}>
             <MdOutlineReplay />
             <p> Repetir</p>
           </ControlsButton>
-          <ControlsButton onClick={handlePause}>
+          <ControlsButton aria-label="Control Button" onClick={handlePause}>
             {isPlaying ? (
               <>
                 <IoMdPause /> <p> Pausar</p>
@@ -835,7 +835,7 @@ const Home = () => {
               </>
             )}
           </ControlsButton>
-          <ControlsButton onClick={toggleMute}>
+          <ControlsButton aria-label="Control Button" onClick={toggleMute}>
             {!isMuted ? (
               <>
                 <FaVolumeMute />

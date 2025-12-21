@@ -221,7 +221,7 @@ const Modal: React.FC<IModalProps> = ({ isOpen, onClose, userToInteractWith }) =
         <ModalContainer>
           <ModalHeader>
             <div>Cultura<article>SkillSwap</article></div>
-            <ModalCloseButton onClick={onClose}>×</ModalCloseButton>
+            <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
           </ModalHeader>        
           <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>

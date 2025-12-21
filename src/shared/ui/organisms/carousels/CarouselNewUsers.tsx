@@ -7,6 +7,7 @@ import { getAllUsersSorted } from "../../../../app/api/users/users";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { getAuthData } from "@/src/lib/utils/getAuthData";
 import { handlePageTheme } from "@/src/lib/utils/themeHandler";
+import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
 import Link from "next/link";
 import styled from "styled-components";
@@ -16,7 +17,6 @@ import "swiper/css/navigation";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 const CarouselWrapper = styled.div`
   width: 100%;
@@ -60,6 +60,12 @@ const CustomSwiper = styled(Swiper)`
 
   & a{
     text-decoration: none;
+  }
+
+  .remove-item {
+    @media (max-width: 400px) {
+      display: none !important;
+    }
   }
 `;
 
@@ -234,7 +240,7 @@ const CarouselNewUsers = () => {
             1024: { slidesPerView: 6 },
             1280: { slidesPerView: 6 },
           }}>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }}>
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />
@@ -242,7 +248,7 @@ const CarouselNewUsers = () => {
               <Skeleton width={50} height={14} />
             </UserCard>
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }}>
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />
@@ -250,7 +256,7 @@ const CarouselNewUsers = () => {
               <Skeleton width={50} height={14} />
             </UserCard>
           </SwiperSlide>
-          <SwiperSlide>
+          <SwiperSlide style={{ padding: "0 4px" }} className="remove-item">
             <UserCard>
               <Skeleton circle width={60} height={60} />
               <Skeleton width={75} height={15} />

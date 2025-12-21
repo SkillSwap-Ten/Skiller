@@ -7,6 +7,7 @@ import { handlePageTheme } from "@/src/lib/utils/themeHandler";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
+import Input from "@/src/shared/ui/atoms/inputs/Input";
 
 // Styled Components para el formulario
 const PageContainer = styled.div`
@@ -87,6 +88,12 @@ const Form = styled.form`
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  gap: 12px;
+  padding: 0 0.5rem;
+
+  @media (max-width: 450px) {
+    padding: 0 0.25rem 0.25rem 0.25rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -117,22 +124,6 @@ const Title = styled.h1`
     100% {
       transform: perspective(400px) rotateY(6deg) skewX(2deg) scale(1);
     }
-  }
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.7rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1.2rem;
-  border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
-  color: ${({ theme }) => theme.colors.textNeutral};
-  background-color: ${({ theme }) => theme.colors.bgWhite};
-  border-radius: 5px;
-  font-size: 1rem;
-
-    @media (max-width: 450px) {
-    padding: 0.5rem 0.7rem;
   }
 `;
 
@@ -284,10 +275,11 @@ function ResetPassword() {
           <FormWrapper>
             <Title>SkillSwap</Title>
             <Form onSubmit={handleSubmit}>
-              <label htmlFor="password">Crear nueva contraseña</label>
+              <label htmlFor="new-password">Crear nueva contraseña</label>
               <Input
                 type="password"
-                id="password"
+                id="new-password"
+                name="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -296,11 +288,12 @@ function ResetPassword() {
               <Input
                 type="password"
                 id="confirm-password"
+                name="confirm-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
-              <SubmitButton type="submit">RESTAURAR</SubmitButton>
+              <SubmitButton aria-label="Submit Button" type="submit">RESTAURAR</SubmitButton>
             </Form>
           </FormWrapper>
         </FormContainer>

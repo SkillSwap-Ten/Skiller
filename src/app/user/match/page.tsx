@@ -81,9 +81,7 @@ const Match = () => {
 
   const openModalTips = () => setIsModalTipsOpen(true);
   const closeModalTips = () => setIsModalTipsOpen(false);
-
-
-
+  
   useEffect(() => {
     if (globalThis.window !== undefined) {
       const fetchPeople = async () => {
@@ -124,7 +122,7 @@ const Match = () => {
 
   const currentUserId = getAuthData('id'); 
   const filteredUsers = allUsersData.filter(user => user.id !== currentUserId);
-
+  
   return (
     <Container>
       <DivMatch>

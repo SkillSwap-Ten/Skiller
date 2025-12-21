@@ -142,8 +142,8 @@ const TableRowReport: React.FC<ITableRowReportProps> = ({ report, setDataToEdit,
       <Td>{actionTakenElement}</Td>
       <Td>{actionDetails}</Td>
       <Td>
-        <EditButton onClick={() => setDataToEdit(report)}>Editar</EditButton>
-        <DeleteButton onClick={() => onDeleteData(id!)}>Eliminar</DeleteButton>
+        <EditButton aria-label="Control Button" onClick={() => setDataToEdit(report)}>Editar</EditButton>
+        <DeleteButton aria-label="Control Button" onClick={() => onDeleteData(id!)}>Eliminar</DeleteButton>
       </Td>
     </Tr>
   );

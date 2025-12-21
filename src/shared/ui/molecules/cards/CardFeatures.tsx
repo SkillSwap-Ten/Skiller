@@ -59,12 +59,16 @@ const SkeletonColumn = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  @media (max-width: 950px) {
+    display: none !important;
+  }
 `;
 
 const FeaturesCard: React.FC<ICardFeaturesProps> = ({ error, loading, userData, openModalReport, openModalTips }) => {
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
-      <SkeletonColumn style={{ maxHeight: "75vh" }}>
+      <SkeletonColumn style={{ maxHeight: "75vh", width: '100%' }}>
         <Skeleton style={{ display: 'flex', height: '35.75vh', width: '100%' }} />
         <Skeleton style={{ display: 'flex', height: '35.75vh', width: '100%' }} />
       </SkeletonColumn>

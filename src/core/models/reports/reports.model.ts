@@ -1,5 +1,4 @@
-// LOGICA ERRONEA: A los dos GET de Reports les falta el '/api' al inicio
-
+// ------------------------------------------------------------------------------
 // LOGICA ERRONEA: Actualmente se envia actionTaken como si fuera la descripción
 // de la accion, pero en realidad actionTaken solo tiene 3 tipos, que son los
 // mismo del estado de cuenta del usuario que ha sido reportado:
@@ -19,8 +18,6 @@
     // 1. Pendiente, 2. Revisión, 3. Resuelto
 
 // ------------------------------------------------------------------------------
-
-// AJUSTES FINALES: docker-compose.yml, adjuntar cambios en rama hotfix, README y assets
 
 export interface IReport {
   id?: number;

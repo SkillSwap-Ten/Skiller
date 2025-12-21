@@ -130,7 +130,7 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
   const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
     console.log("Debounced value:", value);
   },
-    500);
+    300);
 
   const handleChange =
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -260,8 +260,8 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
         </Div>
 
         <DivButton>
-          <Button type="submit">{getButtonText()}</Button>
-          <Button type="button" onClick={handleReset}>
+          <Button aria-label="Control Button" type="submit">{getButtonText()}</Button>
+          <Button aria-label="Control Button" type="button" onClick={handleReset}>
             Limpiar
           </Button>
         </DivButton>

@@ -93,6 +93,7 @@ export const NavbarNotFound: React.FC = () => {
                         localStorage.setItem('theme', 'light');
 
                         globalThis.dispatchEvent(new Event('storage'));
+                        globalThis.location.reload();
                     }} href="/auth" label="AUTH" >
                         <small>Reiniciar</small>
                     </NavLink>
@@ -105,6 +106,7 @@ export const NavbarNotFound: React.FC = () => {
                     localStorage.setItem('theme', 'light');
 
                     globalThis.dispatchEvent(new Event('storage'));
+                    globalThis.location.reload();
                 }}>
                     <BsInfoCircle />
                 </NavLink>

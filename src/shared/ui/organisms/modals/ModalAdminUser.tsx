@@ -257,7 +257,7 @@ const ModalAdminUser: React.FC<IModalUserFormProps> = ({ isOpen, onUpdateData, d
       <ModalContainer>
         <ModalHeader>
           <div>Gestionar<article>Perfil</article></div>
-          <ModalCloseButton onClick={onClose}>×</ModalCloseButton>
+          <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
         </ModalHeader>
         <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>

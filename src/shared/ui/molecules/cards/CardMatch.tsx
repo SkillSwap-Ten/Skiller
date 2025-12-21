@@ -165,7 +165,7 @@ const P = styled.p`
 const MatchCard: React.FC<ICardMatchProps> = ({ user, loading, error }) => {
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
-      <Skeleton style={{ maxHeight: "75vh" }} height={"100%"} width={"100%"} borderRadius={10} />
+      <Skeleton style={{ minHeight: "75vh" }} height={"100%"} width={"100%"} borderRadius={10} />
     </SkeletonTheme>
   );
 

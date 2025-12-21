@@ -25,6 +25,7 @@ const CardListContainer = styled.div`
     transition: 0.4s ease-in-out;
     color: ${({ theme }) => theme.colors.textSecondary};
     cursor: pointer;
+    padding: 0;
 
     &:hover {
         transform: scale(1.02);
@@ -158,21 +159,21 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       {Array.from({ length: 5 }).map((_, index) => (
-        <CardContainer key={index}>
-          <ImageColumn>
-            <Skeleton width={200} height={224} borderRadius={12} />
+        <CardContainer key={index} style={{ gap: '16px', maxWidth: '500px' }} >
+          <ImageColumn style={{ width: '40vw', maxWidth: '200px', minWidth: 'initial', padding: '8px 0' }} >
+            <Skeleton style={{ width: '40vw', maxWidth: '200px' }} height={224} borderRadius={12} />
           </ImageColumn>
           <div>
-            <Skeleton width="60%" height={24} style={{ marginBottom: '4px' }} />
-            <Skeleton width="40%" height={18} />
+            <Skeleton height={24} style={{ marginBottom: '4px', width: '90%', maxWidth: '180px' }} />
+            <Skeleton height={18} style={{ width: '70%', maxWidth: '140px' }} />
             <StarsContainer style={{ gap: '4px' }}>
               {Array.from({ length: 5 }).map((_, starIndex) => (
                 <Skeleton key={starIndex} circle width={16} height={16} />
               ))}
             </StarsContainer>
-            <Skills style={{ width: '100%' }} >
+            <Skills style={{ width: '100%', gap: '8px' }} >
               {Array.from({ length: 3 }).map((_, badgeIndex) => (
-                <Skeleton key={badgeIndex} width={80} height={28} borderRadius={14} />
+                <Skeleton key={badgeIndex} width={70} height={24} borderRadius={14} />
               ))}
             </Skills>
           </div>
@@ -196,6 +197,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
           className="first-button"
+          aria-label="Pagination Button"
           title="Página Anterior"
         >
           <FaAngleLeft />
@@ -222,6 +224,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
                 key={index}
                 onClick={() => paginate(item)}
                 className={item === currentPage ? "active" : ""}
+                aria-label="Pagination Button"
                 title={`Ir a página ${item}`}
               >
                 {item}
@@ -235,6 +238,7 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
           onClick={() => paginate(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="last-button"
+          aria-label="Pagination Button"
           title="Página Siguiente"
         >
           <FaAngleRight />

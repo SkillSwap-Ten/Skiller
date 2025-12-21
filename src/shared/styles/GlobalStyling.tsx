@@ -38,8 +38,8 @@ export const GlobalTheme: IGlobalTheme = {
         textTertiary: '#00000050',
         textSidebar: '#555555',
 
-        textDark: '#00000020',
-        textNeutral: '#999999',
+        textDark: '#00000030',
+        textNeutral: '#AAAAAA',
         textLight: '#FFFFFF50',
 
         textBlack: '#222222',
@@ -60,12 +60,12 @@ export const GlobalTheme: IGlobalTheme = {
         textBrown: '#7F6229',
         textPink: '#EFC7C5',
 
-        borderDark: '#00000020',
-        borderNeutral: '#BBBBBB',
+        borderDark: '#00000030',
+        borderNeutral: '#CCCCCC',
         borderLight: '#FFFFFF50',
 
         borderNavs: '#333333',
-        borderLogobar: '#DDDDDD',
+        borderBottombar: '#DDDDDD',
         borderAuthLeft: '#FEFEFE',
         borderAuthRight: '#F0AC27',
 
@@ -89,7 +89,7 @@ export const GlobalDarkTheme: IGlobalTheme = {
         bgSecondary: '#FEFEFE',
         bgTertiary: '#3A3A3A',
 
-        bgDark: '#00000020',
+        bgDark: '#00000040',
         bgNeutral: '#F5F5F5',
         bgLight: '#FFFFFF50',
 
@@ -104,8 +104,8 @@ export const GlobalDarkTheme: IGlobalTheme = {
         textTertiary: '#FFFFFF60',
         textSidebar: '#DDDDDD',
 
-        textDark: '#FFFFFF20',
-        textNeutral: '#999999',
+        textDark: '#FFFFFF30',
+        textNeutral: '#AAAAAA',
         textLight: '#FFFFFF50',
 
         textBlack: '#222222',
@@ -126,12 +126,12 @@ export const GlobalDarkTheme: IGlobalTheme = {
         textBrown: '#866E3E',
         textPink: '#FFB6C1',
 
-        borderDark: '#00000020',
-        borderNeutral: '#BBBBBB',
+        borderDark: '#00000030',
+        borderNeutral: '#CCCCCC',
         borderLight: '#FFFFFF50',
 
         borderNavs: '#444444',
-        borderLogobar: '#2D2D2D',
+        borderBottombar: '#2D2D2D',
         borderAuthLeft: '#EFEFEF',
         borderAuthRight: '#EFEFEF',
 

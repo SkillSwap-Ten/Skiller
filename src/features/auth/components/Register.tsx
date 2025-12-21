@@ -232,7 +232,7 @@ export default function RegisterPage() {
   const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
     console.log("Debounced value:", value);
   },
-    500);
+    300);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

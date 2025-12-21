@@ -116,6 +116,7 @@ const SelectAuth: React.FC<ISelectProps> = ({
         {options.map((opt) => (
           <OptionButton
             type={"button"}
+            aria-label={opt.value}
             key={opt.value}
             active={opt.value === selected}
             onClick={() => setSelected(opt.value)}

@@ -4,8 +4,8 @@ import React from "react";
 import NavLink from '../../atoms/links/NavLinks';
 import { smoothScrollToTop } from '@/src/lib/utils/scrollBehavior';
 
-// Estilos para el Logobar Fixed a modo de pie de pagina...
-const LogobarStyled = styled.div`
+// Estilos para el Bottombar Fixed a modo de pie de pagina...
+const BottombarStyled = styled.div`
     z-index: 10;
     bottom: 0;
     position: fixed;
@@ -15,7 +15,7 @@ const LogobarStyled = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.bgPrimary};
-    border-top: solid 1px ${({ theme }) => theme.colors.borderLogobar};
+    border-top: solid 1px ${({ theme }) => theme.colors.borderBottombar};
 
     & a {
         padding: 0;
@@ -61,17 +61,17 @@ const LogobarStyled = styled.div`
     }
 `;
 
-export const Logobar: React.FC = () => {
+export const Bottombar: React.FC = () => {
     const handleScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         smoothScrollToTop(2000);
     };
 
     return (
-        <LogobarStyled>
+        <BottombarStyled>
             <NavLink onClick={handleScroll} hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#">
                 <h2>SkillSwap</h2>
             </NavLink>
-        </LogobarStyled>
+        </BottombarStyled>
     );
 };

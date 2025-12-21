@@ -1,5 +1,5 @@
 "use client";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ModalConfirm from "@/src/shared/ui/organisms/modals/ModalConfirm";
 import CarouselMatched from "@/src/shared/ui/organisms/carousels/CarouselMatched";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
@@ -116,6 +116,7 @@ const WidgetContainer = styled.article`
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
   gap: 4px;
+  transition: 1s ease-in-out;
 `
 
 //Containers for Widgets and Aside
@@ -220,6 +221,71 @@ const AccountStateTag = styled.div<({ color: string }) >`
   font-style: normal;
 `;
 
+const barPulse = keyframes`
+  0% { height: 30%; }
+  50% { height: 100%; }
+  100% { height: 40%; }
+`;
+
+const shimmer = keyframes`
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+`;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChartContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  width: 220px;
+  height: 120px;
+`;
+
+const BarWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+`;
+
+const SkeletonBar = styled.div<{
+  delay?: number;
+  baseColor?: string;
+  highlightColor?: string;
+}>`
+  width: 100%;
+  height: 12px;
+  border-radius: 4px;
+
+  /* Gradiente con highlight al centro para la ola */
+  background: linear-gradient(
+    90deg,
+    ${(p) => p.baseColor || "#c2c2c2"} 0%,
+    ${(p) => p.highlightColor || "#e0e0e0"} 50%,
+    ${(p) => p.baseColor || "#c2c2c2"} 100%
+  );
+
+  background-size: 200% 100%;
+  animation:
+    ${barPulse} 2s ease-in-out infinite,
+    ${shimmer} 3s ease-in-out infinite;
+  animation-delay: ${(p) => p.delay || 0}s;
+`;
+
+
 const UserInfo = () => {
   const [accountState, setAccountState] = useState<string | null>(null);
   const [metricsData, setMetricsData] = useState<IRequestMetrics | null>(null);
@@ -243,7 +309,7 @@ const UserInfo = () => {
           setAccountState(dataInfo.nameStateUser ?? "Estado desconocido");
 
           const dataMetrics = await getRequestMetricsByUserId(currentUserId);
-          
+
           if (dataMetrics) {
             setMetricsData(dataMetrics);
           }
@@ -352,13 +418,47 @@ const UserInfo = () => {
             <PageBody>
               <DoubleDiv>
                 <WidgetContainer style={{ display: 'block' }}>
-                  <Skeleton height={200} style={{ width: "100%" }} />
+                  <WidgetBody style={{ paddingBottom: 0, marginBottom: 0 }}>
+                    <h3>Actividad</h3>
+                    <p>
+                      Observa aquí los detalles estadísticos de tus solicitudes y conexiones. Manténte al tanto de tu red y sigue construyendo experiencias.
+                    </p>
+                  </WidgetBody>
+                  <CarouselMatched userId={-1} />
                 </WidgetContainer>
                 <WidgetContainer style={{ display: 'block' }}>
-                  <Skeleton height={200} style={{ width: "100%" }} />
+                  <ChartWrapper>
+                    <ChartContainer>
+                      {[1, 2, 3, 4].map((b, i) => (
+                        <BarWrapper key={b}>
+                          <SkeletonBar baseColor="#c2c2c2"
+                            highlightColor="#e0e0e0" delay={i * 0.25} />
+                        </BarWrapper>
+                      ))}
+                    </ChartContainer>
+                  </ChartWrapper>
                 </WidgetContainer>
               </DoubleDiv>
-              <Skeleton height={320} style={{ width: "100%" }} />
+              <WidgetContainer>
+                <WidgetBody>
+                  <h3>Estado de cuenta</h3>
+                  <P>
+                    Aquí podrás ver en que condición se encuentra tu cuenta actualmente.
+                  </P>
+                  <br />
+                  <Skeleton height={24} width={80} style={{ borderRadius: "50px" }} />
+                </WidgetBody>
+                <DivDeactivateAccount>
+                  <Skeleton height={38} style={{ width: "30vw", minWidth: "100px", maxWidth: "250px" }} />
+                  <div>
+                    <h3>Deshabilitación de cuenta</h3>
+                    <p>
+                      <strong> Atención: </strong>Al desactivar tu cuenta de SkillSwap, toda tu
+                      información permanecerá segura y no será eliminada.
+                    </p>
+                  </div>
+                </DivDeactivateAccount>
+              </WidgetContainer>
             </PageBody>
           </PageContent>
         </PageContainer >
@@ -448,6 +548,7 @@ const UserInfo = () => {
               <DivDeactivateAccount>
                 <ButtonDeactivate
                   color={changeStateBtnColor()}
+                  aria-label="Deactivate Button"
                   onClick={() => setIsModalOpen(true)}
                   disabled={accountState === "Suspendido"}
                 >
