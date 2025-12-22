@@ -813,7 +813,7 @@ const Home = () => {
         <article>
           <DecorationOne urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationOne>
           <Video ref={videoRef} autoPlay muted playsInline>
-            <source src="/vid/skillswap-ad.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dvke5zok0/video/upload/v1766371527/skillswap-ad_dgb7ev.mp4" type="video/mp4" />
             Tu navegador no soporta el video HTML5.
           </Video>
           <DecorationTwo urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationTwo>
