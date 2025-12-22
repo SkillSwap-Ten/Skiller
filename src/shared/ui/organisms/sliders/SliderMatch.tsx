@@ -72,28 +72,73 @@ const SliderImage = styled.div<{ urlImage: string }>`
   border: solid 1px ${({ theme }) => theme.colors.borderDark};
 `;
 
-const Title = styled.h3`
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 1.5rem;
   width: 400px;
+  z-index: 99;
+  gap: 0.5rem;
+
+  @media (max-width: 548px) {
+    width: 200px;
+  }
+
+  @media (min-width: 548px) and (max-width: 648px) {
+    width: 150px;
+  }
+
+  @media (min-width: 648px) and (max-width: 748px) {
+    width: 200px;
+  }
+
+  @media (min-width: 748px) and (max-width: 848px) {
+    width: 250px;
+  }
+
+  @media (min-width: 848px) and (max-width: 950px) {
+    width: 300px;
+  }
+
+  @media (min-width: 950px) and (max-width: 1050px) {
+    width: 200px;
+  }
+
+  @media (min-width: 1050px) and (max-width: 1250px) {
+    width: 250px;
+  }
+
+  @media (min-width: 1250px) and (max-width: 1400px) {
+    width: 300px;
+  }
+
+  @media (min-width: 1400px) and (max-width: 1550px) {
+    width: 350px;
+  }
+`;
+
+const Title = styled.h3`
+  width: 100%;
   font-size: 2rem;
   text-transform: capitalize;
   text-align: start;
-  position: absolute;
   hyphens: auto;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  bottom: 2.5rem;
-  left: 1.5rem;
-  z-index: 99;
+  margin: 0;
 `;
 
 const Subtitle = styled.p`
+  width: 100%;
   font-size: 1rem;
   font-weight: 300;
-  position: absolute;
+  margin: 0;
+  text-align: start;
   text-transform: capitalize;
-  bottom: 2.5rem;
-  left: 1.5rem;
-  z-index: 99;
   color: #ccc;
 `;
 
@@ -236,14 +281,14 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
   };
 
   if (loading) return (
-      <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
-            <Skeleton style={{ minHeight: "75vh" }} height={"100%"} width={"100%"} borderRadius={10} />
-      </SkeletonTheme>
-    );
-  
-    if (error !== null) return (
-          <NoContentContainer error={error} />
-    );
+    <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
+      <Skeleton style={{ minHeight: "75vh" }} height={"100%"} width={"100%"} borderRadius={10} />
+    </SkeletonTheme>
+  );
+
+  if (error !== null) return (
+    <NoContentContainer error={error} />
+  );
 
   return (
     <>
@@ -252,8 +297,10 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
         <ReportButton type={"button"} onClick={handleReportClick}><FaExclamationTriangle /></ReportButton>
         <PassButton aria-label="Pass Button" onClick={handlePassClick}><div>&lt;</div> pass</PassButton>
         <SliderImage urlImage={imageUrl} />
-        <Title>{user.fullName}</Title>
-        <Subtitle>{user.jobTitle}</Subtitle>
+        <Text>
+          <Title>{user.fullName}</Title>
+          <Subtitle>{user.jobTitle}</Subtitle>
+        </Text>
         <MatchButton type={"button"} onClick={handleMatchClick}><PiHandshake /></MatchButton>
       </CardContainer>
 
