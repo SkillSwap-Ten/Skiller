@@ -155,7 +155,7 @@ const CardAdsDiscover: React.FC<ICardAdsDiscoverProps> = ({ loading, error, user
             <AdSection>
                 <InfoTag label={"#AD"} />
                 <Ad loop autoPlay muted playsInline>
-                    <source src="/vid/skillswap-ad.mp4" type="video/mp4" />
+                    <source src="https://res.cloudinary.com/dvke5zok0/video/upload/v1766371527/skillswap-ad_dgb7ev.mp4" type="video/mp4" />
                     Tu navegador no soporta el video HTML5.
                 </Ad>
             </AdSection>
