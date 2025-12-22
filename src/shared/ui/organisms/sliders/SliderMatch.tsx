@@ -282,7 +282,7 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
 
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
-      <Skeleton style={{ minHeight: "75vh" }} height={"100%"} width={"100%"} borderRadius={10} />
+      <Skeleton style={{ minHeight: "450px" }} height={"100%"} width={"100%"} borderRadius={10} />
     </SkeletonTheme>
   );
 
