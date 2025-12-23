@@ -205,13 +205,13 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
         <Div>
           <Label htmlFor="description" text="Descripción o Biografía" />
           <TextArea placeholder="Describe tu experiencia profesional o académica..." ariaLabel="description" title="description" maxLength={300} name="description" id="description" value={form.description!} onChange={handleChange} />
-          <sub>{form.description!.length} / 300 caracteres.</sub>
+          <sub>· {form.description!.length} / 300 caracteres.</sub>
         </Div>
 
         <Div>
           <Label htmlFor="abilities" text="Habilidades" />
           <SelectSkills ariaLabel="abilities" id="abilities" title="abilities" name="abilities" allSkills={allSkills} value={form.abilities || ""} onChange={handleChange} />
-          <sub>{form.abilities!.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
+          <sub>· {form.abilities!.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
         </Div>
 
         <Div>
