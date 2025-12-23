@@ -36,6 +36,7 @@ const ModalContainer = styled.div`
 
   @media (max-width: 600px) {
     max-height: 308px;
+    width: 80%;
   }
 `;
 
@@ -62,6 +63,7 @@ const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: bold;
 
   & div{
     font-weight: bold;
@@ -117,8 +119,8 @@ const UserInfo = styled.div`
   border-left: 1px solid ${({ theme }) => theme.colors.textTertiary};
 
   @media (max-width: 600px) {
-        display: none;
-    }
+    display: none;
+  }
 `;
 
 const UserDetail = styled.div`

@@ -4,7 +4,8 @@
 // y al final de 4 solo quedarían 2 ENDPOINTS (AllUsers (trae Array con IUser[]) 
 // y UserById (trae Object con IUser))
 
-// AÑADIR la 'password: string', correctamente hasheada para evitar errores.
+// CONFIGURAR la 'password: string', correctamente hasheada para evitar errores en caso de que se
+// vaya a enviar en algun endpoint.
 
 export interface IUser {
     id?: number;

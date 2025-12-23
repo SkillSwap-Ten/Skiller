@@ -86,7 +86,6 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
     abilities: dataToEdit?.abilities ?? "",
     category: dataToEdit?.category ?? "",
     email: dataToEdit?.email ?? "",
-    password: dataToEdit?.password ?? "",
     urlImage: dataToEdit?.urlImage ?? "",
     birthdate: dataToEdit?.birthdate ?? "",
     jobTitle: dataToEdit?.jobTitle ?? "",
@@ -191,11 +190,6 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
         </Div>
 
         <Div>
-          <Label htmlFor="password" text="Contraseña" />
-          <Input placeholder="..." type="password" name="password" id="password" value={form.password} onChange={handleChange} required />
-        </Div>
-
-        <Div>
           <Label htmlFor="phoneNumber" text="Teléfono" />
           <Input placeholder="+57..." type="tel" name="phoneNumber" id="phoneNumber" value={form.phoneNumber} onChange={handleChange} />
         </Div>
@@ -208,13 +202,13 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
         <Div>
           <Label htmlFor="description" text="Descripción o Biografía" />
           <TextArea placeholder="Describe tu experiencia profesional o académica..." ariaLabel="description" title="description" maxLength={300} name="description" id="description" value={form.description!} onChange={handleChange} />
-          <sub>{form.description!.length} / 300 caracteres.</sub>
+          <sub>· {form.description!.length} / 300 caracteres.</sub>
         </Div>
 
         <Div>
           <Label htmlFor="abilities" text="Habilidades" />
           <SelectSkills ariaLabel="abilities" id="abilities" title="abilities" name="abilities" allSkills={allSkills} value={form.abilities || ""} onChange={handleChange} />
-          <sub>{form.abilities!.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
+          <sub>· {form.abilities!.split(',').filter(s => s.trim()).length} habilidades seleccionadas.</sub>
         </Div>
 
         <Div>

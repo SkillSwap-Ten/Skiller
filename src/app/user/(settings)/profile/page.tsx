@@ -21,6 +21,8 @@ import { toast } from "react-toastify";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { PiPasswordFill } from "react-icons/pi";
+import ModalResetPassword from "@/src/shared/ui/organisms/modals/ModalResetPassword";
 
 const Container = styled.div`
   width: 100%;
@@ -359,6 +361,29 @@ const EditButton = styled(ButtonFeature)`
   }
 `;
 
+const PasswordButton = styled(ButtonFeature)`
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 4rem;
+  color: ${({ theme }) => theme.colors.textGrey};
+  font-size: 2rem;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.6s ease-in-out;
+
+  & svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  :hover{
+    transition: 0.6s ease-in-out;
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+`;
+
 const UserProfile = () => {
   // Estado para almacenar los datos del usuario
   const [userData, setUserData] = useState<IUser | null>(null);
@@ -368,13 +393,19 @@ const UserProfile = () => {
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
   const [languages, setLanguages] = useState<string[]>([]);
   const [isModalUserOpen, setIsModalUserOpen] = useState<boolean>(false);
+  const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState<boolean>(false);
 
   const handleCloseModal = () => {
     setIsModalUserOpen(false);
+    setIsModalResetPasswordOpen(false);
   };
 
   const handleEditClick = () => {
     setIsModalUserOpen(true);
+  };
+
+  const handlePasswordClick = () => {
+    setIsModalResetPasswordOpen(true);
   };
 
   // Fetch para obtener datos de usuario
@@ -568,6 +599,7 @@ const UserProfile = () => {
                 </MainInfo>
               </UserInfo>
               <EditButton type={"button"} onClick={handleEditClick}><FaEdit /></EditButton>
+              <PasswordButton type={"button"} onClick={handlePasswordClick}><PiPasswordFill /></PasswordButton>
             </Header>
             <DivUserDetails>
               <DivContent>
@@ -581,7 +613,7 @@ const UserProfile = () => {
                         <FaLinkedin />
                         <NavLink
                           target="_blank"
-                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          hover={{ fontWeight: '700', transition: '0.4s' }}
                           href={userData?.urlLinkedin ? userData.urlLinkedin : "#"}
                           label="LinkedIn"
                         />
@@ -593,7 +625,7 @@ const UserProfile = () => {
                         <FaGithubSquare />
                         <NavLink
                           target="_blank"
-                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          hover={{ fontWeight: '700', transition: '0.4s' }}
                           href={userData?.urlGithub ? userData.urlGithub : "#"}
                           label="GitHub"
                         />
@@ -605,7 +637,7 @@ const UserProfile = () => {
                         <FaBehanceSquare />
                         <NavLink
                           target="_blank"
-                          hover={{ fontWeight: '700', transition: '0.4s'}}
+                          hover={{ fontWeight: '700', transition: '0.4s' }}
                           href={userData?.urlBehance ? userData.urlBehance : "#"}
                           label="Adobe Behance"
                         />
@@ -665,6 +697,13 @@ const UserProfile = () => {
         </PageContainer >
         <FooterMain />
       </Container >
+
+      {isModalResetPasswordOpen && (
+        <ModalResetPassword
+          isOpen={isModalResetPasswordOpen}
+          onClose={handleCloseModal}
+        />
+      )}
 
       {isModalUserOpen && (
         <ModalUser

@@ -274,7 +274,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
             value={form.actionDetails! || ""}
             maxLength={300}
           />
-          <sub>{form.actionDetails!.length} / 300 caracteres.</sub>
+          <sub>· {form.actionDetails!.length} / 300 caracteres.</sub>
         </Div>
 
         <Div>

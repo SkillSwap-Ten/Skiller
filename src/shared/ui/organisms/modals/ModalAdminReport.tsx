@@ -45,6 +45,7 @@ const ModalContainer = styled.div`
 
   @media (max-width: 600px) {
     max-height: 308px;
+    width: 80%;
   }
 `;
 
