@@ -29,6 +29,10 @@ export interface IUser {
     roleName?: RoleName;
     suspensionDate?: string | null;
     reactivationDate?: string | null;
+
+    qualification?: number;
+    countMatches?: number;
+    createdAt?: string;
 }
 
 export interface IUserSorted {
@@ -51,10 +55,7 @@ export interface IUserForImages {
     createdAt?: string;
 }
 
-export enum RoleName {
-    Administrador = "Administrador",
-    Usuario = "Usuario",
-}
+export type RoleName = "Administrador" | "Usuario";
 
 export interface IUsersState {
     users: IUser[];

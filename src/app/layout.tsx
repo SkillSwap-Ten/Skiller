@@ -20,9 +20,11 @@ export const metadata: Metadata = {
   creator: "SkillSwap Ten",
   publisher: "SkillSwap Ten",
   category: "Digital Networking",
+  applicationName: "SkillSwap",
   verification: {
     google: "-OmKz-uTTgsQHQVsVnofFirPo8N0j7r9WWoO7--SUOc",
   },
+  metadataBase: new URL("https://skill-swap-ten.vercel.app"),
   keywords: [
     "Skills", "SkillSwap", "Skill-Swap", "Skill 10", "Skill-10", "Skill-Ten", "Skill Ten", "Skiller", "SkillSwap Ten", "SkillSwap-Ten", "Skill-Swap-Ten", "Swap", "skillswapten",
     "Conocer", "Habilidades", "Abilities", "Learning", "Digital", "Tech", "Development", "Software", "Entertainment", "Request", "Communication", "Fortalecer", "Sitio Web",
@@ -32,10 +34,10 @@ export const metadata: Metadata = {
     "Arlex", "Zapata", "Stiven", "David", "Molina", "Mesa", "Medina", "Joan", "Sebastián", "Caro", "David", "Francisco", "Blandón", "Mena", "franccoina", "Laboral", "Deploy",
     "frn", "Vercel", "Destrezas", "Knowledges", "Conocimientos", "Descubrir", "Intercambiar", "Social", "Creativos", "Comunidad", "Cultura", "Github", "Experiencia", "GitHub",
     "Behance", "Linkedin", "Jobs", "Web", "UX", "UI", "Nextjs", "Match", "Conectar", "Connect", "Discover", "New", "Nuevo", "Saberes", "Ideas", "Solicitud", "Colaborar", "API",
-    "Solicitar", "Mensajes", "Messages", "Compartir", "Share", "DevOps", "Frontend", "Backend", ".NET", "Csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional",
-    "intercambio de habilidades", "aprendizaje digital", "comunidad creativa", "red de habilidades", "plataforma de habilidades", "colaboración en habilidades", "desarrollo de habilidades",
+    "Solicitar", "Mensajes", "Messages", "Compartir", "Share", ".NET", "Csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional", "desarrollo de habilidades",
+    "intercambio de habilidades", "aprendizaje digital", "comunidad creativa", "red de habilidades", "plataforma de habilidades", "colaboración en habilidades", "tech skills swap",
     "trueque de conocimientos", "networking digital", "Skill exchange", "digital skills marketplace", "creative skills hub", "online skills sharing", "professional skills network",
-    "collaborative learning platform", "tech skills swap", "digital talent exchange", "Skill10", "Skill10'", "Skill 10'"
+    "collaborative learning platform", "digital talent exchange", "Skill10", "Skill10'", "Skill 10'"
   ],
   robots: {
     index: true,
@@ -50,9 +52,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: 'https://skill-swap-ten.vercel.app/favicon.ico',
-    shortcut: 'https://skill-swap-ten.vercel.app/favicon.ico',
-    apple: 'https://skill-swap-ten.vercel.app/favicon.ico',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
   twitter: {
     card: 'summary_large_image',
@@ -61,7 +63,7 @@ export const metadata: Metadata = {
     creatorId: '1664752708694208515',
     siteId: '1664752708694208515',
     description: 'Aventúrate a intercambiar habilidades digitales con SkillSwap.',
-    images: ['https://skill-swap-ten.vercel.app/img/skillswap-opengraph-tw.png'],
+    images: ['/img/skillswap-opengraph-tw.png'],
   },
   facebook: {
     appId: "804095175706410",
@@ -74,22 +76,29 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://skill-swap-ten.vercel.app/img/skillswap-opengraph-og.png",
+        url: "/img/skillswap-opengraph-og.png",
         width: 1200,
         height: 630,
         alt: "SkillSwap-Ten",
       },
     ],
   },
-  metadataBase: new URL("https://skill-swap-ten.vercel.app"),
   alternates: {
-    canonical: "https://skill-swap-ten.vercel.app",
+    canonical: "/",
+  },
+  other: {
+    sitedomain: "https://skill-swap-ten.vercel.app",
+    organization: "SkillSwap-Ten, franccoina, riwi",
+    designer:
+      "David Francisco Blandón Mena, Luisa Fernanda Ramírez Cardona, Joan Sebastián Zapata Caro",
+    copyright: "© 2024 SkillSwap. Todos los derechos reservados.",
+    "revisit-after": "15days",
   },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
-  initialScale: 1.0,
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -99,13 +108,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head>
-        <meta name="sitedomain" content="https://skill-swap-ten.vercel.app" />
-        <meta name="organization" content="SkillSwap-Ten, frn!, riwi" />
-        <meta name="designer" content="David Francisco Blandón Mena, Luisa Fernanda Ramírez Cardona, Joan Sebastián Zapata Caro" />
-        <meta name="copyright" content="© 2024 SkillSwap. Todos los derechos reservados." />
-        <meta name="revisit-after" content="15days" />
-      </head>
       <body className={urbanist.className}>
         <Providers>
           <RouteHandler>
