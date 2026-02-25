@@ -1,5 +1,5 @@
 import { IRequestConnectionsResponse, IRequestMetricsResponse, IRequestResponse } from '@/src/core/dto/requests/requests.dto';
-import { IRequestMetrics, IRequests } from '@/src/core/models/requests/requests.model';
+import { IChats, IRequestMetrics, IRequests, IMessages } from '@/src/core/models/requests/requests.model';
 import { getAuthData } from '@/src/lib/utils/getAuthData';
 import apiClient from '../apiClient';
 
@@ -117,6 +117,98 @@ export const patchRequestById = async (idRequest: number, idStateRequest: number
     return response;
   } catch (error) {
     console.error('Error al hacer el PATCH:', error);
+    throw error;
+  }
+};
+
+// -------------------- GET CHATS --------------------
+
+export const getChatsByUserId = async (
+  userId: number
+): Promise<IChats[]> => {
+  try {
+    const response = await apiClient(
+      `ChatsGet/GetChatsByUserId/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response?.message === "Success") {
+      return response.data.response;
+    } else {
+      throw new Error(response?.message || "Error obteniendo chats");
+    }
+  } catch (error) {
+    console.error("Error obteniendo chats:", error);
+    throw error;
+  }
+};
+
+// -------------------- GET MESSAGES --------------------
+
+export const getMessagesByChatId = async (
+  chatId: number
+): Promise<IMessages[]> => {
+  try {
+    const response = await apiClient(
+      `MessagesGet/GetMessagesByChatId/${chatId}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response?.message === "Success") {
+      return response.data.response;
+    } else {
+      throw new Error(response?.message || "Error obteniendo mensajes");
+    }
+  } catch (error) {
+    console.error("Error obteniendo mensajes:", error);
+    throw error;
+  }
+};
+
+// -------------------- POST MESSAGE --------------------
+
+export const postMessage = async (
+  chatId: number,
+  receiverId: number,
+  content: string
+) => {
+  const senderId = getAuthData("id");
+
+  const body = {
+    chatId,
+    senderId,
+    receiverId,
+    content,
+  };
+
+  try {
+    const response = await apiClient(
+      `MessagesPost/PostMessage`,
+      {
+        method: "POST",
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error enviando mensaje:", error);
     throw error;
   }
 };

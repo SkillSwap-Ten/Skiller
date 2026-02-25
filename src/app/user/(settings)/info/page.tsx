@@ -35,6 +35,7 @@ const PageContainer = styled.section`
     font-size: 70px;
     opacity: 0.15;
     padding-left: 1rem;
+    color: ${({ theme }) => theme.colors.textGrey};
   }
 
   & h3 {
