@@ -182,7 +182,7 @@ div, section, article, aside, table, ul, ol, textarea {
 }
 
 body {
-    min-height: 100vh;
+    min-height: 100dvh;
     width: 100% !important;
     overflow-x: hidden;
     margin: 0;

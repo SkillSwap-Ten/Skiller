@@ -15,7 +15,7 @@ const Container = styled.div`
   margin: 54px 0;
   flex-direction: column;
   display: flex;
-  min-height: 100vh;
+  min-height: 100dvh;
 `;
 
 const DivMatch = styled.div`

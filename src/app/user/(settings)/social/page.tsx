@@ -15,15 +15,20 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { MOCK_CHATS, MOCK_MESSAGES, MOCK_REQUESTS } from '@/src/app/mock-data';
 
 const PageWrapper = styled.div`
-  height: 100dvh;
   color: ${({ theme }) => theme.colors.textSecondary};
-  position: relative;
+  height: 100dvh;
+  padding: 54px 0;
+  box-sizing: border-box;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `
 
 const ContentViewport = styled.div`
-  height: 100%;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
   width: 100%;
 `
 
@@ -31,7 +36,6 @@ const SliderTrack = styled.div<{ $isChatOpen: boolean }>`
   display: flex;
   height: 100%;
   width: 100%;
-  padding: 54px 0 !important;
   will-change: transform;
   transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -49,6 +53,7 @@ const SidebarWrapper = styled.div`
   max-width: 100%;
   height: 100%;
   overflow: hidden;
+  min-height: 0;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -61,6 +66,7 @@ const MainContent = styled.div`
   height: 100%;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.bgPrimary};
+  min-height: 0;
 
   @media (max-width: 768px) {
     width: 100%;
