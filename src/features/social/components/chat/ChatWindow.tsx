@@ -12,15 +12,19 @@ const WindowContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
 `
 
 const MessagesArea = styled.div`
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  overscroll-behavior: contain;
 `
 
 const MessageRow = styled.div<{ $isOwn: boolean }>`
@@ -57,6 +61,7 @@ const SenderAvatar = styled.div<{ urlImage: string }>`
 
 const InputArea = styled.div`
   padding: 12px 16px;
+  flex-shrink: 0;
 `
 
 const InputWrapper = styled.div`
@@ -104,10 +109,11 @@ const DateDivider = styled.div`
 `
 
 const MessageCounter = styled.div<{ $low: boolean }>`
+  flex-shrink: 0;
   font-size: 12px;
   padding: 4px 16px;
   color: ${({ $low, theme }) =>
-        $low ? theme.colors.textOrange : theme.colors.textGrey};
+    $low ? theme.colors.textOrange : theme.colors.textGrey};
 `
 
 const LimitReached = styled.div`

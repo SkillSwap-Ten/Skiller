@@ -6,7 +6,7 @@ const FullScreenLoader = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.bgNotFound};
   position: fixed;

@@ -20,6 +20,7 @@ const HeaderContainer = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderBottombar};
   gap: 12px;
   height: 54px;
+  flex-shrink: 0;
   background: ${({ theme }) => theme.colors.bgTertiary};
 `
 
@@ -58,6 +59,7 @@ const UserInfo = styled.div`
   background: none;
   border: none;
   padding: 0;
+  min-width: 0;
 `
 
 const UserName = styled.p`
