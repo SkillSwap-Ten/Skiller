@@ -293,8 +293,8 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
   return (
     <>
       <CardContainer animateOut={animateOut}>
-        <TipsButton type={"button"} onClick={handleTipsClick}><FaShieldAlt /></TipsButton>
-        <ReportButton type={"button"} onClick={handleReportClick}><FaExclamationTriangle /></ReportButton>
+        <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
+        <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         <PassButton aria-label="Pass Button" onClick={handlePassClick}><div>&lt;</div> pass</PassButton>
         <SliderImage urlImage={imageUrl} />
         <Text>

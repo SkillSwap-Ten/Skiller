@@ -35,7 +35,7 @@ const ModalContainer = styled.div`
   max-height: 416px;
 
   @media (max-width: 600px) {
-    max-height: 308px;
+    max-height: 312px;
     width: 80%;
   }
 `;
@@ -176,7 +176,7 @@ const DivRequest = styled.div`
   }
 
   & textarea{
-    max-height: 200px;
+    max-height: 212px;
     border-radius: 10px;
   }
 
@@ -189,7 +189,7 @@ const Div = styled.div`
   display: flex;
   border-radius: 10px;
   width: 100%;
-  max-height: 300px;
+  height: 100%;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 

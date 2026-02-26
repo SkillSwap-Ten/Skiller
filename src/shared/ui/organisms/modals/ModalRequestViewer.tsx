@@ -1,9 +1,11 @@
 "use client";
-import { IModalUserFormProps } from "@/src/shared/types/organisms/modal.type";
 import styled from "styled-components";
-import FormAdminUsers from "../forms/FormAdminUser";
-import { useEffect, useState } from "react";
-import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { IModalRequestViewerProps } from "@/src/features/social/types/social.type";
+import { timeAgo } from "@/src/lib/utils/timeAgoFormatter";
+import ButtonBelow from "../../atoms/buttons/ButtonBelow";
+import { useRouter } from "next/navigation";
 
 // Modal Form Component
 const ModalOverlay = styled.div<{ isOpen: boolean }>`
@@ -192,7 +194,7 @@ const UserMainInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
   z-index: 5;
 
@@ -207,15 +209,18 @@ const UserMainInfoContainer = styled.div`
 const UserMainInfo = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
+  gap: 8px;
 
   & h3, p {
-    margin: 4px;
+    margin: 0;
     color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   @media (max-width: 1200px) {
     text-align: start;
+    align-items: start;
   }
 `;
 
@@ -229,62 +234,85 @@ const Avatar = styled.div<{ urlImage: string }>`
   border-radius: 10px;
 `;
 
-const ModalAdminUser: React.FC<IModalUserFormProps> = ({ isOpen, onUpdateData, dataToEdit, setDataToEdit, onClose }) => {
-  const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
+const RequestContent = styled.div`
+  display: flex;
+  align-items: start;
+  background: ${({ theme }) => theme.colors.bgTertiary};
+  width: 100%;
+  height: 100%;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  gap: 12px;
+  text-align: justify;
+`
 
+const UserButton = styled(ButtonBelow)`
+  border: none;
+  color: ${({ theme }) => theme.colors.textGrey};
+  background-color: ${({ theme }) => theme.colors.bgBanner};
+  transition: 0.3s ease-in-out;
+  font-size: 12px;
+  width: fit-content;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    font-weight: 600;
+    transition: 0.4s;
+  }
+`
+
+const ModalRequestViewer: React.FC<IModalRequestViewerProps> = ({ isOpen, request, onClose }) => {
+  const router = useRouter()
+
+  // Bloquear scroll del body cuando el modal está abierto
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
-    };
-
-    if (dataToEdit?.urlImage && isValidImageUrl(dataToEdit?.urlImage)) {
-      checkImageUrl(dataToEdit?.urlImage);
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
     } else {
-      setImageUrl("/img/default-picture-full.webp");
+      document.body.style.overflow = ''
     }
-  }, [dataToEdit]);
 
-  return (
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  if (!isOpen) return null;
+
+  return createPortal(
     <ModalOverlay isOpen={isOpen}>
       <ModalContainer>
         <ModalHeader>
-          <div>Gestionar<article>Perfil</article></div>
+          <div>Revisar<article>Solicitud</article></div>
           <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
         </ModalHeader>
         <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>
           <ModalContent>
             <LeftSection>
-              <FormAdminUsers
-                onUpdateData={onUpdateData}
-                dataToEdit={dataToEdit}
-                setDataToEdit={setDataToEdit}
-                onClose={onClose}
-              />
+              <RequestContent>
+                {request.description}
+              </RequestContent>
             </LeftSection>
             <RightSection>
               <UserMainInfoContainer>
-                <Avatar urlImage={imageUrl} />
+                <Avatar urlImage={request.urlImageRequesting} />
                 <UserMainInfo>
-                  <h3>{dataToEdit?.name} {dataToEdit?.lastName}</h3>
-                  <p>{dataToEdit?.jobTitle}</p>
+                  <h3>{request.userNameRequesting}</h3>
+                  <p>Pendiente · {timeAgo(request.createdAt || new Date().toISOString())}</p>
+                  <UserButton type="button" onClick={() => router.push(`/user/detail/u/${request.idRequestingUser}`)} aria-label={`Ver perfil de ${request.userNameRequesting}`}>
+                    Ver Perfil
+                  </UserButton>
                 </UserMainInfo>
               </UserMainInfoContainer>
             </RightSection>
           </ModalContent>
         </ScrollContainer>
       </ModalContainer>
-    </ModalOverlay>
+    </ModalOverlay>,
+    document.body
   );
 };
 
-export default ModalAdminUser;
+export default ModalRequestViewer;

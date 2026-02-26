@@ -43,7 +43,7 @@ const ModalContainer = styled.div`
   padding: 0;
 
   @media (max-width: 600px) {
-    max-height: 308px;
+    max-height: 312px;
     width: 80%;
   }
 `;
@@ -197,7 +197,7 @@ const UserMainInfoContainer = styled.div`
   @media (max-width: 1200px) {
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     position: static;
   }
 `;
