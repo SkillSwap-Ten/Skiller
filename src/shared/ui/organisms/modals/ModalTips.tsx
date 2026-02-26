@@ -1,7 +1,8 @@
 'use client';
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { IModalProps } from "@/src/shared/types/organisms/modal.type";
+import { createPortal } from 'react-dom'
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -38,7 +39,7 @@ const ModalContainer = styled.div`
   padding: 0;
 
   @media (max-width: 600px) {
-    max-height: 308px;
+    max-height: 312px;
     width: 80%;
   }
 `;
@@ -219,17 +220,30 @@ const AlertText = styled.p`
 `;
 
 const ModalTips: React.FC<IModalProps> = ({ isOpen, onClose }) => {
+  // Bloquear scroll del body cuando el modal está abierto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <ModalOverlay>
       <ModalContainer>
         <ModalHeader>
           <div>Cultura<article>SkillSwap</article></div>
           <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
-        </ModalHeader>      
+        </ModalHeader>
         <ScrollContainer>
-        <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>
+          <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>
           <ModalContent>
             <LeftSection>
               <TipItem>
@@ -258,7 +272,8 @@ const ModalTips: React.FC<IModalProps> = ({ isOpen, onClose }) => {
           </ModalContent>
         </ScrollContainer>
       </ModalContainer>
-    </ModalOverlay>
+    </ModalOverlay>,
+    document.body
   );
 };
 

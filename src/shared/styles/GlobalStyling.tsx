@@ -151,7 +151,7 @@ export const GlobalStyle = createGlobalStyle`
 html {
     background-color: ${({ theme }) => theme.colors.bgPrimary};
     width: 100vw !important;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
     box-sizing: border-box;
     margin: 0;
     padding: 0;

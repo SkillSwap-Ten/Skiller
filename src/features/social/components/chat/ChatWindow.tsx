@@ -1,12 +1,12 @@
 'use client'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
-import ChatHeader from './ChatHeader'
-import { IMessages, IChats } from '@/src/core/models/requests/requests.model'
 import { getAuthData } from '@/src/lib/utils/getAuthData'
 import { postMessage } from '@/src/app/api/requests/requests'
 import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
 import { IoSend } from 'react-icons/io5'
+import { IChatWindowProps } from '../../types/social.type'
+import ChatHeader from './ChatHeader'
+import styled from 'styled-components'
 
 const WindowContainer = styled.div`
   display: flex;
@@ -88,7 +88,7 @@ const SendButton = styled.button<{ $hasText: boolean }>`
         $hasText ? 'pointer' : 'default'};
   color: ${({ $hasText, theme }) =>
         $hasText ? theme.colors.textOrange : theme.colors.textGrey};
-  transition: color 0.2s ease;
+  transition: color 0.4s ease;
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -134,21 +134,7 @@ const LimitIcon = styled.div`
   color: ${({ theme }) => theme.colors.textOrange};
 `
 
-export interface IChatWindowProps {
-    chat: IChats
-    messages: IMessages[]
-    refreshMessages: () => void
-    isMobile?: boolean
-    onBack?: () => void
-}
-
-export default function ChatWindow({
-    chat,
-    messages,
-    refreshMessages,
-    isMobile = false,
-    onBack
-}: IChatWindowProps) {
+const ChatWindow = ({ chat, messages, refreshMessages, isMobile = false, onBack }: IChatWindowProps) => {
     const [newMessage, setNewMessage] = useState('')
     const messagesEndRef = useRef<HTMLDivElement>(null)
     const currentUserId = getAuthData('id')
@@ -335,3 +321,5 @@ export default function ChatWindow({
         </WindowContainer>
     )
 }
+
+export default ChatWindow;

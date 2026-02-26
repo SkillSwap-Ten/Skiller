@@ -1,8 +1,9 @@
 'use client';
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ReportForm from "../forms/FormReport";
 import { IModalProps } from "@/src/shared/types/organisms/modal.type";
+import { createPortal } from 'react-dom'
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -46,8 +47,8 @@ const ModalContainer = styled.div`
     margin: 0;
   }
 
-  @media (max-width: 600px) {
-    max-height: 308px;
+  @media (max-width: 680px) {
+    max-height: 312px;
     width: 80%;
   }
 `;
@@ -128,7 +129,7 @@ const ModalContent = styled.div`
   margin: 0;
   border-radius: 10px;
   width: 100%;
-  max-height: 300px;
+  height: 312px;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 
@@ -143,7 +144,7 @@ const LeftSection = styled.div`
   padding: 1rem;
   width: 60%;
 
-  @media (max-width: 600px) {
+  @media (max-width: 680px) {
     width: 100%;
     border-radius: 10px;
   }
@@ -163,7 +164,7 @@ const RightSection = styled.div`
   background-color: #fff;
   border-left: 1px solid ${({ theme }) => theme.colors.textTertiary};
 
-  @media (max-width: 600px) {
+  @media (max-width: 680px) {
       display: none;
   }
 `;
@@ -180,7 +181,7 @@ const AlertText = styled.p`
 
   span {
     padding-right: 0.5rem;
-    font-size: 1rem  !important;
+    font-size: 1.2rem  !important;
   }
 `;
 
@@ -210,21 +211,35 @@ const DivColor = styled.div`
 const DivTexts = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 0.5rem;
   width: 100%;
 `;
 
 const Modal: React.FC<IModalProps> = ({ isOpen, onClose, userToInteractWith }) => {
+  // Bloquear scroll del body cuando el modal está abierto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <ModalOverlay>
-        <ModalContainer>
-          <ModalHeader>
-            <div>Cultura<article>SkillSwap</article></div>
-            <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
-          </ModalHeader>        
-          <ScrollContainer>
+      <ModalContainer>
+        <ModalHeader>
+          <div>Cultura<article>SkillSwap</article></div>
+          <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
+        </ModalHeader>
+        <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>
           <ModalContent>
             <LeftSection>
@@ -253,9 +268,10 @@ const Modal: React.FC<IModalProps> = ({ isOpen, onClose, userToInteractWith }) =
               </PoliceInfo>
             </RightSection>
           </ModalContent>
-          </ScrollContainer>
-        </ModalContainer>
-    </ModalOverlay>
+        </ScrollContainer>
+      </ModalContainer>
+    </ModalOverlay>,
+    document.body
   );
 };
 

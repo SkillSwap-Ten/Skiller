@@ -1,13 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { IChats, IRequests } from '@/src/core/models/requests/requests.model'
-import RequestsList from './requests/RequestsList'
+import { ISidebarSocialProps } from '@/src/features/social/types/social.type'
+import NoContentContainer from '@/src/shared/ui/organisms/containers/NoContentContainer'
+import RequestsList from '@/src/features/social/components/requests/RequestsList'
 import styled from 'styled-components'
-import ChatList from './chat/ChatList'
+import ChatList from '@/src/features/social/components/chat/ChatList'
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import NoContentContainer from '@/src/shared/ui/organisms/containers/NoContentContainer'
 
 const SidebarContainer = styled.div`
   display: flex;
@@ -67,34 +66,8 @@ const Tab = styled.button<{ $active: boolean }>`
   transition: all 0.3s ease;
 `
 
-type TabType = 'mensajes' | 'solicitudes'
-
-interface ISocialSidebarProps {
-  activeTab: TabType
-  onTabChange: (tab: TabType) => void
-  selectedChatId?: number
-  onSelectChat: (id: number) => void
-  chats: IChats[]
-  requests: IRequests[]
-  onAccept: (id: number) => void
-  onReject: (id: number) => void
-  loading: boolean;
-  error: string | null;
-}
-
-export default function SocialSidebar({
-  activeTab,
-  onTabChange,
-  selectedChatId,
-  onSelectChat,
-  chats,
-  requests,
-  onAccept,
-  onReject,
-  loading,
-  error
-}: ISocialSidebarProps) {
-
+const SidebarSocial = ({ activeTab, onTabChange, selectedChatId, onSelectChat,
+  chats, requests, onAccept, onReject, loading, error }: ISidebarSocialProps) => {
   if (loading) {
     return (
       <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
@@ -208,3 +181,5 @@ export default function SocialSidebar({
     </SidebarContainer>
   )
 }
+
+export default SidebarSocial;

@@ -10,7 +10,7 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -27,7 +27,7 @@ const FormContainer = styled.form`
       color: ${({ theme }) => theme.colors.textSecondary} !important;
       font-size: 14px !important;
       width: 100% !important;
-      height: 40px !important;
+      height: 36px !important;
       text-transform: capitalize;
   }
 `;
@@ -38,15 +38,14 @@ const Input = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
   font-size: 14px !important;
   width: 100%;
-  height: 40px;
+  height: 36px;
 `;
 
 const TextArea = styled.textarea`
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
-  font-size: 14px !important;
   width: 100%;
-  height: 70px;
+  height: 96px;
   resize: none;
 `;
 

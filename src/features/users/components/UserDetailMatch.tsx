@@ -570,8 +570,8 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
     <>
       <ProfileContainer>
         <ProfileImageMobile urlImage={imageUrl}>
-          <TipsButton type={"button"} onClick={handleTipsClick}><FaShieldAlt /></TipsButton>
-          <ReportButton type={"button"} onClick={handleReportClick}><FaExclamationTriangle /></ReportButton>
+          <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
+          <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         </ProfileImageMobile>
         <Header>
           <UserInfo>

@@ -1,22 +1,25 @@
 'use client'
-import styled from 'styled-components'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { IUser } from '@/src/core/models/users/users.model'
 import { FaExclamationTriangle, FaShieldAlt } from 'react-icons/fa'
 import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
+import { IChatHeaderProps } from '@/src/features/social/types/social.type'
 import ButtonFeature from '@/src/shared/ui/atoms/buttons/ButtonFeature'
 import ModalTips from '@/src/shared/ui/organisms/modals/ModalTips'
 import ModalReport from '@/src/shared/ui/organisms/modals/ModalReport'
+import styled from 'styled-components'
+import NavLink from '@/src/shared/ui/atoms/links/NavLinks'
 
 const HeaderContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  width: 100%;
+  padding: 0 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderBottombar};
   gap: 12px;
-  min-height: 60px;
+  height: 54px;
   background: ${({ theme }) => theme.colors.bgTertiary};
 `
 
@@ -36,7 +39,7 @@ const BackButton = styled.button`
   }
 `
 
-const Avatar = styled.button<{ urlImage: string }>`
+const Avatar = styled.div<{ urlImage: string }>`
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -45,19 +48,16 @@ const Avatar = styled.button<{ urlImage: string }>`
   background-size: cover;
   background-position: center;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  cursor: pointer;
 `
 
-const UserInfo = styled.button`
+const UserInfo = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: none;
   border: none;
-  cursor: pointer;
   padding: 0;
-  min-width: 0;
 `
 
 const UserName = styled.p`
@@ -67,7 +67,14 @@ const UserName = styled.p`
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis;  
+  text-transform: capitalize;
+  text-align: start;
+  max-width: 32vw;
+
+  @media (min-width: 360px) {
+    max-width: 40vw;
+  }
 `
 
 const UserHandle = styled.p`
@@ -80,6 +87,19 @@ const HeaderActions = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+`
+
+const HeaderNavigation = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  a {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 `
 
 const TipsButton = styled(ButtonFeature)`
@@ -120,17 +140,7 @@ const ReportButton = styled(ButtonFeature)`
   }
 `
 
-interface IChatHeaderProps {
-  user: IUser
-  isMobile?: boolean
-  onBack?: () => void
-}
-
-export default function ChatHeader({
-  user,
-  isMobile = false,
-  onBack,
-}: IChatHeaderProps) {
+const ChatHeader = ({ user, isMobile = false, onBack }: IChatHeaderProps) => {
   const router = useRouter()
 
   const [isModalReportOpen, setIsModalReportOpen] = useState(false)
@@ -170,28 +180,31 @@ export default function ChatHeader({
   return (
     <>
       <HeaderContainer>
-        {onBack && (
-          <BackButton
-            onClick={onBack}
-            aria-label="Volver"
-          >
-            <MdOutlineArrowBackIosNew />
-          </BackButton>
-        )}
+        <HeaderNavigation>
+          {onBack && (
+            <BackButton
+              onClick={onBack}
+              aria-label="Volver"
+            >
+              <MdOutlineArrowBackIosNew />
+            </BackButton>
+          )}
 
-        <Avatar type="button" onClick={() => router.push(`/user/detail/u/${user.id}`)} aria-label={`Ver perfil de ${user.name}`} urlImage={imageUrl} />
-
-        <UserInfo type="button" onClick={() => router.push(`/user/detail/u/${user.id}`)} aria-label={`Ver perfil de ${user.name}`}>
-          <UserName>{user.name}</UserName>
-          <UserHandle>{user.category}</UserHandle>
-        </UserInfo>
+          <NavLink hover={{ transform: 'scale(1.01)', transition: '0.4s' }} href={`/user/detail/u/${user.id}`} label="DETALLE" >
+            <Avatar urlImage={imageUrl} />
+            <UserInfo>
+              <UserName>{user.name}</UserName>
+              <UserHandle>{user.category}</UserHandle>
+            </UserInfo>
+          </NavLink>
+        </HeaderNavigation>
 
         <HeaderActions>
-          <TipsButton type="button" onClick={openModalTips}>
+          <TipsButton type="button" onClick={openModalTips} aria-label="Control Button">
             <FaShieldAlt />
           </TipsButton>
 
-          <ReportButton type="button" onClick={openModalReport}>
+          <ReportButton type="button" onClick={openModalReport} aria-label="Control Button">
             <FaExclamationTriangle />
           </ReportButton>
         </HeaderActions>
@@ -210,3 +223,5 @@ export default function ChatHeader({
     </>
   )
 }
+
+export default ChatHeader;

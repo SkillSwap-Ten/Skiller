@@ -1,18 +1,19 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { IChats } from '@/src/core/models/requests/requests.model'
-import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
-import { LuSearch } from 'react-icons/lu'
 import styled, { keyframes } from 'styled-components'
+import { useEffect, useState } from 'react'
+import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
+import { IChatsListProps } from '../../types/social.type'
+import { LuSearch } from 'react-icons/lu'
+import { timeAgo } from '@/src/lib/utils/timeAgoFormatter'
 
 const appear = keyframes`
   from {
     opacity: 0;
-    transform: scale(0.95) rotate(1deg);
+    transform: translateY(32px);
   }
   to {
     opacity: 1;
-    transform: scale(1) rotate(0);
+    transform: translateY(0);
   }
 `;
 
@@ -88,6 +89,7 @@ const ChatName = styled.p<{ $unanswered: boolean }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: capitalize;
 `
 
 const ChatPreview = styled.div`
@@ -121,32 +123,7 @@ const UnansweredDot = styled.div`
   flex-shrink: 0;
 `
 
-interface IChatsListProps {
-  chats: IChats[]
-  selectedChatId?: number
-  onSelectChat: (id: number) => void
-}
-
-function timeAgo(dateStr: string): string {
-  const now = new Date()
-  const d = new Date(dateStr)
-  const diffMs = now.getTime() - d.getTime()
-  const diffH = Math.floor(diffMs / 3600000)
-
-  if (diffH < 1) return 'hace un momento'
-  if (diffH < 24) return `hace ${diffH} h`
-
-  const diffD = Math.floor(diffH / 24)
-  if (diffD < 7) return `hace ${diffD} d`
-
-  return `hace ${Math.floor(diffD / 7)} sem`
-}
-
-export default function ChatList({
-  chats,
-  selectedChatId,
-  onSelectChat,
-}: IChatsListProps) {
+const ChatList = ({ chats, selectedChatId, onSelectChat }: IChatsListProps) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [validatedImages, setValidatedImages] = useState<
     Record<number, string>
@@ -238,3 +215,5 @@ export default function ChatList({
     </>
   )
 }
+
+export default ChatList;
