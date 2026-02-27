@@ -16,26 +16,30 @@ import { MOCK_CHATS, MOCK_MESSAGES, MOCK_REQUESTS } from '@/src/app/mock-data';
 
 const PageWrapper = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
+  width: 100%;
   height: 100dvh;
-  padding: 54px 0;
+  min-height: 548px;
   box-sizing: border-box;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  overflow: hidden;
+  padding: 54px 0 !important;
 `
 
 const ContentViewport = styled.div`
-  overflow: hidden;
   flex: 1;
-  min-height: 0;
   width: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 `
 
 const SliderTrack = styled.div<{ $isChatOpen: boolean }>`
   display: flex;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  min-height: 0;
   will-change: transform;
   transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -44,7 +48,8 @@ const SliderTrack = styled.div<{ $isChatOpen: boolean }>`
     transform: ${({ $isChatOpen }) =>
     $isChatOpen
       ? "translateX(-100%)"
-      : "translateX(0)"};
+      : "translateX(0)"
+  };
   }
 `
 
@@ -52,14 +57,15 @@ const SidebarWrapper = styled.div`
   width: 400px;
   max-width: 100%;
   height: 100%;
-  overflow: hidden;
   min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   @media (max-width: 768px) {
     width: 100%;
     flex: 0 0 100%;
   }
-`
+`;
 
 const MainContent = styled.div`
   flex: 1;
@@ -74,7 +80,7 @@ const MainContent = styled.div`
   }
 `
 
-const EmptyState = styled.div`
+const EmptyState = styled.div<{ $isChatOpen: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,6 +89,11 @@ const EmptyState = styled.div`
   color: ${({ theme }) => theme.colors.textNeutral};
   gap: 16px;
   padding: 40px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    display: none;
+  }
 `
 
 const EmptyIcon = styled.div`
@@ -313,7 +324,7 @@ const SocialPage = () => {
                 />
               </SidebarWrapper>
               <Disappear>
-                <EmptyState>
+                <EmptyState $isChatOpen={true}>
                   <EmptyIcon>
                     <IoChatbubbleOutline />
                   </EmptyIcon>
@@ -352,7 +363,7 @@ const SocialPage = () => {
               />
             </SidebarWrapper>
             <Disappear>
-              <EmptyState>
+              <EmptyState $isChatOpen={true}>
                 <EmptyIcon>
                   <IoChatbubbleOutline />
                 </EmptyIcon>
@@ -401,7 +412,7 @@ const SocialPage = () => {
                 onBack={handleBackFromChat}
               />
             ) : (
-              <EmptyState>
+              <EmptyState $isChatOpen={isChatOpen}>
                 <EmptyIcon>
                   <IoChatbubbleOutline />
                 </EmptyIcon>

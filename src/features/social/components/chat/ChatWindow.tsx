@@ -11,9 +11,10 @@ import styled from 'styled-components'
 const WindowContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   height: 100%;
   min-height: 0;
-  overflow: hidden;
+  flex: 1;
 `
 
 const MessagesArea = styled.div`

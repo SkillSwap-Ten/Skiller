@@ -36,7 +36,7 @@ const ToggleButton = styled.button`
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: ${({ theme }) => theme.colors.bgLight};
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -45,6 +45,8 @@ const ToggleButton = styled.button`
   align-items: center;
   color: ${({ theme }) => theme.colors.textWhite};
   border-left: 1px solid ${({ theme }) => theme.colors.textWhite};
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 
   &:focus {
     outline: none;
