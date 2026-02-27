@@ -42,7 +42,18 @@ const Banner = styled.article`
 const BannerBody = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+
+  & sub {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.25;
+    padding-left: 1rem;
+    font-weight: bolder;
+    color: ${({ theme }) => theme.colors.textGrey};
+  }
 `
 
 const TabsContainer = styled.div`
@@ -116,6 +127,7 @@ const SidebarSocial = ({ activeTab, onTabChange, selectedChatId, onSelectChat,
         <Banner>
           <BannerBody>
             <h1>Social</h1>
+            <sub>Fase Beta *</sub>
           </BannerBody>
         </Banner>
 
@@ -144,6 +156,7 @@ const SidebarSocial = ({ activeTab, onTabChange, selectedChatId, onSelectChat,
       <Banner>
         <BannerBody>
           <h1>Social</h1>
+          <sub>Fase Beta *</sub>
         </BannerBody>
       </Banner>
 

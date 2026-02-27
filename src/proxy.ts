@@ -3,8 +3,8 @@ import type { NextRequest } from "next/server";
 import { isValidToken } from "./lib/utils/tokenValidator";
 
 // --------------------------------------------------------------------------
-// Middleware para rutas protegidas
-function protectedMiddleware(req: NextRequest) {
+// Proxy para rutas protegidas
+function protectedProxy(req: NextRequest) {
     const { nextUrl, cookies } = req;
 
     const token = cookies.get("authToken")?.value;
@@ -35,8 +35,8 @@ function protectedMiddleware(req: NextRequest) {
 }
 
 // --------------------------------------------------------------------------
-// Middleware para rutas públicas
-function publicMiddleware(req: NextRequest) {
+// Proxy para rutas públicas
+function publicProxy(req: NextRequest) {
     const { nextUrl, cookies } = req;
 
     const token = cookies.get("authToken")?.value;
@@ -65,8 +65,8 @@ function publicMiddleware(req: NextRequest) {
 }
 
 // --------------------------------------------------------------------------
-// Middleware principal que enruta según el tipo de ruta
-export function middleware(req: NextRequest) {
+// Proxy principal que enruta según el tipo de ruta
+export function proxy(req: NextRequest) {
     const pathname = req.nextUrl.pathname;
 
     // 1. Rutas públicas
@@ -75,12 +75,12 @@ export function middleware(req: NextRequest) {
         pathname.startsWith("/auth") ||
         pathname.startsWith("/legal")
     ) {
-        return publicMiddleware(req);
+        return publicProxy(req);
     }
 
     // 2. Rutas protegidas
     else if (pathname.startsWith("/user") || pathname.startsWith("/admin")) {
-        return protectedMiddleware(req);
+        return protectedProxy(req);
     }
 
     // 3. Cualquier otra ruta continúa normal

@@ -77,7 +77,7 @@ Additionally, we adhered to __DevOps Culture__ practices and a __SCRUM__ oriente
 │   ├── /lib
 │   │   ├── /utils
 │   │   └── store.ts
-│   └── middleware.ts
+│   └── proxy.ts
 ├── .env*
 ├── .gitignore
 ├── .dockerignore
