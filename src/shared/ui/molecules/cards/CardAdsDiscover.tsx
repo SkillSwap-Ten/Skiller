@@ -26,7 +26,7 @@ const Avatar = styled.div<{ urlImage: string }>`
     background-size: cover;
     background-position: center;
     width: 3rem;
-    height: 3rem;
+    aspect-ratio: 1 / 1;
     border-radius: 10px;
 `;
 

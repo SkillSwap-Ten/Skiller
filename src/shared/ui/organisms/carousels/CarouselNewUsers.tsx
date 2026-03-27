@@ -27,6 +27,10 @@ const CarouselWrapper = styled.div`
 const CustomSwiper = styled(Swiper)`
   padding: 0 !important;
 
+  & svg {
+    width: 9px;
+  }
+
   .swiper-button-next,
   .swiper-button-prev {
     translate:0 -12px;
@@ -38,7 +42,7 @@ const CustomSwiper = styled(Swiper)`
     border-radius: 50%;
     background: ${({ theme }) => theme.colors.bgTertiary};
     color: ${({ theme }) => theme.colors.textSecondary};
-    border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+    border: 1px solid ${({ theme }) => theme.colors.textGrey};
     transform: scale(0.75);
   }
 

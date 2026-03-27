@@ -5,18 +5,18 @@ import { IModalProps } from "@/src/shared/types/organisms/modal.type";
 import { createPortal } from 'react-dom'
 
 const ModalOverlay = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
   margin: 0;
   padding: 0;
+  z-index: 1000;
 
   & strong {
     font-weight: bold;
@@ -24,44 +24,45 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgOrange};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
-  border-radius: 10px;
   height: 75%;
+  max-height: 416px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 416px;
   border: none;
   margin: 0;
-  padding: 0;
+  padding: 4px;
+  padding-top: 0;
+  border-radius: 10px;
 
   @media (max-width: 600px) {
-    max-height: 312px;
+    max-height: 59dvh;
     width: 80%;
   }
 `;
 
 const ScrollContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgNeutral};
   width: 100% !important;
   height: 100% !important;
+  padding: 1rem;
+  gap: 12px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 1rem;
-  gap: 1rem;
 `;
 
 const ModalHeader = styled.div`
-  font-size: 20px !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background: ${({ theme }) => theme.colors.gradientPrimary};
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 18px !important;
+  font-weight: 600;
   padding: 0.5rem;
   padding-left: 1rem;
   display: flex;
@@ -69,48 +70,48 @@ const ModalHeader = styled.div`
   align-items: center;
 
   & div{
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
   }
 
   & article{
-    font-weight: bold;
-    font-style: normal;
-    font-size: 20px !important;
+    font-size: 18px !important;
+    font-weight: 600;
     opacity: 0.6;
     padding-left: 6px;
+    font-style: normal;
   }
 `;
 
 const ModalCloseButton = styled.button`
+  color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 1.5rem !important;
+  opacity: 0.6;
   background: none;
   font-weight: bold;
-  color: #000;
-  opacity: 0.5;
   border: none;
-  font-size: 1.5rem !important;
   cursor: pointer;
 `;
 
 const DivRoute = styled.div`
-  width: 100%;
-  min-height: 34px !important;
-  display: flex;
-  border-radius: 10px;
-  justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  padding: 0.5rem;
-  padding-left: 1rem;
-  font-weight: bold;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+  width: 100%;
+  min-height: 32px !important;
+  border-radius: 10px;
+  padding-left: 1rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
 
   & p {
-    color: #222;
+    color: ${({ theme }) => theme.colors.textGray};
     white-space: nowrap;
     text-overflow: ellipsis !important;
     overflow: hidden;
-    font-weight: bold;
-    line-height: normal;
+    font-weight: 600;
   }
 `;
 
@@ -261,13 +262,13 @@ const ModalTips: React.FC<IModalProps> = ({ isOpen, onClose }) => {
             </LeftSection>
             <RightSection>
               <article>
-                <span>🔵</span><AlertText>En tu sección <strong>Social</strong> podrás realizar <strong>Reportes</strong>.</AlertText>
+                <span>⚪</span><AlertText>En tu sección <strong>Social</strong> podrás realizar <strong>Reportes</strong>.</AlertText>
               </article>
               <article>
                 <span>⚠️</span><AlertText>Si lo solicitas, acude a las <strong>autoridades policiales</strong>.</AlertText>
               </article>
               <article>
-                <span>⛔</span><AlertText>Las sanciones van de <strong>suspensiones a bloqueos</strong>.</AlertText></article>
+                <span>⛔</span><AlertText>Las sanciones van desde <strong>suspensiones a bloqueos</strong>.</AlertText></article>
             </RightSection>
           </ModalContent>
         </ScrollContainer>

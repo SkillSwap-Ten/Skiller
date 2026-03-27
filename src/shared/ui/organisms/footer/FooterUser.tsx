@@ -91,33 +91,40 @@ const Box = styled.section`
     hyphens: none;
     word-wrap: normal;
     overflow-wrap: normal;
-    font-size: 15px;
+  }
+
+  a{
+    font-size: 12px;
+  }
+
+  p{
+    font-size: 13px;
   }
 
   @media (max-width: 679px) {
     width: 95%;
 
-    > * {
+    p{
       font-size: 12px;
     }
   }
 `;
 
 const FooterNavItem = styled.li`
-    display: inline-block;
-    font-size: 15px;
-    max-height: 54px;
-    margin-top: 10px;
-    cursor: pointer;
+  display: inline-block;
+  max-height: 54px;
+  cursor: pointer;
+  margin-top: 10px;
 
-    a{
-        padding: 0 15px;
+  a{
+    font-size: 12px;
+    padding: 0 15px;
 
-        & svg{
-            width: 50px;
-            height: auto;
-        }
+    & svg{
+      width: 50px;
+      height: auto;
     }
+  }
 `;
 
 export const FooterUser: React.FC = () => {
@@ -125,19 +132,19 @@ export const FooterUser: React.FC = () => {
     <FooterStyled>
       <ul>
         <FooterNavItem>
-          <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user" label="INICIO" />
+          <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user" label="INICIO" />
         </FooterNavItem>
         <FooterNavItem>
-          <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user/match" label="MATCH" />
+          <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/match" label="MATCH" />
         </FooterNavItem>
         <FooterNavItem>
-          <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user/discover" label="DESCUBRE" />
+          <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/discover" label="DESCUBRE" />
         </FooterNavItem>
         <FooterNavItem>
-          <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user/profile" label="PERFIL" />
+          <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/profile" label="PERFIL" />
         </FooterNavItem>
         <FooterNavItem>
-          <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user/legal" label="LEGAL" />
+          <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/legal" label="LEGAL" />
         </FooterNavItem>
       </ul>
       <Box>
@@ -147,7 +154,7 @@ export const FooterUser: React.FC = () => {
         <div className="social-icons">
           <NavLink
             target="_blank"
-            hover={{ transform: 'scale(0.95)', transition: '0.4s'}}
+            hover={{ transform: 'scale(0.95)', transition: '0.4s' }}
             href="https://www.instagram.com/franccoina"
             label="Instagram"
           >
@@ -155,7 +162,7 @@ export const FooterUser: React.FC = () => {
           </NavLink>
           <NavLink
             target="_blank"
-            hover={{ transform: 'scale(0.95)', transition: '0.4s'}}
+            hover={{ transform: 'scale(0.95)', transition: '0.4s' }}
             href="https://www.figma.com/design/FEDH5WgaGXBLSr2xBBA8OV/SkillSwap.ts-Mockup?t=O8A7L1zQEFkpy70a-1"
             label="Figma"
           >
@@ -163,7 +170,7 @@ export const FooterUser: React.FC = () => {
           </NavLink>
           <NavLink
             target="_blank"
-            hover={{ transform: 'scale(0.95)', transition: '0.4s'}}
+            hover={{ transform: 'scale(0.95)', transition: '0.4s' }}
             href="https://github.com/SkillSwap-Ten/Skiller"
             label="GitHub-Frontend"
           >
@@ -171,7 +178,7 @@ export const FooterUser: React.FC = () => {
           </NavLink>
           <NavLink
             target="_blank"
-            hover={{ transform: 'scale(0.95)', transition: '0.4s'}}
+            hover={{ transform: 'scale(0.95)', transition: '0.4s' }}
             href="https://github.com/SkillSwap-Ten/SkillSwap"
             label="GitHub-Backend"
           >

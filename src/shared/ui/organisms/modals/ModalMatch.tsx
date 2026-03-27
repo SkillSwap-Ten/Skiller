@@ -5,115 +5,121 @@ import RequestForm from "../forms/FormRequest";
 import { IModalProps } from "@/src/shared/types/organisms/modal.type";
 
 const ModalOverlay = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
   margin: 0;
   padding: 0;
+  z-index: 1000;
+
+  & strong {
+    font-weight: bold;
+  }
 `;
 
 const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   height: 75%;
-  padding: 1rem;
+  max-height: 416px;
   position: relative;
-  margin: 0;
-  border-radius: 10px;
-  padding: 0;
-  border: none;
   display: flex;
   flex-direction: column;
-  max-height: 416px;
+  justify-content: center;
+  border: none;
+  margin: 0;
+  padding: 4px;
+  padding-top: 0;
+  border-radius: 10px;
 
   @media (max-width: 600px) {
-    max-height: 312px;
+    max-height: 59dvh;
     width: 80%;
   }
 `;
 
 const ScrollContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgNeutral};
   width: 100% !important;
   height: 100% !important;
+  padding: 1rem;
+  gap: 12px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 1rem;
-  gap: 1rem;
 `;
 
 const ModalHeader = styled.div`
-  font-size: 20px !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background: ${({ theme }) => theme.colors.bgSecondary};
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 18px !important;
+  font-weight: 600;
   padding: 0.5rem;
   padding-left: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: bold;
 
   & div{
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
   }
 
   & article{
-    font-weight: bold;
-    font-style: normal;
-    font-size: 20px !important;
+    font-size: 18px !important;
+    font-weight: 600;
     opacity: 0.6;
     padding-left: 6px;
+    font-style: normal;
   }
 `;
 
 const ModalCloseButton = styled.button`
-  background: none;
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 1.5rem !important;
+  opacity: 0.6;
+  background: none;
+  font-weight: bold;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
 `;
 
 const DivRoute = styled.div`
-  width: 100%;
-  min-height: 34px !important;
-  display: flex;
-  border-radius: 10px;
-  justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  padding: 0.5rem;
-  padding-left: 1rem;
-  font-weight: bold;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+  width: 100%;
+  min-height: 32px !important;
+  border-radius: 10px;
+  padding-left: 1rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
 
   & p {
-    color: #222;
+    color: ${({ theme }) => theme.colors.textGray};
     white-space: nowrap;
     text-overflow: ellipsis !important;
     overflow: hidden;
-    font-weight: bold;
-    line-height: normal;
+    font-weight: 600;
   }
 `;
 
 const UserInfo = styled.div`
-  min-width: 45%;
   display: flex;
   flex-direction: column;
   align-items: start;
+  min-width: 45%;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-left: 1px solid ${({ theme }) => theme.colors.textTertiary};
@@ -127,8 +133,8 @@ const UserDetail = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border-top: 1px solid ${({ theme }) => theme.colors.textTertiary};
   text-align: end;
+  border-top: 1px solid ${({ theme }) => theme.colors.textTertiary};
   border-bottom-right-radius: 10px;
   width: 100%;
   padding: 1rem;
@@ -150,7 +156,7 @@ const UserName = styled.h3`
   }
 
   p {
-    color: #000;
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 0.8rem;
     font-weight: 500;
     text-align: start;
@@ -166,22 +172,18 @@ const DivRequest = styled.div`
   gap: 0.5rem;
   padding: 1rem;
 
-  @media (max-width: 600px) {
-    width: 100%;
-    height: 100%;
-
-    & textarea{
-      min-height: 100px;
-  }
-  }
-
   & textarea{
-    max-height: 212px;
     border-radius: 10px;
+    min-height: 100px;
   }
 
   & button{
     border-radius: 10px;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -190,6 +192,7 @@ const Div = styled.div`
   border-radius: 10px;
   width: 100%;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 
@@ -207,11 +210,10 @@ const Connections = styled.div`
   padding: 1rem;
   padding-bottom: 0;
   margin-bottom: 0.5rem;
-  font-size: 16px;
   color: ${({ theme }) => theme.colors.textSecondary};
 
   div {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -219,11 +221,10 @@ const Connections = styled.div`
 const RatingSection = styled.div`
   padding: 1rem;
   padding-bottom: 0;
-  font-size: 16px;
   color: ${({ theme }) => theme.colors.textSecondary};
 
   div {
-    font-size: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -261,13 +262,13 @@ const Modal: React.FC<IModalProps> = ({ userToInteractWith, isOpen, onClose }) =
   return (
     <ModalOverlay>
       <ModalContainer>
-          <ModalHeader>
-            Conectar
-            <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
-          </ModalHeader>          
-          <ScrollContainer>
+        <ModalHeader>
+          Conectar
+          <ModalCloseButton aria-label="Control Button" onClick={onClose}>×</ModalCloseButton>
+        </ModalHeader>
+        <ScrollContainer>
           <DivRoute><p>C:\ User\ Documents\ SkillSwap</p></DivRoute>
-            <Div>
+          <Div>
             <DivRequest>
               {/* Pasamos onClose al formulario */}
               <RequestForm receivingUser={userToInteractWith!} onClose={onClose} />
@@ -303,9 +304,9 @@ const Modal: React.FC<IModalProps> = ({ userToInteractWith, isOpen, onClose }) =
                   <Unknown>？Unknown</Unknown>
                 </UserName>
               </UserDetail>
-            </UserInfo>        
-          </Div>            
-          </ScrollContainer>
+            </UserInfo>
+          </Div>
+        </ScrollContainer>
       </ModalContainer>
     </ModalOverlay>
   );

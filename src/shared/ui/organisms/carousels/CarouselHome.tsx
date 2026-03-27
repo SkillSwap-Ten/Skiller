@@ -99,20 +99,18 @@ const Title = styled.h2`
 
 const Subtitle = styled.span`
   color: ${({ theme }) => theme.colors.textWhite};
-  font-family: ${baskervville.style.fontFamily};
-  font-size: 14px;
+  font-size: 16px;
   opacity: 0.5;
   text-align: center;
   margin-bottom: 40px;
-  font-weight: normal;
-  font-style: italic;
+  font-weight: 500;
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   @media (max-width: 480px) {
-    font-size: 10px;
+    font-size: 12px;
   }
 `;
 

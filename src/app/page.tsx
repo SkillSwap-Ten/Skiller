@@ -572,7 +572,7 @@ const VideoContainer = styled.div`
   & h2 {
     font-size: 35px;
     color: ${({ theme }) => theme.colors.textOrange};
-    margin: 10px 0;
+    margin: 8px 0;
     width: 100%;
     padding: 0 180px;
     text-align: start;
@@ -582,7 +582,7 @@ const VideoContainer = styled.div`
     text-align: start;
     width: 100%;
     margin: 0;
-    font-size: 16px;
+    font-size: 1.1rem;
     font-weight: 400;
     padding: 0 180px;
     color: ${({ theme }) => theme.colors.textSecondary};
@@ -594,7 +594,7 @@ const VideoContainer = styled.div`
     width: 100%;
     padding: 0 180px;
     color: ${({ theme }) => theme.colors.textSecondary};
-    font-size: 10px;
+    font-size: 12px;
     opacity: 0.8;
   }
 
@@ -607,6 +607,7 @@ const VideoContainer = styled.div`
     }
 
     & h3 {
+      font-size: 15px;
       font-weight: 300;
       padding: 0 50px;
       color: ${({ theme }) => theme.colors.textSecondary};

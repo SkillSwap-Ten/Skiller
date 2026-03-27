@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     creatorId: '1664752708694208515',
     siteId: '1664752708694208515',
     description: 'Aventúrate a intercambiar habilidades digitales con SkillSwap.',
-    images: ['/img/skillswap-opengraph-tw.png'],
+    images: ['/img/skillswap-opengraph.png'],
   },
   facebook: {
     appId: "804095175706410",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/img/skillswap-opengraph-og.png",
+        url: "/img/skillswap-opengraph.png",
         width: 1200,
         height: 630,
         alt: "SkillSwap-Ten",

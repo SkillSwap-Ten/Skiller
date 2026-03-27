@@ -196,7 +196,8 @@ const SocialPage = () => {
   const fetchMessages = useCallback(async (chatId: number) => {
     //const data = await getMessagesByChatId(chatId);
     //setMessages(data);
-    setMessages(MOCK_MESSAGES);
+    const filtered = MOCK_MESSAGES.filter(m => m.chatId === chatId);
+    setMessages(filtered);
   }, []);
 
   // ---------------- FETCH REQUESTS ----------------
@@ -240,8 +241,7 @@ const SocialPage = () => {
     setSelectedChatId(null);
   }, []);
 
-  const selectedChat = chats.find((c) => c.id === selectedChatId);
-
+  const selectedChat = chats.find((c) => Number(c.id) === Number(selectedChatId));
   const isChatOpen = !!selectedChatId;
 
   useEffect(() => {

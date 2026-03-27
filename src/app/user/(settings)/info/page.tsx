@@ -523,7 +523,7 @@ const UserInfo = () => {
                 </WidgetBody>
                 <CarouselMatched userId={metricsData!.idUsuario} />
               </WidgetContainer>
-              <WidgetContainer>
+              <WidgetContainer style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <WidgetBody>
                   <Bar data={barData} options={barOptions} />
                 </WidgetBody>

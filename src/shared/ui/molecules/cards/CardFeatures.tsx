@@ -59,6 +59,7 @@ const SkeletonColumn = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: 4px;
 
   @media (max-width: 950px) {
     display: none !important;
@@ -69,8 +70,8 @@ const FeaturesCard: React.FC<ICardFeaturesProps> = ({ error, loading, userData, 
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       <SkeletonColumn style={{ maxHeight: "75vh", width: '100%' }}>
-        <Skeleton style={{ display: 'flex', height: '35.75vh', width: '100%' }} />
-        <Skeleton style={{ display: 'flex', height: '35.75vh', width: '100%' }} />
+        <Skeleton style={{ display: 'flex', height: '36.75vh', width: '100%' }} />
+        <Skeleton style={{ display: 'flex', height: '36.75vh', width: '100%' }} />
       </SkeletonColumn>
     </SkeletonTheme>
   );

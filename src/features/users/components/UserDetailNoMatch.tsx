@@ -92,7 +92,7 @@ const ProfileImage = styled.div<{ urlImage: string }>`
   background-size: cover;
   background-position: center;
   width: 4rem;
-  height: 4rem;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
 

@@ -31,7 +31,7 @@ const Avatar = styled.div<{ urlImage: string }>`
   background-position: center;
   align-self: start;
   width: 3rem;
-  height: 3rem;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
 
