@@ -17,9 +17,8 @@ const FormContainer = styled.form`
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 80%;
+  height: 100%;
   padding: 10px;
-  margin-bottom: 10px;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
   resize: none;
 
@@ -30,9 +29,10 @@ const TextArea = styled.textarea`
 
 const SendButton = styled.button`
   background: none;
-  width: 50%;
+  width: 40%;
+  min-width: 100px;
   border: none;
-  padding: 0.3rem 0.7rem;
+  padding: 0.3rem 0.6rem;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
   color: ${({ theme }) => theme.colors.textSecondary};
   cursor: pointer;

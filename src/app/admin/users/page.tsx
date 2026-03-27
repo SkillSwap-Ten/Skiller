@@ -193,7 +193,7 @@ const Users: React.FC = () => {
             <WidgetBody>
               <h3>Gestor de usuarios</h3>
               <article>
-                <DivInfo>Aquí podrás revisar la información de los usuarios de la plataforma. Realiza modificaciones en sus estados de cuenta según los T&C de <strong>SkillSwap</strong>. Los códigos de los estados de los usuarios son: <strong>1. Activo, 2. Inactivo, 3. Suspendido</strong></DivInfo>
+                <DivInfo>Aquí podrás revisar la información de los usuarios de la plataforma. Realiza modificaciones en sus estados de cuenta según los Términos y Condiciones de <strong>SkillSwap</strong>. Los códigos de los estados de los usuarios son: <strong>1. Activo, 2. Inactivo, 3. Suspendido</strong></DivInfo>
               </article>
             </WidgetBody>
           </WidgetContainer>

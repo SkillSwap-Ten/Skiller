@@ -11,14 +11,29 @@ const ANIM_DURATION = 500
 
 const SliderContainer = styled.div<{ backgroundImage: string }>`
   position: relative;
-  background-image: url(${(props) => props.backgroundImage});
-  background-size: cover;
-  background-position: bottom;
   width: 100%;
   height: 100%;
   border-radius: 10px;
   margin: 0 auto;
   overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url(${(props) => props.backgroundImage});
+    background-size: cover;
+    background-position: center;
+    filter: blur(12px) brightness(0.8) grayscale();
+    transform: scale(1.1);
+    z-index: 0;
+  }
+
+  /* asegura que los hijos queden por encima */
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
 `;
 
 const SliderWrapper = styled.div`
@@ -225,7 +240,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
       description: "Invita a tus amigos a unirse a nuestra comunidad de habilidades digitales.",
       buttonText: "Compartir",
       buttonIcon: <FaShare />,
-      backgroundImage: "/img/bg-feature.webp",
+      backgroundImage: "/img/bg-dark.gif",
       action: () => {
         if (navigator.share) {
           navigator.share({
@@ -243,7 +258,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
       description: "Conoce nuestras recomendaciones para una experiencia segura.",
       buttonText: "Ver Tips",
       buttonIcon: <FaShieldAlt />,
-      backgroundImage: "/img/bg-feature.webp",
+      backgroundImage: "/img/bg-dark.gif",
       action: openModalTips,
     },
     {
@@ -251,7 +266,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
       description: "¿Encontraste un comportamiento inapropiado? Reporta al usuario.",
       buttonText: "Reportar",
       buttonIcon: <FaExclamationTriangle />,
-      backgroundImage: "/img/bg-feature.webp",
+      backgroundImage: "/img/bg-dark.gif",
       action: openModalReport,
     },
   ]

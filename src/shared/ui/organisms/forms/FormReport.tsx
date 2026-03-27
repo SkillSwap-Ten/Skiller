@@ -23,7 +23,7 @@ const FormContainer = styled.form`
       padding: 10px !important;
       border-radius: 10px !important;
       border: 1px solid ${({ theme }) => theme.colors.textTertiary} !important;
-      background: ${({ theme }) => theme.colors.bgOrange} !important;
+      background: ${({ theme }) => theme.colors.bgNeutral} !important;
       color: ${({ theme }) => theme.colors.textSecondary} !important;
       font-size: 14px !important;
       width: 100% !important;

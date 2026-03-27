@@ -91,33 +91,40 @@ const Box = styled.section`
     hyphens: none;
     word-wrap: normal;
     overflow-wrap: normal;
-    font-size: 15px;
+  }
+
+  a{
+    font-size: 12px;
+  }
+
+  p{
+    font-size: 13px;
   }
 
   @media (max-width: 679px) {
     width: 95%;
 
-    > * {
+    p{
       font-size: 12px;
     }
   }
 `;
 
 const FooterNavItem = styled.li`
-    display: inline-block;
-    font-size: 15px;
-    max-height: 54px;
-    margin-top: 10px;
-    cursor: pointer;
+  display: inline-block;
+  max-height: 54px;
+  cursor: pointer;
+  margin-top: 10px;
 
-    a{
-        padding: 0 15px;
+  a{
+    font-size: 12px;
+    padding: 0 15px;
 
-        & svg{
-            width: 50px;
-            height: auto;
-        }
+    & svg{
+      width: 50px;
+      height: auto;
     }
+  }
 `;
 
 export const FooterAdmin: React.FC = () => {

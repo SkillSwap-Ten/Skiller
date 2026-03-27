@@ -1,11 +1,10 @@
 'use client'
 import styled, { keyframes } from 'styled-components'
-import { useEffect, useState } from 'react'
-import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { IRequestsListProps } from '../../types/social.type'
 import { timeAgo } from '@/src/lib/utils/timeAgoFormatter'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6'
+import { IRequests } from '@/src/core/models/requests/requests.model'
 import ModalRequestViewer from '@/src/shared/ui/organisms/modals/ModalRequestViewer'
 
 const appear = keyframes`
@@ -41,28 +40,27 @@ const RequestItem = styled.div<{ $answered?: boolean }>`
   opacity: ${({ $answered }) => ($answered ? 0.6 : 1)};
 `
 
-const Avatar = styled.button<{ urlImage: string }>`
+const Avatar = styled.button`
   position: relative;
   width: 52px;
   height: 52px;
   border-radius: 50%;
   flex-shrink: 0;
   cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.colors.borderDark};
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.textWhite};
   font-size: 22px;
   overflow: hidden;
+  box-shadow: inset 0 0 8px 4px #22222225;
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url(${(props) => props.urlImage});
-    background-size: cover;
-    background-position: center;
+    background: ${({ theme }) => theme.colors.bgDark};
     filter: blur(4px); 
     transform: scale(1.1);
     z-index: 0;
@@ -184,45 +182,11 @@ const ResponseBadge = styled.div<{ $type: 'accepted' | 'rejected' }>`
 `
 
 const RequestsList = ({ requests, onAccept, onReject }: IRequestsListProps) => {
-  const router = useRouter()
-  const [validatedImages, setValidatedImages] = useState<Record<number, string>>({})
-  const [isModalRequesterOpen, setIsModalRequesterOpen] = useState(false)
+  const [selectedRequest, setSelectedRequest] = useState<IRequests | null>(null)
 
-  const openModalRequester = () => setIsModalRequesterOpen(true)
-  const closeModalRequester = () => setIsModalRequesterOpen(false)
-
-  useEffect(() => {
-    const validateImage = (id: number, url?: string) => {
-      if (!url || !isValidImageUrl(url)) {
-        setValidatedImages(prev => ({
-          ...prev,
-          [id]: '/img/default-picture-full.webp'
-        }))
-        return
-      }
-
-      const img = new Image()
-      img.src = url
-
-      img.onload = () => {
-        setValidatedImages(prev => ({
-          ...prev,
-          [id]: url
-        }))
-      }
-
-      img.onerror = () => {
-        setValidatedImages(prev => ({
-          ...prev,
-          [id]: '/img/default-picture-full.webp'
-        }))
-      }
-    }
-
-    requests.forEach(req => {
-      validateImage(req.id, req.urlImageRequesting)
-    })
-  }, [requests])
+  const openModalRequester = (req: IRequests) => {
+    setSelectedRequest(req)
+  }
 
   if (!requests || requests.length === 0) {
     return (
@@ -243,62 +207,46 @@ const RequestsList = ({ requests, onAccept, onReject }: IRequestsListProps) => {
   return (
     <Container>
       {pendingRequests.map((req) => (
-        <>
-          <RequestItem key={req.id}
+        <RequestItem key={req.id}
+        >
+          <Avatar
+            type="button"
+            onClick={() => openModalRequester(req)}
+            aria-label={`Ver detalle de Solicitud de ${req.userNameRequesting}`
+            }
           >
-            <Avatar
-              urlImage={
-                validatedImages[req.id] ||
-                '/img/default-picture-full.webp'
-              }
-              type="button"
-              onClick={openModalRequester}
-              aria-label={`Ver detalle de Solicitud de ${req.userNameRequesting}`
-              }
+            <FaRegEye />
+          </Avatar>
+          <RequestInfo>
+            <RequestName>{req.userNameRequesting}</RequestName>
+            <RequestDescription>{req.description}</RequestDescription>
+            <RequestTimeStamp>
+              {timeAgo(req.createdAt || new Date().toISOString())}
+            </RequestTimeStamp>
+          </RequestInfo>
+          <ActionsContainer>
+            <ActionButton
+              $variant="accept"
+              onClick={() => onAccept(req.id)}
+              aria-label="Aceptar solicitud"
             >
-              <FaRegEye />
-            </Avatar>
-            <RequestInfo>
-              <RequestName>{req.userNameRequesting}</RequestName>
-              <RequestDescription>{req.description}</RequestDescription>
-              <RequestTimeStamp>
-                {timeAgo(req.createdAt || new Date().toISOString())}
-              </RequestTimeStamp>
-            </RequestInfo>
-            <ActionsContainer>
-              <ActionButton
-                $variant="accept"
-                onClick={() => onAccept(req.id)}
-                aria-label="Aceptar solicitud"
-              >
-                ✔
-              </ActionButton>
+              ✔
+            </ActionButton>
 
-              <ActionButton
-                $variant="reject"
-                onClick={() => onReject(req.id)}
-                aria-label="Rechazar solicitud"
-              >
-                ✖
-              </ActionButton>
-            </ActionsContainer>
-          </RequestItem>
-
-          <ModalRequestViewer
-            request={req}
-            isOpen={isModalRequesterOpen}
-            onClose={closeModalRequester}
-          />
-        </>
+            <ActionButton
+              $variant="reject"
+              onClick={() => onReject(req.id)}
+              aria-label="Rechazar solicitud"
+            >
+              ✖
+            </ActionButton>
+          </ActionsContainer>
+        </RequestItem>
       ))}
 
       {answeredRequests.map((req) => (
         <RequestItem key={req.id} $answered>
-          <Avatar
-            urlImage={
-              validatedImages[req.id] ||
-              '/img/default-picture-full.webp'
-            } >
+          <Avatar>
             <FaRegEyeSlash />
           </Avatar>
           <RequestInfo>
@@ -309,6 +257,12 @@ const RequestsList = ({ requests, onAccept, onReject }: IRequestsListProps) => {
           </ResponseBadge>
         </RequestItem>
       ))}
+
+      <ModalRequestViewer
+        request={selectedRequest}
+        isOpen={!!selectedRequest}
+        onClose={() => setSelectedRequest(null)}
+      />
     </Container>
   )
 }

@@ -95,7 +95,7 @@ const ProfileImage = styled.div<{ urlImage: string }>`
   background-size: cover;
   background-position: center;
   width: 4rem;
-  height: 4rem;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
@@ -429,6 +429,10 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
   const [languages, setLanguages] = useState<string[]>([]);
   const [isGitHub, setIsGitHub] = useState(false);
   const [usernameGitHub, setUsernameGitHub] = useState<string | null>(null);
+    const [statsLoaded, setStatsLoaded] = useState({
+    main: true,
+    langs: true,
+  });
 
   useEffect(() => {
     if (!userData) return;
@@ -487,6 +491,11 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
 
     runUserDetail();
   }, [userData, userDetail]);
+
+  
+  useEffect(() => {
+    setStatsLoaded({ main: true, langs: true });
+  }, [usernameGitHub]);
 
   const handleReportClick = () => {
     setIsModalReportOpen(true);
@@ -622,7 +631,7 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
                     <FaLinkedin />
                     <NavLink
                       target="_blank"
-                      hover={{ fontWeight: '700', transition: '0.4s'}}
+                      hover={{ fontWeight: '700', transition: '0.4s' }}
                       href={userDetail?.urlLinkedin ? userDetail.urlLinkedin : "#"}
                       label="LinkedIn"
                     />
@@ -634,7 +643,7 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
                     <FaGithubSquare />
                     <NavLink
                       target="_blank"
-                      hover={{ fontWeight: '700', transition: '0.4s'}}
+                      hover={{ fontWeight: '700', transition: '0.4s' }}
                       href={userDetail?.urlGithub ? userDetail.urlGithub : "#"}
                       label="GitHub"
                     />
@@ -646,26 +655,33 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
                     <FaBehanceSquare />
                     <NavLink
                       target="_blank"
-                      hover={{ fontWeight: '700', transition: '0.4s'}}
+                      hover={{ fontWeight: '700', transition: '0.4s' }}
                       href={userDetail?.urlBehance ? userDetail.urlBehance : "#"}
                       label="Adobe Behance"
                     />
                   </SocialButton>
                 </SocialButtons>
-                {isGitHub && (
-                  <StatsContainer>
-                    <StatsImage
-                      src={`https://github-readme-stats.vercel.app/api?username=${usernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
-                      alt={`${usernameGitHub}-stats`}
-                    />
-                    {languages.length !== 0 && (
-                      <StatsImage
-                        src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${usernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
-                        alt={`${usernameGitHub}-top-langs`}
-                      />
-                    )}
-                  </StatsContainer>
-                )}
+
+                {isGitHub &&
+                  (statsLoaded.main || (languages.length !== 0 && statsLoaded.langs)) && (
+                    <StatsContainer>
+                      {statsLoaded.main && (
+                        <StatsImage
+                          src={`https://github-readme-stats.vercel.app/api?username=${usernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
+                          alt={`${usernameGitHub}-stats`}
+                          onError={() => setStatsLoaded(prev => ({ ...prev, main: false }))}
+                        />
+                      )}
+
+                      {languages.length !== 0 && statsLoaded.langs && (
+                        <StatsImage
+                          src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${usernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
+                          alt={`${usernameGitHub}-top-langs`}
+                          onError={() => setStatsLoaded(prev => ({ ...prev, langs: false }))}
+                        />
+                      )}
+                    </StatsContainer>
+                  )}
               </MediaContent>
               <MediaContent>
                 <H3>Cultura</H3>

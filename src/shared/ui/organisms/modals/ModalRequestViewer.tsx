@@ -8,19 +8,19 @@ import ButtonBelow from "../../atoms/buttons/ButtonBelow";
 import { useRouter } from "next/navigation";
 
 // Modal Form Component
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
+const ModalOverlay = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
   margin: 0;
   padding: 0;
+  z-index: 1000;
 
   & strong {
     font-weight: bold;
@@ -32,44 +32,45 @@ const ModalOverlay = styled.div<{ isOpen: boolean }>`
 `;
 
 const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
-  border-radius: 10px;
   height: 75%;
+  max-height: 416px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 416px;
   border: none;
   margin: 0;
-  padding: 0;
+  padding: 4px;
+  padding-top: 0;
+  border-radius: 10px;
 
   @media (max-width: 600px) {
-    max-height: 312px;
+    max-height: 59dvh;
     width: 80%;
   }
 `;
 
 const ScrollContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgNeutral};
   width: 100% !important;
   height: 100% !important;
+  padding: 1rem;
+  gap: 12px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 1rem;
-  gap: 1rem;
 `;
 
 const ModalHeader = styled.div`
-  font-size: 20px !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background: ${({ theme }) => theme.colors.bgSecondary};
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 18px !important;
+  font-weight: 600;
   padding: 0.5rem;
   padding-left: 1rem;
   display: flex;
@@ -77,46 +78,48 @@ const ModalHeader = styled.div`
   align-items: center;
 
   & div{
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
   }
 
   & article{
-    font-weight: bold;
-    font-style: normal;
-    font-size: 20px !important;
+    font-size: 18px !important;
+    font-weight: 600;
     opacity: 0.6;
     padding-left: 6px;
+    font-style: normal;
   }
 `;
 
 const ModalCloseButton = styled.button`
-  background: none;
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 1.5rem !important;
+  opacity: 0.6;
+  background: none;
+  font-weight: bold;
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
 `;
 
 const DivRoute = styled.div`
-  width: 100%;
-  min-height: 34px !important;
-  display: flex;
-  border-radius: 10px;
-  justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  padding: 0.5rem;
-  padding-left: 1rem;
-  font-weight: bold;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+  width: 100%;
+  min-height: 32px !important;
+  border-radius: 10px;
+  padding-left: 1rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
 
   & p {
-    color: #222;
+    color: ${({ theme }) => theme.colors.textGray};
     white-space: nowrap;
     text-overflow: ellipsis !important;
     overflow: hidden;
-    font-weight: bold;
-    line-height: normal;
+    font-weight: 600;
   }
 `;
 
@@ -170,20 +173,16 @@ const RightSection = styled.div`
   border-top-right-radius: 10px;
 
   @media (max-width: 1200px) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 0;
+    border-radius: 10px;
+    padding: 1rem;
+    padding-bottom: 0;
     width: 100%;
-    border-left: none;
+    border: none;
     height: auto;
 
     & article {
       justify-content: start;
     }
-  }
-
-  @media (max-width: 550px) {
-    padding: 1rem;
   }
 `;
 
@@ -221,6 +220,7 @@ const UserMainInfo = styled.div`
   @media (max-width: 1200px) {
     text-align: start;
     align-items: start;
+    gap: 0;
   }
 `;
 
@@ -230,19 +230,25 @@ const Avatar = styled.div<{ urlImage: string }>`
   background-size: cover;
   background-position: center;
   width: clamp(6rem, 10vw, 11rem);
-  height: clamp(6rem, 10vw, 11rem);
-  border-radius: 10px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  @media (max-width: 1200px) {
+    width: 5rem;
+  }
 `;
 
 const RequestContent = styled.div`
   display: flex;
   align-items: start;
   background: ${({ theme }) => theme.colors.bgTertiary};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
+  color: ${({ theme }) => theme.colors.textGrey};
   width: 100%;
   height: 100%;
   padding: 8px 16px;
   border-radius: 8px;
-  border: none;
   gap: 12px;
   text-align: justify;
 `
@@ -259,6 +265,10 @@ const UserButton = styled(ButtonBelow)`
     color: ${({ theme }) => theme.colors.textSecondary};
     font-weight: 600;
     transition: 0.4s;
+  }
+
+  @media (max-width: 1200px) {
+    margin-top: 8px;
   }
 `
 
@@ -278,10 +288,10 @@ const ModalRequestViewer: React.FC<IModalRequestViewerProps> = ({ isOpen, reques
     }
   }, [isOpen])
 
-  if (!isOpen) return null;
+  if (!isOpen || !request) return null;
 
   return createPortal(
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay>
       <ModalContainer>
         <ModalHeader>
           <div>Revisar<article>Solicitud</article></div>
@@ -300,7 +310,7 @@ const ModalRequestViewer: React.FC<IModalRequestViewerProps> = ({ isOpen, reques
                 <Avatar urlImage={request.urlImageRequesting} />
                 <UserMainInfo>
                   <h3>{request.userNameRequesting}</h3>
-                  <p>Pendiente · {timeAgo(request.createdAt || new Date().toISOString())}</p>
+                  <p>{timeAgo(request.createdAt || new Date().toISOString())}</p>
                   <UserButton type="button" onClick={() => router.push(`/user/detail/u/${request.idRequestingUser}`)} aria-label={`Ver perfil de ${request.userNameRequesting}`}>
                     Ver Perfil
                   </UserButton>

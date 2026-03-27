@@ -6,121 +6,113 @@ import { IModalProps } from "@/src/shared/types/organisms/modal.type";
 import { createPortal } from 'react-dom'
 
 const ModalOverlay = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
   margin: 0;
   padding: 0;
+  z-index: 1000;
 
   & strong {
     font-weight: bold;
   }
-
-  > * {
-    font-size: 14px !important ;
-  }
 `;
 
 const ModalContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgOrange};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 70%;
   height: 75%;
   max-height: 416px;
-  padding: 1rem;
   position: relative;
-  margin: 0;
-  border-radius: 10px;
-  padding: 0;
-  border: none;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  border: none;
+  margin: 0;
+  padding: 4px;
+  padding-top: 0;
+  border-radius: 10px;
 
-  & h2{
-    margin: 0;
-  }
-
-  @media (max-width: 680px) {
-    max-height: 312px;
+  @media (max-width: 600px) {
+    max-height: 59dvh;
     width: 80%;
   }
 `;
 
 const ScrollContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgNeutral};
   width: 100% !important;
   height: 100% !important;
+  padding: 1rem;
+  gap: 12px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 1rem;
-  gap: 1rem;
 `;
 
 const ModalHeader = styled.div`
-  font-size: 20px !important;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background: ${({ theme }) => theme.colors.gradientPrimary};
   color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 18px !important;
+  font-weight: 600;
   padding: 0.5rem;
   padding-left: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 
   & div{
-    font-weight: bold;
+    font-weight: 600;
     display: flex;
   }
 
   & article{
-    font-weight: bold;
-    font-style: normal;
-    font-size: 20px !important;
+    font-size: 18px !important;
+    font-weight: 600;
     opacity: 0.6;
     padding-left: 6px;
+    font-style: normal;
   }
 `;
 
 const ModalCloseButton = styled.button`
+  color: ${({ theme }) => theme.colors.textWhite};
+  font-size: 1.5rem !important;
+  opacity: 0.6;
   background: none;
   font-weight: bold;
-  color: #000;
-  opacity: 0.5;
   border: none;
-  font-size: 1.5rem  !important;
   cursor: pointer;
 `;
 
 const DivRoute = styled.div`
-  width: 100%;
-  min-height: 34px !important;
-  display: flex;
-  border-radius: 10px;
-  justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
-  padding: 0.5rem;
-  padding-left: 1rem;
-  font-weight: bold;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+  width: 100%;
+  min-height: 32px !important;
+  border-radius: 10px;
+  padding-left: 1rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: bold;
 
   & p {
-    color: #222;
+    color: ${({ theme }) => theme.colors.textGray};
     white-space: nowrap;
     text-overflow: ellipsis !important;
     overflow: hidden;
-    font-weight: bold;
-    line-height: normal;
+    font-weight: 600;
   }
 `;
 
@@ -176,7 +168,7 @@ const AlertText = styled.p`
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   width: auto !important;
 
   span {
@@ -187,8 +179,20 @@ const AlertText = styled.p`
 
 const PoliceInfo = styled.div`
   font-weight: 300;
+  font-size: 14px;
   color: #000;
-  padding: 0.8rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  gap: 1rem;
+
+  & span{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const DivAlertText = styled.div`
@@ -200,7 +204,7 @@ const DivAlertText = styled.div`
 
 const DivColor = styled.div`
   border-top-right-radius: 10px;
-  background: ${({ theme }) => theme.colors.gradientPrimary};
+  background: ${({ theme }) => theme.colors.bgSecondary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.textTertiary};
   margin: 0;
   padding: 0;
@@ -212,7 +216,7 @@ const DivTexts = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0.7rem;
   width: 100%;
 `;
 
@@ -251,20 +255,24 @@ const Modal: React.FC<IModalProps> = ({ isOpen, onClose, userToInteractWith }) =
                 <DivColor />
                 <DivTexts>
                   <AlertText>
-                    <span>⚠️</span> No dudes en reportar.
+                    <span>⚪</span> La seguridad es primero.
                   </AlertText>
                   <AlertText>
-                    <span>🔵</span> La seguridad es lo primero.
+                    <span>⚠️</span> No dudes en reportar abusos.
                   </AlertText>
                   <AlertText>
-                    <span>⛔</span> Reprobamos cualquier tipo de abuso o ilegalidad.
+                    <span>⛔</span> Reprobamos cualquier tipo de acoso o ilegalidad.
                   </AlertText>
                 </DivTexts>
               </DivAlertText>
 
               <PoliceInfo>
-                <strong>Línea Policía Nacional: </strong><br />0 8000 91 1190<br /><br />
-                <strong>Página CAI Virtual: </strong><br />https://cai.virtual.policia.gov.co
+                <span>
+                  <strong>Línea Policía Nacional: </strong>0 8000 91 1190
+                </span>
+                <span>
+                  <strong>Página CAI Virtual: </strong>https://cai.virtual.policia.gov.co
+                </span>
               </PoliceInfo>
             </RightSection>
           </ModalContent>

@@ -153,8 +153,8 @@ const Avatar = styled.div<{ urlImage: string }>`
   background-size: cover;
   background-position: center;
   width: 4rem;
-  height: 4rem;
   border-radius: 10px;
+  aspect-ratio: 1 / 1;
   display: flex;
 `;
 

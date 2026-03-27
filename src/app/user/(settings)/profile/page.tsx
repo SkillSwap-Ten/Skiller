@@ -169,10 +169,8 @@ const UserDescription = styled.div`
   min-width: 285px;
   max-width: 285px;
   padding-bottom: 0.5rem;
-  min-height: 29rem;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  height: 100%;
   display: flex;
   flex-direction: column;
 
@@ -212,7 +210,6 @@ const DivUserDetails = styled.div`
 
 const DivContent = styled.div`
     display: flex;
-    align-items: start;
     height: 100%;
     min-height: 14.5rem;
     width: 100%;
@@ -392,6 +389,11 @@ const UserProfile = () => {
 
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
   const [languages, setLanguages] = useState<string[]>([]);
+  const [statsLoaded, setStatsLoaded] = useState({
+    main: true,
+    langs: true,
+  });
+
   const [isModalUserOpen, setIsModalUserOpen] = useState<boolean>(false);
   const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState<boolean>(false);
 
@@ -483,7 +485,7 @@ const UserProfile = () => {
   }
 
   const isGitHub = getGitHubUser(userData?.urlGithub?.toString()).isSuccess
-  const UsernameGitHub = getGitHubUser(userData?.urlGithub?.toString()).user
+  const usernameGitHub = getGitHubUser(userData?.urlGithub?.toString()).user
 
   const abilitiesArray =
     typeof userData?.abilities === 'string'
@@ -493,7 +495,7 @@ const UserProfile = () => {
   // Fetch para verificar los lenguages en repositorios del usuario
   useEffect(() => {
     const getLanguages = async () => {
-      if (!UsernameGitHub) return;
+      if (!usernameGitHub) return;
 
       try {
         const repos = await getGitHubRepos(userData!.urlGithub!);
@@ -508,7 +510,11 @@ const UserProfile = () => {
     };
 
     getLanguages();
-  }, [UsernameGitHub, userData]);
+  }, [usernameGitHub, userData]);
+
+  useEffect(() => {
+    setStatsLoaded({ main: true, langs: true });
+  }, [usernameGitHub]);
 
   // Muestra loading, error o los datos del usuario
   if (loading) return (
@@ -644,20 +650,26 @@ const UserProfile = () => {
                       </SocialButton>
                     </SocialButtons>
 
-                    {isGitHub && (
-                      <StatsContainer>
-                        <StatsImage
-                          src={`https://github-readme-stats.vercel.app/api?username=${UsernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
-                          alt={`${UsernameGitHub}-stats`}
-                        />
-                        {(languages.length !== 0) && (
-                          <StatsImage
-                            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${UsernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
-                            alt={`${UsernameGitHub}-top-langs`}
-                          />
-                        )}
-                      </StatsContainer>
-                    )}
+                    {isGitHub &&
+                      (statsLoaded.main || (languages.length !== 0 && statsLoaded.langs)) && (
+                        <StatsContainer>
+                          {statsLoaded.main && (
+                            <StatsImage
+                              src={`https://github-readme-stats.vercel.app/api?username=${usernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
+                              alt={`${usernameGitHub}-stats`}
+                              onError={() => setStatsLoaded(prev => ({ ...prev, main: false }))}
+                            />
+                          )}
+
+                          {languages.length !== 0 && statsLoaded.langs && (
+                            <StatsImage
+                              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${usernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
+                              alt={`${usernameGitHub}-top-langs`}
+                              onError={() => setStatsLoaded(prev => ({ ...prev, langs: false }))}
+                            />
+                          )}
+                        </StatsContainer>
+                      )}
                   </MediaContent>
                   <MediaContent>
                     <H3>Cultura</H3>

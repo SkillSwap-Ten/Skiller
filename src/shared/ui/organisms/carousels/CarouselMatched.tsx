@@ -29,6 +29,10 @@ const CustomSwiper = styled(Swiper)`
   width: 100%;
   padding: 0 !important;
 
+  & svg {
+    width: 9px;
+  }
+
   .swiper-button-next,
   .swiper-button-prev {
     translate:0 -22px;
@@ -41,7 +45,7 @@ const CustomSwiper = styled(Swiper)`
     transition: 0.6s ease;
     background: ${({ theme }) => theme.colors.bgTertiary};
     color: ${({ theme }) => theme.colors.textSecondary};
-    border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+    border: 1px solid ${({ theme }) => theme.colors.textGrey};
     transform: scale(0.75);
   }
 

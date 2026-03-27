@@ -43,7 +43,7 @@ export interface IRequestsListProps {
 }
 
 export interface IModalRequestViewerProps {
-    request: IRequests
+    request: IRequests | null
     onClose: () => void
     isOpen: boolean
 }
