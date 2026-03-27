@@ -37,7 +37,7 @@ const swipeOut = keyframes`
   }
 `;
 
-const CardContainer = styled.div<{ animateOut?: boolean }>`
+const CardContainer = styled.div<{ $animateOut?: boolean }>`
   width: 50%;
   min-height: 100% !important;
   max-height: 75vh !important;
@@ -46,7 +46,7 @@ const CardContainer = styled.div<{ animateOut?: boolean }>`
   color: ${({ theme }) => theme.colors.textWhite};
   text-align: center;
   overflow: hidden;
-  animation: ${(props) => (props.animateOut ? swipeOut : swipeIn)} 0.6s ease forwards;
+  animation: ${(props) => (props.$animateOut ? swipeOut : swipeIn)} 0.6s ease forwards;
   z-index: 9;
 
   &::after {
@@ -61,8 +61,8 @@ const CardContainer = styled.div<{ animateOut?: boolean }>`
   }
 `;
 
-const SliderImage = styled.div<{ urlImage: string }>`
-  background-image: url(${(props) => props.urlImage}); 
+const SliderImage = styled.div<{ $urlImage: string }>`
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   min-height: 450px;
@@ -292,11 +292,11 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
 
   return (
     <>
-      <CardContainer animateOut={animateOut}>
+      <CardContainer $animateOut={animateOut}>
         <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
         <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         <PassButton aria-label="Pass Button" onClick={handlePassClick}><div>&lt;</div> pass</PassButton>
-        <SliderImage urlImage={imageUrl} />
+        <SliderImage $urlImage={imageUrl} />
         <Text>
           <Title>{user.fullName}</Title>
           <Subtitle>{user.jobTitle}</Subtitle>

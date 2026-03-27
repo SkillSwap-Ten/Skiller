@@ -4,7 +4,7 @@ import SliderMatch from "../../../shared/ui/organisms/sliders/SliderMatch";
 import MatchCard from "../../../shared/ui/molecules/cards/CardMatch";
 import ModalReport from "@/src/shared/ui/organisms/modals/ModalReport";
 import ModalTips from "@/src/shared/ui/organisms/modals/ModalTips";
-import FeaturesCard from "@/src/shared/ui/molecules/cards/CardFeatures";
+import CardFeatures from "@/src/shared/ui/molecules/cards/CardFeatures";
 import styled from "styled-components";
 import { getUsersForImages } from "../../api/users/users"
 import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
@@ -81,7 +81,7 @@ const Match = () => {
 
   const openModalTips = () => setIsModalTipsOpen(true);
   const closeModalTips = () => setIsModalTipsOpen(false);
-  
+
   useEffect(() => {
     if (globalThis.window !== undefined) {
       const fetchPeople = async () => {
@@ -120,13 +120,13 @@ const Match = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredUsers.length);
   };
 
-  const currentUserId = getAuthData('id'); 
+  const currentUserId = getAuthData('id');
   const filteredUsers = allUsersData.filter(user => user.id !== currentUserId);
-  
+
   return (
     <Container>
       <DivMatch>
-        <FeaturesCard loading={loading} error={error} userData={currentUserData} openModalReport={openModalReport} openModalTips={openModalTips} />
+        <CardFeatures loading={loading} error={error} userData={currentUserData} openModalReport={openModalReport} openModalTips={openModalTips} />
         <SliderMatch loading={loading} error={error} user={filteredUsers[currentIndex]} onPass={handlePass} />
         <MatchCard
           loading={loading}

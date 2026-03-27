@@ -49,12 +49,12 @@ const MessageBubble = styled.div<{ $isOwn: boolean }>`
   word-wrap: break-word;
 `
 
-const SenderAvatar = styled.div<{ urlImage: string }>`
+const SenderAvatar = styled.div<{ $urlImage: string }>`
   width: 28px;
   height: 28px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-image: url(${(props) => props.urlImage});
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: center;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -269,7 +269,7 @@ const ChatWindow = ({ chat, messages, refreshMessages, isMobile = false, onBack 
 
                             <MessageRow $isOwn={isOwn}>
                                 {!isOwn && (
-                                    <SenderAvatar urlImage={avatarUrl} />
+                                    <SenderAvatar $urlImage={avatarUrl} />
                                 )}
 
                                 <MessageBubble $isOwn={isOwn}>

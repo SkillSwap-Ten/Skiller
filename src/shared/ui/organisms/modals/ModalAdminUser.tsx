@@ -222,12 +222,13 @@ const UserMainInfo = styled.div`
   }
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: clamp(6rem, 10vw, 11rem);
+  height: clamp(6rem, 10vw, 11rem);
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -276,7 +277,7 @@ const ModalAdminUser: React.FC<IModalUserFormProps> = ({ isOpen, onUpdateData, d
             </LeftSection>
             <RightSection>
               <UserMainInfoContainer>
-                <Avatar urlImage={imageUrl} />
+                <Avatar $urlImage={imageUrl} />
                 <UserMainInfo>
                   <h3>{dataToEdit?.name} {dataToEdit?.lastName}</h3>
                   <p>{dataToEdit?.jobTitle}</p>

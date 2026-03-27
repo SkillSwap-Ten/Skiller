@@ -179,7 +179,7 @@ const DivDeactivateAccount = styled.div`
   }
 `;
 
-const ButtonDeactivate = styled.button<({ color: string }) >`
+const ButtonDeactivate = styled.button<({ $color: string }) >`
   min-width: 100px;
   width: 30vw;
   max-width: 250px;
@@ -188,13 +188,13 @@ const ButtonDeactivate = styled.button<({ color: string }) >`
   background-color: transparent;
   padding: 10px;
   font-weight: 500;
-  color: ${(props) => props.color};
-  border: ${(props) => props.color} 1px solid;
+  color: ${(props) => props.$color};
+  border: ${(props) => props.$color} 1px solid;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 
   &:hover {
-    background-color: ${(props) => props.color};
+    background-color: ${(props) => props.$color};
     color: ${({ theme }) => theme.colors.textPrimary};
     border: none;
   }
@@ -206,15 +206,15 @@ const ButtonDeactivate = styled.button<({ color: string }) >`
   }
 `;
 
-const AccountStateTag = styled.div<({ color: string }) >`
+const AccountStateTag = styled.div<({ $color: string }) >`
   width: 80px;
   text-align: center;
   border-radius: 50px;
   padding: 4px;
   font-size: 12px;
   font-weight: bold;
-  color: ${(props) => props.color};
-  border: ${(props) => props.color} 1px solid;
+  color: ${(props) => props.$color};
+  border: ${(props) => props.$color} 1px solid;
   display: flex;
   gap: 4px;
   align-items: center;
@@ -542,13 +542,13 @@ const UserInfo = () => {
                 ) : error ? (
                   <p>{error}</p>
                 ) : (
-                  <AccountStateTag color={stateBtnColor()}><GrStatusGoodSmall />{accountState}</AccountStateTag>
+                  <AccountStateTag $color={stateBtnColor()}><GrStatusGoodSmall />{accountState}</AccountStateTag>
                 )}
               </WidgetBody>
 
               <DivDeactivateAccount>
                 <ButtonDeactivate
-                  color={changeStateBtnColor()}
+                  $color={changeStateBtnColor()}
                   aria-label="Deactivate Button"
                   onClick={() => setIsModalOpen(true)}
                   disabled={accountState === "Suspendido"}

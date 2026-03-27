@@ -220,12 +220,13 @@ const ReportMainInfo = styled.div`
   }
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: clamp(6rem, 10vw, 11rem);
+  height: clamp(6rem, 10vw, 11rem);
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -251,7 +252,7 @@ const ModalAdminReport: React.FC<IModalReportFormProps> = ({ onUpdateData, dataT
             </LeftSection>
             <RightSection>
               <ReportMainInfoContainer>
-                <Avatar urlImage={'/img/many-users.webp'} />
+                <Avatar $urlImage={'/img/many-users.webp'} />
                 <ReportMainInfo>
                   <h3>{dataToEdit?.titleReport}</h3>
                   <p>{dataToEdit?.user} vs. {dataToEdit?.reportedUser}</p>

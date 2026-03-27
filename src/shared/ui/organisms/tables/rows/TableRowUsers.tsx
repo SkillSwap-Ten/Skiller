@@ -147,12 +147,13 @@ const SocialButton = styled.div`
   }
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
+  height: 4rem;
   border-radius: 10px;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -239,7 +240,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
       <Td>{id}</Td>
       <Td>
         <UserMainInfoContainer>
-          <Avatar urlImage={imageUrl} />
+          <Avatar $urlImage={imageUrl} />
           <UserMainInfo>
             {name} {lastName}
             <TableTag className={'role'}>{idRoleUser}: {roleName}</TableTag>

@@ -12,7 +12,7 @@ const cssFromObject = (obj?: CSSProperties) => {
     .join('\n');
 };
 
-const NavLinkComponent = styled(Link) <{ hover?: CSSProperties }>`
+const NavLinkComponent = styled(Link) <{ $hover?: CSSProperties }>`
   text-decoration: none;
   padding: 16px;
   font-weight: 400;
@@ -47,7 +47,7 @@ const NavLinkComponent = styled(Link) <{ hover?: CSSProperties }>`
   }
 
   &:hover {
-    ${(props) => cssFromObject(props.hover)}
+    ${(props) => cssFromObject(props.$hover)}
   }
 `;
 
@@ -69,7 +69,7 @@ const NavLink: React.FC<ILinkProps> = ({ href, hover, className, label, onClick,
       aria-label={label ? label : 'Navigation Link'}
       href={href}
       className={className}
-      hover={hover}
+      $hover={hover}
       onClick={(e) => handleClick(e)}
     >
       {children ? children : label}

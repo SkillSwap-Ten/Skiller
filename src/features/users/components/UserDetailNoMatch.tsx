@@ -65,7 +65,7 @@ const MainInfo = styled.div`
 
 const UserName = styled.h1`
   text-transform: capitalize;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.textGrey};
   margin: 0;
@@ -75,8 +75,8 @@ const UserTitle = styled.h2`
   text-transform: capitalize;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textGrey};
   font-weight: 400;
   margin-top: 0;
@@ -87,11 +87,12 @@ const UserTitle = styled.h2`
     }
 `;
 
-const ProfileImage = styled.div<{ urlImage: string }>`
-  background-image: url(${(props) => props.urlImage}); 
+const ProfileImage = styled.div<{ $urlImage: string }>`
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
+  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -101,9 +102,9 @@ const ProfileImage = styled.div<{ urlImage: string }>`
     }
 `;
 
-const ProfileImageMobile = styled.div<{ urlImage: string }>`
+const ProfileImageMobile = styled.div<{ $urlImage: string }>`
   display: none;
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   position: relative;
@@ -135,13 +136,13 @@ const Connections = styled.div`
   flex-direction: column;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textSecondary};
   padding-bottom: 0;
   padding-left: 0;
 
   span {
-    font-size: 1rem;
+    font-size: 0.9rem;
     display: flex;
     gap: 1rem;
     justify-content: start;
@@ -171,17 +172,16 @@ const Skills = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.borderDark};
   }
 
-   @media (max-width: 600px) {
-      width: 100%;
-    }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const UserDescription = styled.div`
   min-width: 14rem;
   max-width: 14rem;
   padding-bottom: 0.5rem;
-  min-height: 16rem;
-  height: 100%;
+  min-height: 12rem;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
@@ -216,11 +216,11 @@ const RatingSection = styled.div`
   padding-right: 1rem;
   padding-top: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textSecondary};
 
   div {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -240,7 +240,7 @@ const DivRating = styled.div`
 
 const Star = styled.span`
   color: ${({ theme }) => theme.colors.textGrey};
-  font-size: 20px;
+  font-size: 1rem;
 `;
 
 const DivUserDetails = styled.div`
@@ -253,23 +253,22 @@ const DivUserDetails = styled.div`
 `;
 
 const DivContent = styled.div`
-    display: flex;
-    align-items: start;
-    height: 100%;
-    min-height: 16rem;
-    width: 100%;
-    gap: 1rem;
-    padding-top: 1rem;
+  display: flex;
+  height: 100%;
+  min-height: 16rem;
+  width: 100%;
+  gap: 1rem;
+  padding-top: 1rem;
 
-    & section{
+  & section{
     height: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
     & span{
-    display: none;
-  }
+      display: none;
+    }
   }
 
   @media (max-width: 600px) {
@@ -278,14 +277,14 @@ const DivContent = styled.div`
     & section{
       align-items: center;
 
-          & span {
-      display: block;
-      width: 50%;
-      height: 1px;
-      border-top: 1px solid ${({ theme }) => theme.colors.textGrey};
-      margin: 1rem 5px;
-      opacity: 0.5;
-    }
+      & span {
+        display: block;
+        width: 50%;
+        height: 1px;
+        border-top: 1px solid ${({ theme }) => theme.colors.textGrey};
+        margin: 1rem 5px;
+        opacity: 0.5;
+      }
     }
   }
 `;
@@ -321,7 +320,7 @@ const ButtonText = styled.p`
 
 const MediaContent = styled.div`
   width: 100%;
-  height: 11.5rem !important;
+  height: 12.5rem !important;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
@@ -329,7 +328,7 @@ const MediaContent = styled.div`
 
   @media (max-width: 600px) {
     height: 12rem !important;
-    }
+  }
 `;
 
 const ReportButton = styled(ButtonFeature)`
@@ -457,14 +456,14 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       <ProfileContainer>
-        <ProfileImageMobile urlImage={""}>
+        <ProfileImageMobile $urlImage={""}>
           <Skeleton height={"100%"} width={"100%"} borderRadius={10} />
         </ProfileImageMobile>
 
         <Header style={{ paddingBottom: '0.5rem', backgroundColor: '#f7f7f7' }}>
           <UserInfo>
             <MainInfo>
-              <ProfileImage urlImage="" style={{ border: "none" }}>
+              <ProfileImage $urlImage="" style={{ border: "none" }}>
                 <Skeleton width={64} height={64} />
               </ProfileImage>
               <div>
@@ -524,14 +523,14 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
   return (
     <>
       <ProfileContainer>
-        <ProfileImageMobile urlImage={imageUrl}>
+        <ProfileImageMobile $urlImage={imageUrl}>
           <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
           <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         </ProfileImageMobile>
         <Header>
           <UserInfo>
             <MainInfo>
-              <ProfileImage urlImage={imageUrl} />
+              <ProfileImage $urlImage={imageUrl} />
               <div>
                 <UserName>{userData!.fullName}</UserName>
                 <UserTitle>
@@ -565,6 +564,7 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
             </ConnectionsRating>
           </UserInfo>
         </Header>
+
         <DivUserDetails>
           <DivContent>
             <section>
