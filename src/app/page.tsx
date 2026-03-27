@@ -642,9 +642,9 @@ const VideoContainer = styled.div`
   }
 `;
 
-const DecorationOne = styled.div<{ urlImage: string }>`
+const DecorationOne = styled.div<{ $urlImage: string }>`
   display: flex;
-  background-image: url(${(props) => props.urlImage});
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: left;
   border-top-right-radius: 30px;
@@ -668,9 +668,9 @@ const DecorationOne = styled.div<{ urlImage: string }>`
   }
 `;
 
-const DecorationTwo = styled.div<{ urlImage: string }>`
+const DecorationTwo = styled.div<{ $urlImage: string }>`
   display: flex;
-  background-image: url(${(props) => props.urlImage});
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: right;
   border-top-left-radius: 30px;
@@ -812,12 +812,12 @@ const Home = () => {
         <br />
         <br />
         <article>
-          <DecorationOne urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationOne>
+          <DecorationOne $urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationOne>
           <Video ref={videoRef} autoPlay muted playsInline>
             <source src="https://res.cloudinary.com/dvke5zok0/video/upload/v1766371527/skillswap-ad_dgb7ev.mp4" type="video/mp4" />
             Tu navegador no soporta el video HTML5.
           </Video>
-          <DecorationTwo urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationTwo>
+          <DecorationTwo $urlImage="https://t4.ftcdn.net/jpg/05/01/83/79/360_F_501837926_xvM4Ym7pql243YOrjmct5NCXjFTxz11v.jpg"></DecorationTwo>
         </article>
         <section>
           <ControlsButton aria-label="Control Button" onClick={handleReplay}>
@@ -903,7 +903,7 @@ const Home = () => {
         <LeftSection>
           <div>
             <SwapText>Swap.</SwapText>
-            <SubText>simple. dinámico. libre.</SubText>
+            <SubText>Simple. Dinámico. Libre.</SubText>
           </div>
         </LeftSection>
         {/* Right Section */}

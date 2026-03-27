@@ -9,7 +9,7 @@ import { ICardFeaturesProps } from "@/src/shared/types/molecules/card.type";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-const FeaturesCardContainer = styled.div`
+const CardFeaturesContainer = styled.div`
   background: ${({ theme }) => theme.colors.bgSidebar};
   width: 100%;
   min-height: 100% !important;
@@ -44,7 +44,7 @@ const ProfileCardContent = styled.div`
   }
 `;
 
-const FeaturesCardContent = styled.div`
+const CardFeaturesContent = styled.div`
   background: ${({ theme }) => theme.colors.bgSidebar};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 100%;
@@ -58,48 +58,49 @@ const FeaturesCardContent = styled.div`
 const SkeletonColumn = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 10px;
 
   @media (max-width: 950px) {
     display: none !important;
   }
 `;
 
-const FeaturesCard: React.FC<ICardFeaturesProps> = ({ error, loading, userData, openModalReport, openModalTips }) => {
+const CardFeatures: React.FC<ICardFeaturesProps> = ({ error, loading, userData, openModalReport, openModalTips }) => {
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
-      <SkeletonColumn style={{ maxHeight: "75vh", width: '100%' }}>
-        <Skeleton style={{ display: 'flex', height: '36.75vh', width: '100%' }} />
-        <Skeleton style={{ display: 'flex', height: '36.75vh', width: '100%' }} />
+      <SkeletonColumn style={{ maxHeight: "80vh", width: '100%' }}>
+        <Skeleton style={{ display: 'flex', height: '40vh', width: '100%', borderRadius: "10px" }} />
+        <Skeleton style={{ display: 'flex', height: '40vh', width: '100%', borderRadius: "10px" }} />
       </SkeletonColumn>
     </SkeletonTheme>
   );
 
   if (error !== null)
     return (
-      <FeaturesCardContainer style={{ minHeight: "75vh" }}>
+      <CardFeaturesContainer style={{ minHeight: "75vh" }}>
         <ProfileCardContent style={{ height: "50%", padding: '0' }}>
           <NoContentContainer error={error} />
         </ProfileCardContent>
         <ProfileCardContent style={{ height: "50%", padding: '0' }}>
           <NoContentContainer error={error} />
         </ProfileCardContent>
-      </FeaturesCardContainer>
+      </CardFeaturesContainer>
     );
 
   return (
-    <FeaturesCardContainer>
+    <CardFeaturesContainer>
       <ProfileCardContent>
         <CardProfileLink
           userData={userData!}
         />
       </ProfileCardContent>
-      <FeaturesCardContent>
+      <CardFeaturesContent>
         <SliderFeature openModalReport={openModalReport} openModalTips={openModalTips} />
-      </FeaturesCardContent>
-    </FeaturesCardContainer>
+      </CardFeaturesContent>
+    </CardFeaturesContainer>
   );
 };
 
-export default FeaturesCard;
+export default CardFeatures;

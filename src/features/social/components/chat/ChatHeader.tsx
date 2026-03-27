@@ -40,12 +40,12 @@ const BackButton = styled.button`
   }
 `
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-image: url(${(props) => props.urlImage});
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: center;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -193,7 +193,7 @@ const ChatHeader = ({ user, isMobile = false, onBack }: IChatHeaderProps) => {
           )}
 
           <NavLink hover={{ transform: 'scale(1.01)', transition: '0.4s' }} href={`/user/detail/u/${user.id}`} label="DETALLE" >
-            <Avatar urlImage={imageUrl} />
+            <Avatar $urlImage={imageUrl} />
             <UserInfo>
               <UserName>{user.name}</UserName>
               <UserHandle>{user.category}</UserHandle>

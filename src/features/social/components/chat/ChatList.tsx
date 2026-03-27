@@ -63,12 +63,12 @@ const ChatItem = styled.button<{ $active: boolean }>`
   text-align: left;
 `
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   width: 52px;
   height: 52px;
   border-radius: 50%;
   flex-shrink: 0;
-  background-image: url(${(props) => props.urlImage});
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: center;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -187,7 +187,7 @@ const ChatList = ({ chats, selectedChatId, onSelectChat }: IChatsListProps) => {
             onClick={() => onSelectChat(chat.id)}
           >
             <Avatar
-              urlImage={
+              $urlImage={
                 validatedImages[chat.id] ||
                 '/img/default-picture-full.webp'
               }

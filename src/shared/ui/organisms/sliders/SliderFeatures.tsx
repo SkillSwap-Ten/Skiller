@@ -9,7 +9,7 @@ import ButtonFeature from "../../atoms/buttons/ButtonFeature"
 
 const ANIM_DURATION = 500
 
-const SliderContainer = styled.div<{ backgroundImage: string }>`
+const SliderContainer = styled.div<{ $backgroundImage: string }>`
   position: relative;
   width: 100%;
   height: 100%;
@@ -21,7 +21,7 @@ const SliderContainer = styled.div<{ backgroundImage: string }>`
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url(${(props) => props.backgroundImage});
+    background-image: url(${(props) => props.$backgroundImage});
     background-size: cover;
     background-position: center;
     filter: blur(12px) brightness(0.8) grayscale();
@@ -104,8 +104,8 @@ const SlideArea = styled.div`
  */
 
 const SlideItem = styled.div<{
-  stage: "idle" | "out" | "preIn" | "in";
-  direction: "left" | "right";
+  $stage: "idle" | "out" | "preIn" | "in";
+  $direction: "left" | "right";
 }>`
   position: absolute;
   top: 0;
@@ -121,8 +121,8 @@ const SlideItem = styled.div<{
 
   ${(p) => {
     const dur = `${ANIM_DURATION}ms`;
-    const dir = p.direction === "right" ? 1 : -1;
-    switch (p.stage) {
+    const dir = p.$direction === "right" ? 1 : -1;
+    switch (p.$stage) {
       case "idle":
         return `
           transform: translateX(0);
@@ -202,7 +202,7 @@ const IndicatorsWrapper = styled.div`
   gap: 0.5rem;
 `;
 
-const Indicator = styled.button<{ active: boolean }>`
+const Indicator = styled.button<{ $active: boolean }>`
   width: 0.25rem;
   height: 0.15rem;
   border-radius: 5px;
@@ -210,11 +210,11 @@ const Indicator = styled.button<{ active: boolean }>`
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: ${(props) => (props.active ? "#fff" : "#ffffff50")};
-  transform: ${(props) => (props.active ? "scale(1.25)" : "scale(1)")};
+  background: ${(props) => (props.$active ? "#fff" : "#ffffff50")};
+  transform: ${(props) => (props.$active ? "scale(1.25)" : "scale(1)")};
 
   &:hover {
-    background: ${(props) => (props.active ? "#fff" : "#ffffff50")};
+    background: ${(props) => (props.$active ? "#fff" : "#ffffff50")};
   }
 `;
 
@@ -364,7 +364,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
   }
 
   return (
-    <SliderContainer backgroundImage={currentSlide.backgroundImage} className={className}>
+    <SliderContainer $backgroundImage={currentSlide.backgroundImage} className={className}>
       <SliderWrapper>
         <ContentWrapper>
           <NavigationWrapper>
@@ -381,8 +381,8 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
             <SlideArea>
               {/* single layer that animates across stages */}
               <SlideItem
-                stage={animState}
-                direction={animDirection}
+                $stage={animState}
+                $direction={animDirection}
                 style={{ zIndex: 12, position: animState === "preIn" ? "absolute" : "absolute" }}
               >
                 {renderSlideContent(currentIndex)}
@@ -394,7 +394,7 @@ const SliderFeature: React.FC<ISliderFeaturesProps> = ({
             {slides.map((_, index) => (
               <Indicator
                 key={index}
-                active={index === currentIndex}
+                $active={index === currentIndex}
                 onClick={() => goToSlide(index)}
                 aria-label={`Ir al slide ${index + 1}`}
               />

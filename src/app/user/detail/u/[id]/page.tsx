@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import UserProfileNoDetail from "@/src/features/users/components/UserDetailNoMatch";
 import UserProfileDetail from "@/src/features/users/components/UserDetailMatch";
-import FeaturesCard from "@/src/shared/ui/molecules/cards/CardFeatures";
+import CardFeatures from "@/src/shared/ui/molecules/cards/CardFeatures";
 import ModalTips from "@/src/shared/ui/organisms/modals/ModalTips";
 import ModalReport from "@/src/shared/ui/organisms/modals/ModalReport";
 import styled from "styled-components";
@@ -149,7 +149,7 @@ const DetailAboutUser = () => {
     <Container>
       <Div>
         <DivFeatures>
-          <FeaturesCard loading={loading} error={error} userData={currentUserData} openModalReport={openModalReport} openModalTips={openModalTips} />
+          <CardFeatures loading={loading} error={error} userData={currentUserData} openModalReport={openModalReport} openModalTips={openModalTips} />
         </DivFeatures>
         {isConnection ? (
           <UserProfileDetail loading={loading} error={error} userData={clickedUserData} userDetail={clickedUserDetail} />

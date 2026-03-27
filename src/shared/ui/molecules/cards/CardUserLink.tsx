@@ -44,8 +44,8 @@ const InfoColumn = styled.div`
 
 
 // Estilo para el nombre
-const ImageCard = styled.article<{ urlImage?: string }>`
-  background-image: url(${(props) => props.urlImage});
+const ImageCard = styled.article<{ $urlImage?: string }>`
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -125,7 +125,7 @@ const CardUserLink: React.FC<ICardUserProps> = ({
       <CardContainer>
         <CardContent>
           <ImageColumn>
-            <ImageCard urlImage={imageUrl} />
+            <ImageCard $urlImage={imageUrl} />
           </ImageColumn>
           <InfoColumn>
             <Name>{userData.fullName}</Name>

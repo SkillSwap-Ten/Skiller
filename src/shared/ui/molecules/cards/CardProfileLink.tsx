@@ -22,12 +22,13 @@ const ProfileHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
+  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -134,7 +135,7 @@ const CardProfileLink: React.FC<ICardProfileProps> = ({
     <NavLink hover={{ transform: 'scale(1.01)', transition: '0.4s' }} href="/user/profile" label="PERFIL">
       < CardContainer>
         <ProfileHeader>
-          <Avatar urlImage={imageUrl} />
+          <Avatar $urlImage={imageUrl} />
           <div>
             <ProfileName>{userData?.fullName}</ProfileName>
             {abilitiesArray.length > 0 ? (

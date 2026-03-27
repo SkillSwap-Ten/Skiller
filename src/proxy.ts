@@ -13,7 +13,12 @@ function protectedProxy(req: NextRequest) {
 
     // 1. Si no hay token o rol válido → redirige al login
     if (!token || !isValidToken(token) || !role) {
-        return NextResponse.redirect(new URL("/auth", req.url));
+        const res = NextResponse.redirect(new URL("/auth", req.url));
+
+        res.cookies.delete("authToken");
+        res.cookies.delete("userRole");
+
+        return res;
     }
 
     // 2. Lógica de autorización por rol

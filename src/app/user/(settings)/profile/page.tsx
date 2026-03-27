@@ -88,7 +88,7 @@ const MainInfo = styled.div`
 `;
 
 const UserName = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   font-weight: bold;
   text-transform: capitalize;
   color: ${({ theme }) => theme.colors.textGrey};
@@ -99,8 +99,8 @@ const UserTitle = styled.h2`
   display: flex;
   align-items: center;
   text-transform: capitalize;
-  gap: 10px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textGrey};
   font-weight: 400;
   margin-top: 0;
@@ -111,8 +111,8 @@ const UserTitle = styled.h2`
     }
 `;
 
-const ProfileImage = styled.div<{ urlImage: string }>`
-  background-image: url(${(props) => props.urlImage}); 
+const ProfileImage = styled.div<{ $urlImage: string }>`
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
@@ -125,9 +125,9 @@ const ProfileImage = styled.div<{ urlImage: string }>`
     }
 `;
 
-const ProfileImageMobile = styled.div<{ urlImage: string }>`
+const ProfileImageMobile = styled.div<{ $urlImage: string }>`
   display: none;
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -175,7 +175,6 @@ const UserDescription = styled.div`
   flex-direction: column;
 
   @media (max-width: 768px) {
-      min-height: 15.5rem;
       max-width: 100%;
       width: 100%;
     }
@@ -211,7 +210,6 @@ const DivUserDetails = styled.div`
 const DivContent = styled.div`
     display: flex;
     height: 100%;
-    min-height: 14.5rem;
     width: 100%;
     gap: 1rem;
     padding-top: 1rem;
@@ -221,13 +219,13 @@ const DivContent = styled.div`
     }
 `;
 
-const State = styled.span`
+const State = styled.span<({ $color: string }) >`
   color: ${({ theme }) => theme.colors.textOrange};
   padding: 2px 10px;
   border-radius: 20px;
   text-align: center;
-  color: ${(props) => props.color};
-  border: ${(props) => props.color} 1px solid;
+  color: ${(props) => props.$color};
+  border: ${(props) => props.$color} 1px solid;
   font-size: 8px;
   font-weight: bold;
   display: flex;
@@ -522,18 +520,18 @@ const UserProfile = () => {
       <Container>
         <PageContainer >
           <ProfileContainer>
-            <ProfileImageMobile urlImage={""}>
+            <ProfileImageMobile $urlImage={""}>
               <Skeleton height={"100%"} width={"100%"} borderRadius={10} />
             </ProfileImageMobile>
 
             <Header style={{ padding: '1rem', backgroundColor: '#f7f7f7' }}>
               <UserInfo>
                 <MainInfo>
-                  <ProfileImage urlImage="" style={{ border: "none" }}>
+                  <ProfileImage $urlImage="" style={{ border: "none" }}>
                     <Skeleton width={64} height={64} />
                   </ProfileImage>
                   <div>
-                    <Skeleton width={200} height={25} />
+                    <Skeleton width={240} height={40} style={{ marginBottom: "4px" }} />
                     <Skeleton width={120} height={18} />
                   </div>
                 </MainInfo>
@@ -542,8 +540,8 @@ const UserProfile = () => {
 
             <DivContent>
               <MediaContainer style={{ minHeight: "100%" }}>
-                <Skeleton height={"10vw"} borderRadius={10} />
-                <Skeleton height={"10vw"} borderRadius={10} />
+                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }}/>
+                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }}/>
               </MediaContainer>
 
               <UserDescription style={{ border: "none", minHeight: "100%" }}>
@@ -558,9 +556,9 @@ const UserProfile = () => {
               </UserDescription>
             </DivContent>
 
-            <Skills style={{ gap: "0.25rem", marginTop: "0" }}>
+            <Skills style={{ gap: "0.25rem", marginTop: "0", alignItems: "end" }}>
               <Skeleton width={80} height={25} borderRadius={20} />
-              <Skeleton width={80} height={25} borderRadius={20} style={{ marginLeft: "1rem" }} />
+              <Skeleton width={80} height={25} borderRadius={20} style={{ marginRight: "1rem" }} />
               <Skeleton width={60} height={25} borderRadius={20} />
             </Skills>
           </ProfileContainer>
@@ -588,16 +586,16 @@ const UserProfile = () => {
       <Container>
         <PageContainer >
           <ProfileContainer>
-            <ProfileImageMobile urlImage={imageUrl} />
+            <ProfileImageMobile $urlImage={imageUrl} />
             <Header>
               <UserInfo>
                 <MainInfo>
-                  <ProfileImage urlImage={imageUrl} />
+                  <ProfileImage $urlImage={imageUrl} />
                   <div>
                     <UserName>Tú, {userData!.name} {userData!.lastName}</UserName>
                     <UserTitle>
                       {userData!.jobTitle}
-                      <State color={stateBtnColor(userData!.nameStateUser!)}>
+                      <State $color={stateBtnColor(userData!.nameStateUser!)}>
                         <GrStatusGoodSmall /> {userData!.nameStateUser!}
                       </State>
                     </UserTitle>
@@ -680,7 +678,7 @@ const UserProfile = () => {
                     <CarouselMatched userId={userData!.id} />
                   </MediaContent>
                 </MediaContainer>
-                <UserDescription style={{ minHeight: isGitHub ? '35.5rem' : '29rem' }}>
+                <UserDescription >
                   <H3>Descripción</H3>
                   <P>{userData!.description}</P>
                   <ContactInfo>

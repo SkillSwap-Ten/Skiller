@@ -19,8 +19,8 @@ const PageContainer = styled.div`
   width: 100%;
 `;
 
-const PageSideBanner = styled.div<{ urlImage: string }>`
-  background-image: url(${(props) => props.urlImage});
+const PageSideBanner = styled.div<{ $urlImage: string }>`
+  background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: center;
   display: flex;
@@ -266,7 +266,7 @@ function ResetPassword() {
 
   return (
     <PageContainer>
-      <PageSideBanner urlImage="/img/bg-banner.webp" />
+      <PageSideBanner $urlImage="/img/bg-banner.webp" />
       <PageContent>
         <FormContainer>
           <BackLink onClick={() => handlePageTheme("INICIAR SESIÓN")}>

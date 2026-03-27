@@ -118,12 +118,13 @@ const ProfileHeader = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
   filter: brightness(95%);
-  background-image: url(${(props) => props.urlImage}); 
+  background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
   width: 4rem;
+  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -200,7 +201,7 @@ const SidebarOffline: React.FC<ISidebarProps> = ({ isOpen, onClose }) => {
         <Disclaimer>
           <OfflineProfile>
             <ProfileHeader>
-              <Avatar urlImage={"/img/default-picture-circled.webp"} />
+              <Avatar $urlImage={"/img/default-picture-circled.webp"} />
               <div>
                 <ProfileName>Offline</ProfileName>
                 <Skills>

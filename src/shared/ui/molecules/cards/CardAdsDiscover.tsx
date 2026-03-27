@@ -20,12 +20,13 @@ const ProfileHeader = styled.div`
     border-bottom: 1px solid ${({ theme }) => theme.colors.textTertiary};
 `;
 
-const Avatar = styled.div<{ urlImage: string }>`
+const Avatar = styled.div<{ $urlImage: string }>`
     border: 1px solid ${({ theme }) => theme.colors.borderDark};
-    background-image: url(${(props) => props.urlImage});
+    background-image: url(${(props) => props.$urlImage});
     background-size: cover;
     background-position: center;
     width: 3rem;
+    height: 3rem; 
     aspect-ratio: 1 / 1;
     border-radius: 10px;
 `;
@@ -145,7 +146,7 @@ const CardAdsDiscover: React.FC<ICardAdsDiscoverProps> = ({ loading, error, user
         <CardContainer>
             <NavLink hover={{ transform: 'scale(1.01)', transition: '0.4s'}} href="/user/profile" label="PERFIL">
                 <ProfileHeader>
-                    <Avatar urlImage={imageUrl} />
+                    <Avatar $urlImage={imageUrl} />
                     <div>
                         <ProfileName>{user.fullName}</ProfileName>
                         <JobTitle>{user.jobTitle}</JobTitle>

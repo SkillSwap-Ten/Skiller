@@ -10,10 +10,6 @@ const baskervville = Baskervville({
     style: 'normal'
 });
 
-interface CardProps {
-  imgsrc: string;
-}
-
 interface CardData {
   id: number;
   imgsrc: string;
@@ -165,11 +161,11 @@ const CardsContainer = styled.div`
   }
 `;
 
-const Card = styled.div<CardProps>`
+const Card = styled.div<({ $imgsrc: string })>`
   overflow: hidden;
   background-color: #c4c4c4;
   border-radius: 15px;
-  background-image: url(${(props) => props.imgsrc});
+  background-image: url(${(props) => props.$imgsrc});
   background-size: cover;
   background-position: center;
   margin: 5px;
@@ -313,7 +309,7 @@ const CarouselHome: React.FC = () => {
           {cards.map((card, index) => (
             <Card
               key={card.id}
-              imgsrc={card.imgsrc}
+              $imgsrc={card.imgsrc}
               className={`card-${index + 1}`}
             />
           ))}
