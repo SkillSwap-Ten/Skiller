@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { IModalResetPasswordProps } from "@/src/shared/types/organisms/modal.type";
 import { postRecoverPasswordRequest } from "@/src/app/api/auth/auth";
 
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+const ModalOverlay = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -110,7 +110,7 @@ const ModalResetPassword: React.FC<IModalResetPasswordProps> = ({ isOpen, onClos
   };
 
   return (
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay $isOpen={isOpen}>
       <ModalContent>
         <ModalHeader>
         <h2>Restablecer contraseña</h2>

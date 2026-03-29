@@ -37,6 +37,7 @@ const Logo = styled.h1`
   font-size: 12vw;
   margin-top: 0.57em;
   margin-bottom: 0.4em;
+  position: relative;
   font-weight: bold;
   -webkit-background-clip: text;
   background-clip: text;
@@ -61,6 +62,7 @@ const MainText = styled.div`
   margin-top: 15vw;
   background: transparent;
   align-items: end;
+  position: relative;
   padding: 50px;
   padding-bottom: 5vw;
   width: 100%;
@@ -72,41 +74,57 @@ const MainText = styled.div`
   }
 `;
 
+const Rounded = styled.div`
+  position: relative;
+  background: ${({ theme }) => theme.colors.bgGrey};
+  border-top-right-radius: 100%;
+  border-top-left-radius: 100%;
+  height: 41px;
+  width: 100%;
+  top: 1px;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
+`;
+
 // Estilos para cada cuadro de texto
 const Slogan = styled.div`
   display: flex;
-  text-align: start;
+  text-align: center;
   align-items: end;
+  justify-content: center;
   background: transparent;
-  background: ${({ theme }) => theme.colors.gradientText};
+  background: ${({ theme }) => theme.colors.textYellow};
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  border: 4px solid ${({ theme }) => theme.colors.textYellow};
+  border: none;
   flex: 1;
-  width: 50%;
-  padding: 0 45px;
+  width: 100%;
+  padding: 0;
 
   & h2 {
-    font-size: 2.5vw;
-    font-weight: 600;
-  }
-
-  &:first-child {
-    border-right: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-  }
-
-  &:last-child {
-    border-left: 1px solid transparent;
+    font-size: 30px;
+    font-weight: bold;
   }
 
   @media (max-width: 768px) {
+    & h2 {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 500px) {
     padding: 0 20px;
-    width: 100%;
-    font-weight: bold;
+    text-align: start;
+    justify-content: start;
     border: 2px solid ${({ theme }) => theme.colors.textYellow};
+    background: transparent;
+    background: ${({ theme }) => theme.colors.gradientText};
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;   
 
     &:first-child {
       border-right: 1px solid transparent;
@@ -120,65 +138,28 @@ const Slogan = styled.div`
 
     & h2 {
       font-size: 4.5vw;
-      font-weight: bold;
     }
   }
 `;
 
 const Catchphrase = styled.div`
-  align-items: center;
-  justify-content: end;
-  text-align: end;
   display: none;
   background: transparent;
-  display: flex;
-  border: 4px solid ${({ theme }) => theme.colors.textSecondary};
-  flex: 1;
-  width: 50%;
-  padding: 0 45px;
 
   & h2 {
-    font-size: 2.5vw;
-    font-weight: 600;
-  }
-
-  &:first-child {
-    border-right: 1px solid transparent;
-  }
-
-  &:last-child {
-    border-left: 1px solid transparent;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-  }
-
-  @media (max-width: 768px) {
-    display: flex;
+    font-size: 4.5vw;
     font-weight: bold;
-    border: 2px solid ${({ theme }) => theme.colors.textSecondary};
-    padding: 0;
-    padding-right: 20px;
-    width: 100%;
-
-    & h2 {
-      font-size: 4.5vw;
-      font-weight: bold;
-      color: ${({ theme }) => theme.colors.textSecondary};
-    }
-
-    &:first-child {
-      border-right: 1px solid transparent;
-    }
-
-    &:last-child {
-      border-left: 1px solid transparent;
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
-    }
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   @media (max-width: 500px) {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    text-align: end;
     border: none;
+    width: 100%;
+    flex: 1;
     padding: 0;
     padding-top: 10px;
   }
@@ -224,7 +205,6 @@ const Section2 = styled.div`
   border-radius: 10px;
   font-weight: 100;
   color: ${({ theme }) => theme.colors.textSecondary};
-  padding-left: 50px;
 
   @media (max-width: 1200px) {
     padding: 0;
@@ -275,8 +255,7 @@ const ProfileBoxStart = styled.div`
 const ProfileBoxMiddle = styled.div`
   display: flex;
   flex-direction: column;
-  border: none;
-  padding: 30px 50px 30px 100px;
+  padding: 30px 15px 30px 100px;
   text-align: start;
   align-items: start;
   justify-content: flex-start;
@@ -290,7 +269,6 @@ const ProfileBoxMiddle = styled.div`
 
   @media (max-width: 1200px) {
     width: 100%;
-    border-radius: 0;
     text-align: end;
     align-items: end;
     justify-content: flex-end;
@@ -333,42 +311,6 @@ const ProfileBoxEnd = styled.div`
   @media (max-width: 1200px) {
     padding: 30px 100px 30px 50px;
     width: 100%;
-  }
-`;
-
-const BoxTitle = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  text-align: end;
-  width: 25%;
-  margin-right: 70px;
-
-  @media (max-width: 1200px) {
-    width: 100%;
-    margin-right: 0;
-    text-align: center;
-    justify-content: center;
-  }
-`;
-
-const Title = styled.h1`
-  background: ${({ theme }) => theme.colors.gradientText};
-  font-size: 2.5rem;
-  font-weight: normal;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: grayscale();
-
-  @media (max-width: 1492px) {
-    font-size: 1.7rem;
-    margin-top: 0;
-    margin-bottom: 30px;
-  }
-
-  @media (max-width: 1200px) {
-    display: none;
   }
 `;
 
@@ -430,6 +372,7 @@ const LeftSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
   width: 100%;
   border-left: 4px solid ${({ theme }) => theme.colors.textYellow};
   padding-left: 50px;
@@ -514,6 +457,7 @@ const Video = styled.video`
   box-shadow: none !important;
   object-fit: cover;
   background: transparent;
+  position: relative;
 
   @media (max-width: 768px) {
     border-radius: 20px;
@@ -573,57 +517,30 @@ const VideoContainer = styled.div`
     font-size: 35px;
     color: ${({ theme }) => theme.colors.textOrange};
     margin: 8px 0;
-    width: 100%;
-    padding: 0 180px;
+    padding: 0 20px;
+    width: 75%;
     text-align: start;
+    position: relative;
   }
 
   & h3 {
     text-align: start;
-    width: 100%;
     margin: 0;
     font-size: 1.1rem;
     font-weight: 400;
-    padding: 0 180px;
+    padding: 0 20px;
+    width: 75%;
     color: ${({ theme }) => theme.colors.textSecondary};
     opacity: 0.8;
   }
 
   & small {
     text-align: justify;
-    width: 100%;
-    padding: 0 180px;
+    padding: 0 20px;
+    width: 75%;
     color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 12px;
     opacity: 0.8;
-  }
-
-  @media (max-width: 768px) {
-    padding: 50px 0;
-
-    & h2 {
-      font-size: 20px;
-      padding: 0 50px;
-    }
-
-    & h3 {
-      font-size: 15px;
-      font-weight: 300;
-      padding: 0 50px;
-      color: ${({ theme }) => theme.colors.textSecondary};
-    }
-
-    & small {
-      padding: 0 50px;
-      color: ${({ theme }) => theme.colors.textSecondary};
-      font-size: 10px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    & h2{
-      font-size: 23px;
-    }
   }
 
   & article {
@@ -640,10 +557,42 @@ const VideoContainer = styled.div`
     width: 100%;
     gap: 1rem;
   }
+
+  @media (max-width: 768px) {
+    padding: 50px 0;
+
+    & h2 {
+      font-size: 20px;
+      padding: 0 10px;
+      width: 80%;
+    }
+
+    & h3 {
+      font-size: 15px;
+      font-weight: 300;
+      padding: 0 10px;
+      width: 80%;
+      color: ${({ theme }) => theme.colors.textSecondary};
+    }
+
+    & small {
+      width: 80%;
+      padding: 0 10px;
+      color: ${({ theme }) => theme.colors.textSecondary};
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    & h2{
+      font-size: 23px;
+    }
+  }
 `;
 
 const DecorationOne = styled.div<{ $urlImage: string }>`
   display: flex;
+  position: relative;
   background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: left;
@@ -670,6 +619,7 @@ const DecorationOne = styled.div<{ $urlImage: string }>`
 
 const DecorationTwo = styled.div<{ $urlImage: string }>`
   display: flex;
+  position: relative;
   background-image: url(${(props) => props.$urlImage});
   background-size: cover;
   background-position: right;
@@ -699,7 +649,7 @@ const Imagenes = styled(Image)`
   width: 100vw;
   position: absolute;
   top: -31.5vw;
-  transform: rotate(-90deg);
+  z-index: 2;
 
   @media (max-width: 1024px) {
     top: -29.5vw;
@@ -796,6 +746,7 @@ const Home = () => {
           </h2>
         </Catchphrase>
       </MainText>
+      <Rounded />
       <CarouselHome />
       <VideoContainer>
         <h2>
@@ -868,9 +819,6 @@ const Home = () => {
           </ProfileBoxStart>
         </Section1>
         <Section2>
-          <BoxTitle>
-            <Title>TODO SEGÚN TUS NECESIDADES E INTERESES</Title>
-          </BoxTitle>
           <ProfileBoxMiddle>
             <Name>Jorge Torres</Name>
             <Message>
@@ -892,8 +840,8 @@ const Home = () => {
               Coding contigo.
             </Message>
             <ButtonGroup>
-              <ButtonTag label={"Entretenimiento"}></ButtonTag>
-              <ButtonTag label={"Manejo Redes"}></ButtonTag>
+              <ButtonTag label={"Entertainment"}></ButtonTag>
+              <ButtonTag label={"Social Media"}></ButtonTag>
             </ButtonGroup>
           </ProfileBoxEnd>
         </Section3>

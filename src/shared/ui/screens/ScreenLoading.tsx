@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 // Animación de las letras que hacen una ola
@@ -37,7 +38,7 @@ const LoadingText = styled.h1`
 `;
 
 // Estilo para cada letra en un cuadro negro con animación
-const Letter = styled.span<{ delay: number }>`
+const Letter = styled.span<{ $delay: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,22 +48,22 @@ const Letter = styled.span<{ delay: number }>`
     color: #000000;
     font-weight: 600;
     animation: ${waveAnimation} 1.2s ease-in-out infinite;
-    animation-delay: ${({ delay }) => delay}s;
+    animation-delay: ${({ $delay }) => $delay}s;
     border-radius: 0.42rem;
     font-size: clamp(0.8rem, 2vw, 3rem);
     font-style: normal;
 `;
 
-const LoadingScreen = () => {
+const ScreenLoading: React.FC = () => {
     return (
         <FullScreenLoader>
             <LoadingText>
                 {Array.from('CARGANDO').map((letter, index) => (
-                    <Letter key={index} delay={index * 0.1}>{letter}</Letter>
+                    <Letter key={index} $delay={index * 0.1}>{letter}</Letter>
                 ))}
             </LoadingText>
         </FullScreenLoader>
     );
 };
 
-export default LoadingScreen;
+export default ScreenLoading;

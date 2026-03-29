@@ -16,6 +16,7 @@ const Container = styled.div`
   margin: 54px 0;
   flex-direction: column;
   display: flex;
+  position: relative;
 `;
 
 //Container for the whole page.tsx
@@ -99,6 +100,7 @@ const WidgetContainer = styled.div`
   justify-content: center;
   align-items: start;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
 `

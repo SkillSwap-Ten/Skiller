@@ -114,7 +114,7 @@ const MessageCounter = styled.div<{ $low: boolean }>`
   font-size: 12px;
   padding: 4px 16px;
   color: ${({ $low, theme }) =>
-    $low ? theme.colors.textOrange : theme.colors.textGrey};
+        $low ? theme.colors.textOrange : theme.colors.textGrey};
 `
 
 const LimitReached = styled.div`
@@ -141,11 +141,10 @@ const LimitIcon = styled.div`
   color: ${({ theme }) => theme.colors.textOrange};
 `
 
-const ChatWindow = ({ chat, messages, refreshMessages, isMobile = false, onBack }: IChatWindowProps) => {
-    const [newMessage, setNewMessage] = useState('')
+const ChatWindow = ({ chat, messages, refreshMessages, onBack }: IChatWindowProps) => {
     const messagesEndRef = useRef<HTMLDivElement>(null)
     const currentUserId = getAuthData('id')
-
+    const [newMessage, setNewMessage] = useState('')
     const [avatarUrl, setAvatarUrl] = useState<string>(
         '/img/default-picture-full.webp'
     )
@@ -157,28 +156,21 @@ const ChatWindow = ({ chat, messages, refreshMessages, isMobile = false, onBack 
     }, [])
 
     useEffect(() => {
-        const checkImageUrl = (url: string) => {
-            const img = new Image()
-            img.src = url
+        const url = chat?.otherUserUrlImage;
 
-            img.onerror = () => {
-                setAvatarUrl('/img/default-picture-full.webp')
-            }
+        if (!url || !isValidImageUrl(url)) return;
 
-            img.onload = () => {
-                setAvatarUrl(url)
-            }
-        }
+        const img = new Image();
+        img.src = url;
 
-        if (
-            chat?.otherUserUrlImage &&
-            isValidImageUrl(chat.otherUserUrlImage)
-        ) {
-            checkImageUrl(chat.otherUserUrlImage)
-        } else {
-            setAvatarUrl('/img/default-picture-full.webp')
-        }
-    }, [chat?.otherUserUrlImage])
+        img.onload = () => {
+            setAvatarUrl(url);
+        };
+
+        img.onerror = () => {
+            setAvatarUrl("/img/default-picture-full.webp");
+        };
+    }, [chat]);
 
     useEffect(() => {
         scrollToBottom()
@@ -240,13 +232,12 @@ const ChatWindow = ({ chat, messages, refreshMessages, isMobile = false, onBack 
     return (
         <WindowContainer>
             <ChatHeader
+                onBack={onBack}
                 user={{
                     id: chat.otherUserId,
                     name: chat.otherUserName,
                     urlImage: chat.otherUserUrlImage,
                 }}
-                isMobile={isMobile}
-                onBack={onBack}
             />
 
             <MessagesArea>

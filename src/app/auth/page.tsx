@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { FooterMain } from "@/src/shared/ui/organisms/footer/FooterMain";
 import styled from "styled-components";
@@ -166,6 +166,7 @@ const SwitchButton = styled.button`
   padding: 0 !important;
   border-radius: 20px;
   width: 150px;
+  min-height: 36px;
   border: 1px solid ${({ theme }) => theme.colors.textYellow};
   background-color: transparent;
   font-size: 12px;
@@ -225,18 +226,16 @@ const FooterContainer = styled.div`
 `;
 
 export default function AuthPage() {
-  const [isRegister, setIsRegister] = useState(false);
   const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState(false);
+  const [isRegister, setIsRegister] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("currentPage") === "REGISTRO";
+    }
+    return false;
+  });
 
   const openModalResetPassword = () => setIsModalResetPasswordOpen(true);
   const closeModalResetPassword = () => setIsModalResetPasswordOpen(false);
-
-  useEffect(() => {
-    const currentPage = localStorage.getItem("currentPage");
-    if (currentPage === "REGISTRO") {
-      setIsRegister(true);
-    }
-  }, []);
 
   return (
     <>

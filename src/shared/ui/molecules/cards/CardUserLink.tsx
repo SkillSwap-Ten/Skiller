@@ -94,24 +94,20 @@ const CardUserLink: React.FC<ICardUserProps> = ({
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
+    const url = userData?.urlImage;
+
+    if (!url || !isValidImageUrl(url)) return;
+
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => {
+      setImageUrl(url);
     };
 
-    if (userData.urlImage && isValidImageUrl(userData.urlImage)) {
-      checkImageUrl(userData.urlImage);
-    } else {
+    img.onerror = () => {
       setImageUrl("/img/default-picture-full.webp");
-    }
+    };
   }, [userData]);
 
   // Constante que convierte abilities de string a array

@@ -13,9 +13,10 @@ import { IUserForImages } from "@/src/core/models/users/users.model";
 
 const Container = styled.div`
   margin: 54px 0;
+  min-height: 100dvh;
   flex-direction: column;
   display: flex;
-  min-height: 100dvh;
+  position: relative;
 `;
 
 const DivMatch = styled.div`

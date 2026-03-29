@@ -9,14 +9,15 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 // Estilos para el contenedor general de la tarjeta
 const CardContainer = styled.div`
-  width: 100%;
-  min-height: 100% !important;
-  max-height: 75vh !important;
+  background: ${({ theme }) => theme.colors.bgPrimary};
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  min-height: 100% !important;
+  max-height: 75vh !important;
   padding: 0.8rem 0;
-  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 0.5rem;
   padding-right: 0.2rem;
 

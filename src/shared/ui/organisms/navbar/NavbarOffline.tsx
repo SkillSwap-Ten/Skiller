@@ -6,20 +6,30 @@ import OfflineProfileSidebar from "../sidebars/SidebarOffline";
 import NavLink from "../../atoms/links/NavLinks";
 
 // Styled components
+const Overlay = styled.div`
+    background: ${({ theme }) => theme.colors.bgGrey};
+    position: fixed;
+    width: 100vw;
+    height: 54px;
+    top: 0;
+`;
+
 const NavbarContainer = styled.nav`
     z-index: 10;
     position: fixed;
     width: 100%;
     height: 54px;
     top: 0;
+    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     background-color: ${({ theme }) => theme.colors.bgNavbar};
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     color: ${({ theme }) => theme.colors.textWhite};
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
     gap: 50px;
-    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
 
     @media (max-width: 768px) {
         padding: 0 5px;
@@ -111,22 +121,26 @@ export const Navbar: React.FC = () => {
     const closeSidebar = () => setIsSidebarOpen(false);
 
     return (
-        <NavbarContainer>
+        <>
+            <Overlay />
             <OfflineProfileSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
-            <SidebarToggleContainer>
-                <NavToggle onClick={openSidebar}><small><span>+</span>SkillSwap</small></NavToggle>
-            </SidebarToggleContainer>
 
-            <IconsContainer>
-                <AuthLink>
-                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/auth" label="AUTH">
-                        <small>Iniciar sesión</small>
+            <NavbarContainer>
+                <SidebarToggleContainer>
+                    <NavToggle onClick={openSidebar}><small><span>+</span>SkillSwap</small></NavToggle>
+                </SidebarToggleContainer>
+
+                <IconsContainer>
+                    <AuthLink>
+                        <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/auth" label="AUTH">
+                            <small>Iniciar sesión</small>
+                        </NavLink>
+                    </AuthLink>
+                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/legal" label="LEGAL">
+                        <BsInfoCircle />
                     </NavLink>
-                </AuthLink>
-                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/legal" label="LEGAL">
-                    <BsInfoCircle />
-                </NavLink>
-            </IconsContainer>
-        </NavbarContainer>
+                </IconsContainer>
+            </NavbarContainer>
+        </>
     );
 };

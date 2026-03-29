@@ -238,24 +238,16 @@ const SliderMatch: React.FC<ISliderMatchProps> = ({ user, loading, error, onPass
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
-    };
+    const url = user?.urlImage;
 
-    if (user && user.urlImage && isValidImageUrl(user.urlImage)) {
-      checkImageUrl(user.urlImage);
-    } else {
-      setImageUrl("/img/default-picture-full.webp");
-    }
+    if (!url || !isValidImageUrl(url)) return;
+
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => setImageUrl(url);
+    img.onerror = () => setImageUrl("/img/default-picture-full.webp");
+
   }, [user]);
 
   const handlePassClick = () => {

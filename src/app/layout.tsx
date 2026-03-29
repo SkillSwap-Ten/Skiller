@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "Comunicación", "Tecnologías", "Aprender", "Estudio", "Intercambio", "Exchange", "Luisa", "Fernanda", "Ramírez", "Cardona", "Jonathan", "Escobar", "Urrego", "Dotnet", "Docker",
     "Arlex", "Zapata", "Stiven", "David", "Molina", "Mesa", "Medina", "Joan", "Sebastián", "Caro", "David", "Francisco", "Blandón", "Mena", "franccoina", "Laboral", "Deploy",
     "frn", "Vercel", "Destrezas", "Knowledges", "Conocimientos", "Descubrir", "Intercambiar", "Social", "Creativos", "Comunidad", "Cultura", "Github", "Experiencia", "GitHub",
-    "Behance", "Linkedin", "Jobs", "Web", "UX", "UI", "Nextjs", "Match", "Conectar", "Connect", "Discover", "New", "Nuevo", "Saberes", "Ideas", "Solicitud", "Colaborar", "API",
+    "Behance", "Linkedin", "Jobs", "Desarrollo Web", "UX", "UI", "Nextjs", "Match", "Conectar", "Connect", "Discover", "New", "Nuevo", "Saberes", "Ideas", "Solicitud", "Colaborar", "API",
     "Solicitar", "Mensajes", "Messages", "Compartir", "Share", ".NET", "Csharp", "C#", "Azure", "Repository", "Repositorio", "Profesional", "desarrollo de habilidades",
     "intercambio de habilidades", "aprendizaje digital", "comunidad creativa", "red de habilidades", "plataforma de habilidades", "colaboración en habilidades", "tech skills swap",
     "trueque de conocimientos", "networking digital", "Skill exchange", "digital skills marketplace", "creative skills hub", "online skills sharing", "professional skills network",

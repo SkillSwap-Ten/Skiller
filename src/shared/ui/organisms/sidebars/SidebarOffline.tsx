@@ -5,16 +5,17 @@ import NavLink from "../../atoms/links/NavLinks";
 import { handlePageTheme } from "../../../../lib/utils/themeHandler";
 import { ISidebarProps } from "@/src/shared/types/organisms/sidebar.type";
 
-const OfflineSidebarContainer = styled.div<{ isOpen: boolean }>`
+const OfflineSidebarContainer = styled.div<{ $isOpen: boolean }>`
     top: 0;
     left: 0;
+    z-index: 12;
     position: fixed;
     align-items: center;
     background: ${({ theme }) => theme.colors.bgMainOpacity};
     width: 100%;
     height: 100%;
-    display: ${({ isOpen }) => (isOpen ? "flex" : "none")}; 
-    animation: ${({ isOpen }) => (isOpen ? "appear 1s ease-in-out" : "none")};
+    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; 
+    animation: ${({ $isOpen }) => ($isOpen ? "appear 1s ease-in-out" : "none")};
     z-index: 9;
     overflow: hidden;
     
@@ -123,8 +124,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: 4rem;
   width: 4rem;
-  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -196,7 +197,7 @@ const SidebarOffline: React.FC<ISidebarProps> = ({ isOpen, onClose }) => {
   }, [onClose]);
 
   return (
-    <OfflineSidebarContainer isOpen={isOpen}>
+    <OfflineSidebarContainer $isOpen={isOpen}>
       <OfflineSidebarContent ref={sidebarRef}>
         <Disclaimer>
           <OfflineProfile>

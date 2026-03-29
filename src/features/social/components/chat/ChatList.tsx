@@ -64,8 +64,9 @@ const ChatItem = styled.button<{ $active: boolean }>`
 `
 
 const Avatar = styled.div<{ $urlImage: string }>`
-  width: 52px;
-  height: 52px;
+  min-width: 3.25rem;
+  width: 3.25rem;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   flex-shrink: 0;
   background-image: url(${(props) => props.$urlImage});

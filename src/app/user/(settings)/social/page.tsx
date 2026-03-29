@@ -1,4 +1,11 @@
 'use client'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { MOCK_CHATS, MOCK_MESSAGES, MOCK_REQUESTS } from '@/src/app/mock-data';
+
+// --------------------------------------------------------------------------------------------- //
+// -------------------------------------- FASE BETA -------------------------------------------- //
+// --------------------------------------------------------------------------------------------- //
+
 import styled from 'styled-components'
 import ChatWindow from '@/src/features/social/components/chat/ChatWindow';
 import SidebarSocial from '@/src/shared/ui/organisms/sidebars/SidebarSocial';
@@ -12,18 +19,16 @@ import { toast } from "react-toastify";
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-import { MOCK_CHATS, MOCK_MESSAGES, MOCK_REQUESTS } from '@/src/app/mock-data';
-
 const PageWrapper = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
   width: 100%;
   height: 100dvh;
   min-height: 548px;
+  padding: 54px 0 !important;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding: 54px 0 !important;
 `
 
 const ContentViewport = styled.div`

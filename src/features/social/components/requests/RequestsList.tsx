@@ -41,20 +41,21 @@ const RequestItem = styled.div<{ $answered?: boolean }>`
 `
 
 const Avatar = styled.button`
-  position: relative;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  min-width: 3.25rem;
+  width: 3.25rem;
+  aspect-ratio: 1 / 1;
   flex-shrink: 0;
+  font-size: 22px;
+  border-radius: 50%;
+  position: relative;
   cursor: pointer;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.textWhite};
-  font-size: 22px;
   overflow: hidden;
-  box-shadow: inset 0 0 8px 4px #22222225;
+  box-shadow: inset 0 0 8px 4px #22222220;
+  color: ${({ theme }) => theme.colors.textWhite};
 
   &::before {
     content: '';

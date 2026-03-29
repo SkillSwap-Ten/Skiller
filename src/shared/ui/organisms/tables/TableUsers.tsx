@@ -16,10 +16,9 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   height: 100%; 
   width: 100%; 
-  display: flex; 
+  display: flex;
   flex-direction: column; 
   align-items: center;
   overflow: hidden;
@@ -27,7 +26,6 @@ const Container = styled.div`
 `;
 
 const TableContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   height: auto; 
   width: 100%; 
   display: flex; 
@@ -35,6 +33,7 @@ const TableContainer = styled.div`
   overflow-x: auto;
   padding: 1rem;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
+  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   border-radius: 10px;
 `;
 

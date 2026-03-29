@@ -8,14 +8,16 @@ import { smoothScrollToTop } from '@/src/lib/utils/scrollBehavior';
 const BottombarStyled = styled.div`
     z-index: 10;
     bottom: 0;
-    position: fixed;
     width: 100vw;
     height: 54px;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.colors.bgPrimary};
     border-top: solid 1px ${({ theme }) => theme.colors.borderBottombar};
+    background-color: ${({ theme }) => theme.colors.bgBottombar};
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
 
     & a {
         padding: 0;

@@ -14,6 +14,7 @@ import InputAuth from "../../../shared/ui/atoms/inputs/InputAuth";
 import ButtonAuth from "../../../shared/ui/atoms/buttons/ButtonAuth";
 import Label from "../../../shared/ui/atoms/labels/LabelAuth";
 import NavLink from "../../../shared/ui/atoms/links/NavLinks";
+import Loader from "@/src/shared/ui/atoms/loader/Loader";
 import styled from 'styled-components';
 
 const Arrow = styled.span`
@@ -218,7 +219,7 @@ export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
           />
           <DivButtonLogin>
             <ButtonAuth type="submit" disabled={loading} onClick={() => handlePageTheme('INICIO')}>
-              {loading ? "Cargando..." : "ENTRAR"}
+              {loading ? <Loader color={"#DC7D2F"} /> : "ENTRAR"}
             </ButtonAuth>
           </DivButtonLogin>
 

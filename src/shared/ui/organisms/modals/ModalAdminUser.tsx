@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 // Modal Form Component
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
+const ModalOverlay = styled.div<{ $isOpen: boolean }>`
   background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -227,8 +227,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: clamp(6rem, 10vw, 11rem);
   width: clamp(6rem, 10vw, 11rem);
-  height: clamp(6rem, 10vw, 11rem);
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -237,28 +237,24 @@ const ModalAdminUser: React.FC<IModalUserFormProps> = ({ isOpen, onUpdateData, d
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
+    const url = dataToEdit?.urlImage;
+
+    if (!url || !isValidImageUrl(url)) return;
+
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => {
+      setImageUrl(url);
     };
 
-    if (dataToEdit?.urlImage && isValidImageUrl(dataToEdit?.urlImage)) {
-      checkImageUrl(dataToEdit?.urlImage);
-    } else {
+    img.onerror = () => {
       setImageUrl("/img/default-picture-full.webp");
-    }
+    };
   }, [dataToEdit]);
 
   return (
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay $isOpen={isOpen}>
       <ModalContainer>
         <ModalHeader>
           <div>Gestionar<article>Perfil</article></div>
@@ -269,6 +265,7 @@ const ModalAdminUser: React.FC<IModalUserFormProps> = ({ isOpen, onUpdateData, d
           <ModalContent>
             <LeftSection>
               <FormAdminUsers
+                key={dataToEdit?.id}
                 onUpdateData={onUpdateData}
                 dataToEdit={dataToEdit}
                 setDataToEdit={setDataToEdit}

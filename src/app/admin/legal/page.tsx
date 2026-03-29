@@ -10,11 +10,10 @@ import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 const LegalContainer = styled.article`
   width: 100%;
   height: 100%;
-  margin: auto;
+  margin: 54px auto;
   display: flex;
+  position: relative;
   flex-direction: column;
-  margin-top: 54px;
-  margin-bottom: 54px;
 `;
 
 const Container = styled.div`
@@ -40,11 +39,11 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  text-align: center;
   margin: 0;
   margin-bottom: 5px;
   background: ${({ theme }) => theme.colors.gradientText};
   font-size: 2.5rem;
+  text-align: center;
   font-weight: normal;
   -webkit-background-clip: text;
   background-clip: text;
@@ -58,14 +57,14 @@ const Section = styled.section`
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 1.5rem;
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 1.5rem;
   margin-bottom: 10px;
   font-weight: 500;
-  display: flex;
-  align-items: center;
   gap: 8px;
   opacity: 0.8;
+  display: flex;
+  align-items: center;
 `;
 
 const Paragraph = styled.p`

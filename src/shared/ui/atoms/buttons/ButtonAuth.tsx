@@ -11,6 +11,7 @@ const StyledButtonAuth = styled.button`
   font-weight: 600;
   cursor: pointer;
   width: 120px;
+  min-height: 36px;
   background-color: ${({ theme }) => theme.colors.textWhite};
   border: none;
 

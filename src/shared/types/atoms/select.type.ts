@@ -15,6 +15,12 @@ export interface ISelectProps {
 }
 
 export interface ISelectSkillsProps extends ISelectProps {
-  allSkills: string; // String con todas las skills disponibles (separadas por comas)
+  allSkills: Skill[]; // Array de objetos Skill con todas las skills disponibles
   value: string; // String con las skills del usuario (separadas por comas)
 }
+
+export type Skill = {
+  name: string;
+  aliases: string[];
+  related?: string[];
+};

@@ -14,9 +14,10 @@ export const darkThemeLabels = ['REGISTRO'];
 // Configuramos nuestro Global Theme
 export const GlobalTheme: IGlobalTheme = {
     colors: {
-        bgNavbar: '#222222',
+        bgNavbar: '#222222EE',
         bgBanner: 'rgba(0, 0, 0, 0.1)',
         bgMainOpacity: '#00000050',
+        bgBottombar: '#FFFFFFEE',
         bgSidebar: '#FEFEFE',
         bgNotFound: '#F5F5F5',
         bgPrimary: '#FEFEFE',
@@ -71,7 +72,7 @@ export const GlobalTheme: IGlobalTheme = {
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(90deg, #F0AC2799 20%,  #DC7D2F99 80%, #D13B0099 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC27AA 20%,  #DC7D2FAA 80%, #D13B00AA 100% )',
 
         gradientPink: 'linear-gradient(90deg, #7D93FF 0%, #F093C0 85%, #EFC7C5 100%)',
         gradientGreen: 'linear-gradient(90deg, #B6CB65 0%, #37A879 52%, #4A54AE66 100%)',
@@ -80,9 +81,10 @@ export const GlobalTheme: IGlobalTheme = {
 
 export const GlobalDarkTheme: IGlobalTheme = {
     colors: {
-        bgNavbar: '#222222',
+        bgNavbar: '#222222EE',
         bgBanner: 'rgba(255, 255, 255, 0.05)',
         bgMainOpacity: '#00000050',
+        bgBottombar: '#222222EE',
         bgSidebar: '#1A1A1A',
         bgNotFound: '#0E0E0E',
         bgPrimary: '#222222',
@@ -137,7 +139,7 @@ export const GlobalDarkTheme: IGlobalTheme = {
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(90deg, #F0AC2799 20%,  #DC7D2F99 80%, #D13B0099 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC27AA 20%,  #DC7D2FAA 80%, #D13B00AA 100% )',
 
         gradientPink: 'linear-gradient(90deg, #9DAAFF 0%, #F5A3D4 85%, #FFCDD2 100%)',
         gradientGreen: 'linear-gradient(90deg, #85A84F 0%, #2C8F66 52%, #3E47A066 100%)',
@@ -147,71 +149,70 @@ export const GlobalDarkTheme: IGlobalTheme = {
 
 // Global styling para elementos HTML importantes
 export const GlobalStyle = createGlobalStyle`
-
-html {
-    background-color: ${({ theme }) => theme.colors.bgPrimary};
-    width: 100vw !important;
-    overflow-x: hidden !important;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-*,
-*::before,
-*::after{
-    font-family: ${urbanist.style.fontFamily};
-    box-sizing: inherit;
-}
-
-div, section, article, aside, table, ul, ol, textarea {
-    &::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
+    html {
+        background-color: ${({ theme }) => theme.colors.bgPrimary};
+        width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-    &::-webkit-scrollbar-track {
-        background: transparent;
-        margin: 8px;
+    *,
+    *::before,
+    *::after{
+        font-family: ${urbanist.style.fontFamily};
+        box-sizing: inherit;
     }
 
-    &::-webkit-scrollbar-thumb {
-        background: ${({ theme }) => theme.colors.textTertiary};
-        border-radius: 4px;
+    div, section, article, aside, table, ul, ol, textarea {
+        &::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+            margin: 8px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: ${({ theme }) => theme.colors.textTertiary};
+            border-radius: 4px;
+        }
     }
-}
 
-body {
-    min-height: 100dvh;
-    width: 100% !important;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-}
+    body {
+        min-height: 100dvh;
+        width: 100% !important;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: bolder;
-}
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: bolder;
+    }
 
-p {
-    color: ${({ theme }) => theme.colors.bgPrimary};
-    line-height: 1.3;
-    font-weight: 300;
-    margin: 0;
-    hyphens: auto;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
+    p {
+        color: ${({ theme }) => theme.colors.bgPrimary};
+        line-height: 1.3;
+        font-weight: 300;
+        margin: 0;
+        hyphens: auto;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
 
-.gradient-bg-primary {
-    background-color: ${({ theme }) => theme.colors.gradientPrimary};
-}
+    .gradient-bg-primary {
+        background-color: ${({ theme }) => theme.colors.gradientPrimary};
+    }
 
-.gradient-bg-secondary {
-    background-color: ${({ theme }) => theme.colors.gradientSecondary};
-}
+    .gradient-bg-secondary {
+        background-color: ${({ theme }) => theme.colors.gradientSecondary};
+    }
 
-input, select, textarea, span, button {
-    font-family: ${urbanist.style.fontFamily};
-}
+    input, select, textarea, span, button {
+        font-family: ${urbanist.style.fontFamily};
+    }
 `;

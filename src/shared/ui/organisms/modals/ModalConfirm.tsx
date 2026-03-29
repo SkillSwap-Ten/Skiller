@@ -3,8 +3,8 @@ import { IModalConfirmProps } from "@/src/shared/types/organisms/modal.type";
 import styled from "styled-components";
 
 // Modal Confirm Component
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+const ModalOverlay = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -69,7 +69,7 @@ const ModalHeader = styled.div`
 
 const ModalConfirm: React.FC<IModalConfirmProps> = ({ isOpen, onClose, onConfirm }) => {
   return (
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay $isOpen={isOpen}>
       <ModalContent>
         <ModalHeader>
           <h2>Confirmación</h2>

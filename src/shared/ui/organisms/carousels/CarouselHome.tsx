@@ -12,43 +12,43 @@ const baskervville = Baskervville({
 
 interface CardData {
   id: number;
-  imgsrc: string;
+  imgSrc: string;
 }
 
 const initialCards: CardData[] = [
   {
     id: 1,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/17612180/pexels-photo-17612180/free-photo-of-blanco-y-negro-mujer-cara-enfrentarse.jpeg",
   },
   {
     id: 2,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/15169306/pexels-photo-15169306/free-photo-of-blanco-y-negro-mujer-joven-retrato.jpeg",
   },
   {
     id: 3,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/13944737/pexels-photo-13944737.jpeg",
   },
   {
     id: 4,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/16557436/pexels-photo-16557436/free-photo-of-retrato-para-mi-prima.jpeg",
   },
   {
     id: 5,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/24017554/pexels-photo-24017554/free-photo-of-cara-de-nino-en-blanco-y-negro.jpeg",
   },
   {
     id: 6,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/2558823/pexels-photo-2558823.jpeg",
   },
   {
     id: 7,
-    imgsrc:
+    imgSrc:
       "https://images.pexels.com/photos/8727669/pexels-photo-8727669.jpeg",
   },
 ];
@@ -59,15 +59,19 @@ const Container = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colors.bgGrey};
   flex-direction: column;
-  padding-top: 100px;
+  padding-top: 70px;
   padding-bottom: 150px;
   position: relative;
   width: 100%;
   overflow: hidden;
 
   @media (max-width: 768px) {
-    padding-top: 70px;
+    padding-top: 40px;
     padding-bottom: 80px;
+  }
+
+  @media (max-width: 500px) {
+    padding-top: 70px;
   }
 `;
 
@@ -161,16 +165,16 @@ const CardsContainer = styled.div`
   }
 `;
 
-const Card = styled.div<({ $imgsrc: string })>`
+const Card = styled.div<{ $imgSrc: string }>`
   overflow: hidden;
-  background-color: #c4c4c4;
-  border-radius: 15px;
-  background-image: url(${(props) => props.$imgsrc});
+  background-color: #555;
+  background-image: url(${(props) => props.$imgSrc});
   background-size: cover;
   background-position: center;
   margin: 5px;
   height: 180px;
   width: 150px;
+  border-radius: 15px;
   filter: grayscale();
   transition: all 0.6s ease-in-out !important;
 
@@ -309,7 +313,7 @@ const CarouselHome: React.FC = () => {
           {cards.map((card, index) => (
             <Card
               key={card.id}
-              $imgsrc={card.imgsrc}
+              $imgSrc={card.imgSrc}
               className={`card-${index + 1}`}
             />
           ))}

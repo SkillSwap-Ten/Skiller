@@ -1,12 +1,24 @@
 {
   "name": "skiller",
-  "version": "0.1.0",
+  "version": "1.1.1",
+  "author": "SkillSwap Team",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "lint:staged": "eslint ."
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
@@ -34,8 +46,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/styled-components": "^5.1.34",
-    "eslint": "^10.1.0",
-    "eslint-config-next": "^0.2.4",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.0"

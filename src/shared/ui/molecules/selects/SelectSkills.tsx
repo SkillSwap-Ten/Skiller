@@ -1,6 +1,7 @@
 'use client';
+import React, { useState, ChangeEvent, useMemo } from 'react';
 import { ISelectSkillsProps } from '@/src/shared/types/atoms/select.type';
-import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
+import { IoAdd, IoClose } from 'react-icons/io5';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -35,33 +36,32 @@ const SkillsWrapper = styled.div`
   padding-right: 6px;
 `;
 
-const SkillOption = styled.span<{ active: boolean }>`
+const SkillOption = styled.span<{ $active: boolean }>`
+  background-color: ${({ $active, theme }) =>
+    $active ? `${theme.colors.textSecondary}33` : 'transparent'};
+  border: 1px solid ${({ $active, theme }) =>
+    $active ? 'transparent' : theme.colors.textSecondary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid ${({ active, theme }) => active ? 'transparent' : theme.colors.textSecondary};
-  color: ${({ theme }) => theme.colors.textSecondary};
-  background-color: ${({ active, theme }) =>
-    active ? `${theme.colors.textSecondary}33` : 'transparent'};
+  min-width: 80px;
+  width: fit-content;
   border-radius: 9999px;
   padding: 6px 10px;
   font-size: 14px;
+  gap: 6px;
   cursor: pointer;
-  min-width: 100px;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     opacity: 0.8;
+    transition: all 0.2s ease-in-out;
   }
 
   @media (max-width: 500px) {
     min-width: 60px;
   }
-`;
-
-const OptionSymbol = styled.span`
-  margin-left: 6px;
-  font-weight: bold;
 `;
 
 const SelectSkills: React.FC<ISelectSkillsProps> = ({
@@ -71,34 +71,31 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
   value,
   onChange,
 }) => {
-  // Convertir los strings entrantes en arrays limpios
-  const allSkillsArray = allSkills
-    .split(',')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-
-  const userSkillsArray = value
-    .split(',')
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
-
+  // --- Estado ---
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState<string[]>(userSkillsArray);
-  const selectRef = useRef<HTMLSelectElement>(null);
+  const [selected, setSelected] = useState<string[]>(
+    value
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean)
+  );
 
-  // Sincronizar el estado interno con el valor externo del formulario
-  useEffect(() => {
+  // --- Derivar selected de value para mantener sincronía sin useEffect ---
+  const derivedSelected = useMemo(() => {
     const updated = value
       .split(',')
       .map(s => s.trim())
       .filter(Boolean);
-    setSelected(updated);
-  }, [value]);
 
-  // Emitir un evento "real" compatible con handleSelectChange
+    const isEqual =
+      updated.length === selected.length &&
+      updated.every((v, i) => v === selected[i]);
+
+    return isEqual ? selected : updated;
+  }, [value, selected]);
+
+  // --- Evento que dispara cambio ---
   const triggerChangeEvent = (skills: string[]) => {
-    if (!selectRef.current) return;
-
     const event = {
       target: {
         name,
@@ -109,18 +106,17 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
     onChange(event);
   };
 
-  const handleToggle = (skill: string) => {
-    setSelected(prev => {
-      const newSelection = prev.includes(skill)
-        ? prev.filter(s => s !== skill)
-        : [...prev, skill];
+  // --- Toggle skill ---
+  const handleToggle = (skillName: string) => {
+    const newSelection = derivedSelected.includes(skillName)
+      ? derivedSelected.filter(s => s !== skillName)
+      : [...derivedSelected, skillName];
 
-      triggerChangeEvent(newSelection);
-      return newSelection;
-    });
+    setSelected(newSelection);
+    triggerChangeEvent(newSelection);
   };
 
-  // Normaliza texto: pasa a minúsculas y elimina caracteres no alfanuméricos
+  // --- Normalización ---
   const normalize = (str: string) =>
     str
       .toLowerCase()
@@ -129,52 +125,103 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
       .replaceAll(/[^a-z0-9\s]/gi, '')
       .trim();
 
-  // Filtrado por palabras
-  const filtered = allSkillsArray.filter(skill => {
-    const normalizedSkill = normalize(skill);
-    const normalizedSearch = normalize(search);
+  const normalizedSearch = normalize(search);
 
+  // --- Filtrado principal ---
+  const filtered = allSkills.filter(skill => {
     if (!normalizedSearch) return true;
 
     const searchWords = normalizedSearch.split(/\s+/);
-    return searchWords.every(word => normalizedSkill.includes(word));
+    const name = normalize(skill.name);
+    const aliases = skill.aliases?.map(a => normalize(a)) || [];
+
+    return searchWords.every(
+      word => name.includes(word) || aliases.some(alias => alias.includes(word))
+    );
   });
 
-  // Mostrar primero las skills seleccionadas
-  filtered.sort((a, b) => {
-    const aSelected = selected.includes(a);
-    const bSelected = selected.includes(b);
-    return aSelected === bSelected ? 0 : aSelected ? -1 : 1;
+  // --- Mapa de relevancia de relacionados ---
+  const relatedCountMap = new Map<string, number>();
+  if (normalizedSearch) {
+    filtered.forEach(skill => {
+      (skill.related || []).forEach(rel => {
+        relatedCountMap.set(rel, (relatedCountMap.get(rel) || 0) + 1);
+      });
+    });
+  }
+
+  // --- Skills relacionadas con peso ---
+  const relatedSkills = Array.from(relatedCountMap.entries())
+    .map(([name, count]) => ({
+      skill: allSkills.find(s => s.name === name),
+      count,
+    }))
+    .filter(
+      (item): item is { skill: typeof allSkills[0]; count: number } => !!item.skill
+    );
+
+  // --- Unificar sin duplicados ---
+  const skillMap = new Map<string, typeof allSkills[0]>();
+  // 1. Seleccionados
+  derivedSelected.forEach(name => {
+    const skill = allSkills.find(s => s.name === name);
+    if (skill) skillMap.set(skill.name, skill);
+  });
+  // 2. Filtrados
+  filtered.forEach(skill => {
+    if (!skillMap.has(skill.name)) {
+      skillMap.set(skill.name, skill);
+    }
+  });
+  // 3. Relacionados
+  relatedSkills.forEach(({ skill }) => {
+    if (!skillMap.has(skill.name)) {
+      skillMap.set(skill.name, skill);
+    }
   });
 
+  // --- Lista final ordenada ---
+  const finalSkills = Array.from(skillMap.values()).sort((a, b) => {
+    const aSelected = derivedSelected.includes(a.name);
+    const bSelected = derivedSelected.includes(b.name);
+    if (aSelected !== bSelected) return aSelected ? -1 : 1;
+
+    const aInFiltered = filtered.some(f => f.name === a.name);
+    const bInFiltered = filtered.some(f => f.name === b.name);
+    if (aInFiltered !== bInFiltered) return aInFiltered ? -1 : 1;
+
+    const aRel = relatedCountMap.get(a.name) || 0;
+    const bRel = relatedCountMap.get(b.name) || 0;
+    return bRel - aRel;
+  });
+
+  // --- Render ---
   return (
     <Container>
       <SearchInput
         type="text"
         placeholder="Busca tu habilidad..."
         value={search}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setSearch(e.target.value)
-        }
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
       />
       <SkillsWrapper>
-        {filtered.map(skill => {
-          const active = selected.includes(skill);
+        {finalSkills.map(skill => {
+          const active = derivedSelected.includes(skill.name);
           return (
             <SkillOption
-              key={skill}
-              active={active}
-              onClick={() => handleToggle(skill)}
+              key={skill.name}
+              $active={active}
+              onClick={() => handleToggle(skill.name)}
             >
-              {skill}
-              <OptionSymbol>{active ? '✕' : '+'}</OptionSymbol>
+              {skill.name}
+              {active ? <IoClose /> : <IoAdd />}
             </SkillOption>
           );
         })}
       </SkillsWrapper>
 
       {/* select hidden para integrarse al form */}
-      <select title={title} ref={selectRef} name={name} multiple hidden>
+      <select title={title} name={name} multiple hidden>
         {selected.map(skill => (
           <option key={skill} value={skill} selected>
             {skill}

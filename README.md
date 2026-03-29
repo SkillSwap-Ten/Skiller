@@ -27,11 +27,10 @@ Additionally, we adhered to __DevOps Culture__ practices and a __SCRUM__ oriente
 │   └── /vid
 ├── /src
 │   ├── /app
-│   │   ├── /(account)
-│   │   │   └── /auth
-│   │   │       ├── /password/reset
-│   │   │       ├── layout.tsx
-│   │   │       └── page.tsx
+│   │   ├── /auth
+│   │   │   ├── /password/reset
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
 │   │   ├── /admin
 │   │   │   ├── /legal
 │   │   │   ├── /reports

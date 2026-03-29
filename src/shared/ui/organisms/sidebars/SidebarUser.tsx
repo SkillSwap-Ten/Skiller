@@ -17,6 +17,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const UserSidebarContainer = styled.div`
     top: 0;
     left: 0;
+    z-index: 12;
     position: fixed;
     display: flex;
     align-items: center;

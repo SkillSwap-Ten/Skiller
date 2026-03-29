@@ -17,15 +17,17 @@ const Step = styled.div`
     text-align: center;
 `;
 
-const Circle = styled.div<{ active: boolean; completed: boolean }>`
+const Circle = styled.div<{ $active: boolean; $completed: boolean }>`
     width: 18px;
     height: 18px;
-    background-color: ${({ active, completed }) => (active || completed ? '#ffffffcc' : '#ffffff4c')};
+    background-color: ${({ $active, $completed }) => (
+        $active || $completed ? '#ffffffcc' : '#ffffff4c')};
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${({ active, completed, theme}) => (active || completed ? theme.colors.textOrange : theme.colors.textWhite)};
+    color: ${({ $active, $completed, theme}) => (
+        $active || $completed ? theme.colors.textOrange : theme.colors.textWhite)};
     font-weight: bold;
     font-size: 10px;
     transition: background-color 0.3s;
@@ -39,7 +41,7 @@ const Indicator: React.FC<IIndicatorProps> = ({ currentStep }) => {
         <IndicatorContainer>
             {Array.from({ length: totalSteps }).map((_, index) => (
                 <Step key={index}>
-                    <Circle active={index === currentStep} completed={index < currentStep}>
+                    <Circle $active={index === currentStep} $completed={index < currentStep}>
                         {index + 1}
                     </Circle>
                 </Step>

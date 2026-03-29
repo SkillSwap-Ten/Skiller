@@ -152,8 +152,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: 4rem;
   width: 4rem;
-  height: 4rem;
   border-radius: 10px;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -198,27 +198,17 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
   } = user;
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
-    };
-
-    if (urlImage && isValidImageUrl(urlImage)) {
-      checkImageUrl(urlImage);
-    } else {
-      setImageUrl("/img/default-picture-full.webp");
+    if (!urlImage || !isValidImageUrl(urlImage)) {
+      return;
     }
-  }, [urlImage]);
 
-  console.log(nameStateUser);
+    const img = new Image();
+    img.src = urlImage;
+
+    img.onload = () => setImageUrl(urlImage);
+    img.onerror = () => setImageUrl("/img/default-picture-full.webp");
+
+  }, [urlImage]);
 
   let stateElement;
   if (nameStateUser?.toLocaleLowerCase().trim() === 'activo') {
@@ -266,7 +256,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
             <FaLinkedin />
             <NavLink
               target="_blank"
-              hover={{ fontWeight: '700', transition: '0.4s'}}
+              hover={{ fontWeight: '700', transition: '0.4s' }}
               href={urlLinkedin ? urlLinkedin : "#"}
               label="LinkedIn"
             />
@@ -278,7 +268,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
             <FaGithubSquare />
             <NavLink
               target="_blank"
-              hover={{ fontWeight: '700', transition: '0.4s'}}
+              hover={{ fontWeight: '700', transition: '0.4s' }}
               href={urlGithub ? urlGithub : "#"}
               label="GitHub"
             />
@@ -290,7 +280,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
             <FaBehanceSquare />
             <NavLink
               target="_blank"
-              hover={{ fontWeight: '700', transition: '0.4s'}}
+              hover={{ fontWeight: '700', transition: '0.4s' }}
               href={urlBehance ? urlBehance : "#"}
               label="Behance"
             />

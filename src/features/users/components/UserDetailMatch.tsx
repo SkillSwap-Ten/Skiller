@@ -93,8 +93,8 @@ const ProfileImage = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: 4rem;
   width: 4rem;
-  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -185,6 +185,7 @@ const UserDescription = styled.div`
   padding-bottom: 0.5rem;
   min-height: 12rem;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
@@ -316,6 +317,7 @@ const MediaContent = styled.div`
   min-height: 8rem !important;
   height: 50%;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   gap: 1rem;
 
@@ -435,8 +437,8 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
   useEffect(() => {
     if (!userData) return;
 
-    const checkImageUrl = (url: string) => {
-      return new Promise<void>((resolve) => {
+    const checkImageUrl = (url: string) =>
+      new Promise<void>((resolve) => {
         const img = new Image();
         img.src = url;
         img.onload = () => {
@@ -448,40 +450,36 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
           resolve();
         };
       });
-    };
 
     const runUserDetail = async () => {
       try {
-        const tasks: Promise<void>[] = [];
-
         // Imagen
         if (userData.urlImage && isValidImageUrl(userData.urlImage)) {
-          tasks.push(checkImageUrl(userData.urlImage));
+          await checkImageUrl(userData.urlImage);
         } else {
           setImageUrl("/img/default-picture-full.webp");
         }
 
-        // GitHub repos
+        // GitHub user
         const { isSuccess, user } = getGitHubUser(userDetail?.urlGithub?.toString());
         setIsGitHub(isSuccess);
         setUsernameGitHub(user ?? null);
 
-        if (isSuccess && user) {
-          tasks.push(
-            (async () => {
-              const repos = await getGitHubRepos(userDetail!.urlGithub!);
-              const langs = repos.reduce<string[]>((acc, repo) => {
-                if (repo.language && !acc.includes(repo.language)) acc.push(repo.language);
-                return acc;
-              }, []);
-              setLanguages(langs);
-            })()
-          );
+        // Lenguajes (solo una vez)
+        if (isSuccess && user && userDetail?.urlGithub) {
+          const repos = await getGitHubRepos(userDetail.urlGithub);
+
+          const langs = repos.reduce<string[]>((acc, repo) => {
+            if (repo.language && !acc.includes(repo.language)) {
+              acc.push(repo.language);
+            }
+            return acc;
+          }, []);
+
+          setLanguages(langs);
         } else {
           setLanguages([]);
         }
-
-        await Promise.all(tasks);
       } catch (error) {
         console.error(error);
       }
@@ -490,10 +488,12 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
     runUserDetail();
   }, [userData, userDetail]);
 
-
-  useEffect(() => {
-    setStatsLoaded({ main: true, langs: true });
-  }, [usernameGitHub]);
+  const handleStatsError = (type: "main" | "langs") => {
+    setStatsLoaded((prev) => {
+      if (!prev[type]) return prev;
+      return { ...prev, [type]: false };
+    });
+  };
 
   const handleReportClick = () => {
     setIsModalReportOpen(true);
@@ -502,6 +502,11 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
   const handleTipsClick = () => {
     setIsModalTipsOpen(true);
   };
+
+  const abilitiesArray =
+    typeof userData?.abilities === 'string'
+      ? userData.abilities.split(',').map((ability: string) => ability.trim())
+      : [];
 
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
@@ -568,11 +573,6 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
     </ProfileContainer>
   );
 
-  const abilitiesArray =
-    typeof userData?.abilities === 'string'
-      ? userData.abilities.split(',').map((ability: string) => ability.trim())
-      : [];
-
   return (
     <>
       <ProfileContainer>
@@ -580,6 +580,7 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
           <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
           <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         </ProfileImageMobile>
+
         <Header>
           <UserInfo>
             <MainInfo>
@@ -663,12 +664,12 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
 
                 {isGitHub &&
                   (statsLoaded.main || (languages.length !== 0 && statsLoaded.langs)) && (
-                    <StatsContainer>
+                    <StatsContainer key={usernameGitHub}>
                       {statsLoaded.main && (
                         <StatsImage
                           src={`https://github-readme-stats.vercel.app/api?username=${usernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
                           alt={`${usernameGitHub}-stats`}
-                          onError={() => setStatsLoaded(prev => ({ ...prev, main: false }))}
+                          onError={() => handleStatsError("main")}
                         />
                       )}
 
@@ -676,7 +677,7 @@ const UserProfileDetail: React.FC<IDetailUserProps> = ({ loading, error, userDet
                         <StatsImage
                           src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${usernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
                           alt={`${usernameGitHub}-top-langs`}
-                          onError={() => setStatsLoaded(prev => ({ ...prev, langs: false }))}
+                          onError={() => handleStatsError("langs")}
                         />
                       )}
                     </StatsContainer>

@@ -10,14 +10,13 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const CardFeaturesContainer = styled.div`
-  background: ${({ theme }) => theme.colors.bgSidebar};
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   min-height: 100% !important;
   max-height: 75vh !important;
-  display: flex;
-  flex-direction: column;
   padding: 0;
-  overflow: hidden;
   gap: 1rem;
 
   @media (max-width: 950px) {
@@ -27,14 +26,14 @@ const CardFeaturesContainer = styled.div`
 
 const ProfileCardContent = styled.div`
   background: ${({ theme }) => theme.colors.bgSidebar};
-  width: 100%;
-  height: 45%;
+  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 45%;
   padding: 1rem;
   padding-top: 0;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   & a {
     &:hover {
@@ -45,7 +44,6 @@ const ProfileCardContent = styled.div`
 `;
 
 const CardFeaturesContent = styled.div`
-  background: ${({ theme }) => theme.colors.bgSidebar};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   width: 100%;
   height: 55%;
