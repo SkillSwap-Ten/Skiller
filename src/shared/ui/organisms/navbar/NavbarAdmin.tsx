@@ -10,14 +10,24 @@ import AdminProfileSidebar from "../sidebars/SidebarAdmin";
 import LogoutButton from "../../atoms/buttons/ButtonLogout";
 
 // Styled components
+const Overlay = styled.div`
+    background: ${({ theme }) => theme.colors.bgGrey};
+    position: fixed;
+    width: 100vw;
+    height: 54px;
+    top: 0;
+`;
+
 const NavbarContainer = styled.nav`
     position: fixed;
     z-index: 10;
     width: 100%;
     height: 54px;
-    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     top: 0;
+    border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     background-color: ${({ theme }) => theme.colors.bgNavbar};
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     color: ${({ theme }) => theme.colors.textWhite};
     display: flex;
     align-items: center;
@@ -30,13 +40,13 @@ const NavbarContainer = styled.nav`
     }
 `;
 
-const NavListContainer = styled.div<{ isOpen: boolean }>`
+const NavListContainer = styled.div<{ $isOpen: boolean }>`
     display: flex;
     padding: 0;
     margin: 0;
 
     @media (max-width: 790px) {
-        display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+        display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
         flex-direction: column;
         align-items: start;
         justify-content: center;
@@ -245,44 +255,47 @@ export const NavbarAdmin: React.FC = () => {
     };
 
     return (
-        <NavbarContainer>
+        <>
+            <Overlay />
             <AdminProfileSidebar isOpen={isSidebarProfileOpen} onClose={closeSidebarProfile} />
 
-            <SidebarToggleContainer>
-                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Guía</small></NavToggle>
-            </SidebarToggleContainer>
+            <NavbarContainer>
+                <SidebarToggleContainer>
+                    <NavToggle onClick={openSidebarProfile}><small><span>+</span>Guía</small></NavToggle>
+                </SidebarToggleContainer>
 
-            <MenuToggleContainer>
-                <NavToggle onClick={toggleMenu}>
-                    {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
-                </NavToggle>
-            </MenuToggleContainer>
+                <MenuToggleContainer>
+                    <NavToggle onClick={toggleMenu}>
+                        {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
+                    </NavToggle>
+                </MenuToggleContainer>
 
-            <NavListContainer isOpen={isOpenToggleMenu}>
-                <NavList>
-                    <NavListContent>
-                        <NavItem>
-                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/" label="INICIO" />
-                        </NavItem>
-                        <NavItem>
-                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/users" label="USUARIOS" />
-                        </NavItem>
-                        <NavItem>
-                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/reports" label="REPORTES" />
-                        </NavItem>
-                    </NavListContent>
-                    <BoxLogout>
-                        <LogoutButton type={'button'}>
-                            <FiLogOut />
-                        </LogoutButton>
-                    </BoxLogout>
-                </NavList>
-            </NavListContainer>
-            <IconsContainer>
-                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/admin/legal" label="LEGAL">
-                    <BsInfoCircle />
-                </NavLink>
-            </IconsContainer>
-        </NavbarContainer>
+                <NavListContainer $isOpen={isOpenToggleMenu}>
+                    <NavList>
+                        <NavListContent>
+                            <NavItem>
+                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/" label="INICIO" />
+                            </NavItem>
+                            <NavItem>
+                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/users" label="USUARIOS" />
+                            </NavItem>
+                            <NavItem>
+                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/admin/reports" label="REPORTES" />
+                            </NavItem>
+                        </NavListContent>
+                        <BoxLogout>
+                            <LogoutButton type={'button'}>
+                                <FiLogOut />
+                            </LogoutButton>
+                        </BoxLogout>
+                    </NavList>
+                </NavListContainer>
+                <IconsContainer>
+                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/admin/legal" label="LEGAL">
+                        <BsInfoCircle />
+                    </NavLink>
+                </IconsContainer>
+            </NavbarContainer>
+        </>
     );
 };

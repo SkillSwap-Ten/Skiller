@@ -229,8 +229,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: clamp(6rem, 10vw, 11rem);
   width: clamp(6rem, 10vw, 11rem);
-  height: clamp(6rem, 10vw, 11rem);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   flex-shrink: 0;

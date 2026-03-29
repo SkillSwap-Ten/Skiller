@@ -30,8 +30,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-size: cover;
   background-position: center;
   align-self: start;
+  min-width: 3rem;
   width: 3rem;
-  height: 3rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
@@ -115,24 +115,20 @@ const CardSidebarLink: React.FC<ICardSidebarProps> = ({
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image();
-      img.src = url;
-      img.onerror = () => {
-        // Si la imagen da error, se usa la imagen por defecto
-        setImageUrl("/img/default-picture-full.webp");
-      };
-      img.onload = () => {
-        // Si la imagen carga correctamente, se usa la URL
-        setImageUrl(url);
-      };
+    const url = userData?.urlImage;
+
+    if (!url || !isValidImageUrl(url)) return;
+
+    const img = new Image();
+    img.src = url;
+
+    img.onload = () => {
+      setImageUrl(url);
     };
 
-    if (userData.urlImage && isValidImageUrl(userData.urlImage)) {
-      checkImageUrl(userData.urlImage);
-    } else {
+    img.onerror = () => {
       setImageUrl("/img/default-picture-full.webp");
-    }
+    };
   }, [userData]);
 
   return (

@@ -1,8 +1,3 @@
-import { LuSend } from 'react-icons/lu';
-// ------------------------------------------------------------------------------
-
-import { IUser } from "../users/users.model";
-
 // Traducir al inglés
 
 export interface IRequestMetricsDetails {

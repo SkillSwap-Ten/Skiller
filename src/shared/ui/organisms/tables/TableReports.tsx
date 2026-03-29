@@ -15,7 +15,6 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Container = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   height: 100%; 
   width: 100%; 
   display: flex; 
@@ -26,13 +25,13 @@ const Container = styled.div`
 `;
 
 const TableContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   height: auto; 
   width: 100%; 
   display: flex; 
   flex-direction: column; 
   overflow-x: auto;
   padding: 1rem;
+  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
 `;
@@ -245,7 +244,7 @@ const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataT
           <TableHeaderReport />
           <tbody>
             {currentData.length ? (
-              data.map((report) => (
+              currentData.map((report) => (
                 <TableRowReport
                   key={report.id}
                   report={report}

@@ -21,7 +21,7 @@ const TableHeaderReport: React.FC = () => {
         <Th>ID</Th>
         <Th>Reporte</Th>
         <Th>Descripción</Th>
-        <Th>Fecha de Creación</Th>
+        <Th>Fecha Creación</Th>
         <Th>Usuario Informante</Th>
         <Th>Usuario Reportado</Th>
         <Th>Acción tomada</Th>

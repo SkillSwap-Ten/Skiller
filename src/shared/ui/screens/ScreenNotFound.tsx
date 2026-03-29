@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import styled from 'styled-components';
 
 const FullScreenLoader = styled.div`
@@ -46,7 +47,7 @@ const P = styled.p`
   margin-top: 2rem;
 `;
 
-const NotFoundScreen = () => {
+const ScreenNotFound: React.FC = () => {
   return (
     <FullScreenLoader>
       <div>
@@ -61,4 +62,4 @@ const NotFoundScreen = () => {
   );
 };
 
-export default NotFoundScreen;
+export default ScreenNotFound;

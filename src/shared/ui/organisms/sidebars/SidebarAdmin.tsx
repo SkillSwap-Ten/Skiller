@@ -17,6 +17,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const AdminSidebarContainer = styled.div`
     top: 0;
     left: 0;
+    z-index: 12;
     position: fixed;
     display: flex;
     align-items: center;
@@ -121,8 +122,8 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-size: cover;
   background-position: center;
   align-self: start;
+  min-width: 3rem;
   width: 3rem;
-  height: 3rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;

@@ -20,7 +20,6 @@ export interface IChatWindowProps {
     chat: IChats
     messages: IMessages[]
     refreshMessages: () => void
-    isMobile?: boolean
     onBack?: () => void
 }
 
@@ -32,7 +31,6 @@ export interface IChatsListProps {
 
 export interface IChatHeaderProps {
     user: IUser
-    isMobile?: boolean
     onBack?: () => void
 }
 

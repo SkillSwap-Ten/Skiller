@@ -12,14 +12,14 @@ const StyledInputContainer = styled.div`
 `;
 
 const StyledInputTable = styled.input`
+    background-color: ${({ theme }) => theme.colors.bgPrimary}; 
     border: 1px solid ${({ theme }) => theme.colors.borderDark};
     color: ${({ theme }) => theme.colors.textSecondary};
     width: 100%;  
     height: 100%;        
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 10px;
     margin-bottom: 10px;
-    background: transparent;
 
     &::placeholder {
         opacity: 0.7;

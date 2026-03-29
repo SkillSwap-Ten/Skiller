@@ -10,6 +10,7 @@ import { ISidebarProps } from "@/src/shared/types/organisms/sidebar.type";
 const SidebarContainer = styled.div`
     top: 0;
     right: 0;
+    z-index: 12;
     position: fixed;
     display: flex;
     justify-content: end;

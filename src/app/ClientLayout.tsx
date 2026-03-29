@@ -11,7 +11,7 @@ import { useTheme } from "../shared/hooks/useTheme";
 import { useThemeAuth } from "../shared/hooks/useThemeAuth";
 import { IGlobalTheme } from "../shared/types/styles/theme.type";
 import { GlobalStyle } from "../shared/styles/GlobalStyling";
-import LoadingScreen from "../shared/ui/screens/LoadingScreen";
+import ScreenLoading from "../shared/ui/screens/ScreenLoading";
 
 const LayoutContainer = styled.div`
     display: flex;
@@ -29,70 +29,82 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const [themeAuth] = useThemeAuth();
     const [definedTheme, setDefinedTheme] = useState<IGlobalTheme | null>(null);
     const [isAuthRoute, setIsAuthRoute] = useState(false);
+    const [isOfflineRoute, setIsOfflineRoute] = useState(false);
 
-    // Effect exclusivo para detectar rutas /auth
+    // Effect exclusivo para detectar rutas
     useEffect(() => {
-        setIsAuthRoute(pathname.startsWith('/auth'));
+        // Calculamos primero
+        const authRoute = pathname.startsWith('/auth');
+        const protectedRoutes = ['/user', '/admin'];
+        const offlineRoute = !protectedRoutes.some(route => pathname.startsWith(route));
+
+        // Actualizamos el estado de forma diferida
+        setTimeout(() => {
+            setIsAuthRoute(authRoute);
+            setIsOfflineRoute(offlineRoute);
+        }, 0);
     }, [pathname]);
 
     // Effect con toda la lógica de token / loading / prefetch
     useEffect(() => {
-        // Validar token inmediatamente al montar
-        const storedToken = globalThis.window === undefined ? null : getAuthData("token");
+        const runEffect = async () => {
+            // Activamos loading inmediatamente
+            setLoading(true);
 
-        if (storedToken) {
-            try {
-                if (!isValidToken(storedToken)) {
-                    clearStorage();
-                }
-            } catch (e) {
-                console.warn("Error al validar token:", e);
-            }
-        }
-
-        // Validación periódica (cada 5 minutos)
-        const interval = setInterval(() => {
-            const tokenCheck = globalThis.window === undefined ? null : getAuthData("token");
-            if (tokenCheck) {
-                try {
-                    if (!isValidToken(tokenCheck)) {
-                        clearStorage();
+            // Validación de token
+            if (typeof window !== 'undefined') {
+                const token = getAuthData("token");
+                if (token) {
+                    try {
+                        if (!isValidToken(token)) clearStorage();
+                    } catch (e) {
+                        console.warn("Error al validar token:", e);
                     }
-                } catch (e) {
-                    console.warn("Error al validar token:", e);
+                }
+            }
+
+            // Prefetch de la ruta
+            router.prefetch(pathname);
+
+            // Desactivar loading después de 3s
+            setTimeout(() => setLoading(false), 3000);
+        };
+
+        runEffect();
+
+        // Validación periódica cada 5 minutos
+        const interval = setInterval(() => {
+            if (typeof window !== 'undefined') {
+                const token = getAuthData("token");
+                if (token) {
+                    try {
+                        if (!isValidToken(token)) clearStorage();
+                    } catch (e) {
+                        console.warn("Error al validar token:", e);
+                    }
                 }
             }
         }, 5 * 60 * 1000);
 
-        // Prefetch y animación de carga
-        router.prefetch(pathname);
-        setLoading(true);
-        const timeout = setTimeout(() => setLoading(false), 3000);
-
-        // Limpiar cuando el componente se desmonta
-        return () => {
-            clearInterval(interval);
-            clearTimeout(timeout);
-        };
+        return () => clearInterval(interval);
     }, [pathname, router]);
 
     // Effect para aplicar el tema correcto
     useEffect(() => {
-        // Aplicar tema según la ruta actual
         const themeToUse = isAuthRoute ? themeAuth : theme;
-        setDefinedTheme(themeToUse);
+        setTimeout(() => setDefinedTheme(themeToUse), 0);
     }, [themeAuth, theme, isAuthRoute]);
 
-    if (loading) return <LoadingScreen />;
+    if (loading) return <ScreenLoading />;
     if (!definedTheme) return null;
 
     return (
         <ThemeProvider theme={definedTheme}>
             <GlobalStyle />
             <LayoutContainer>
-                {!isAuthRoute && <Navbar />}
+                {!isAuthRoute && isOfflineRoute && <Navbar />}
                 {children}
-                {!isAuthRoute && <Bottombar />}
+                {!isAuthRoute && isOfflineRoute && <Bottombar />}
             </LayoutContainer>
         </ThemeProvider>
     );

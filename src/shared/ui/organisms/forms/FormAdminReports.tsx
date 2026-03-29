@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent, MouseEvent, useState, useEffect, useMemo } from "react";
+import React, { FormEvent, MouseEvent, useState, useMemo } from "react";
 import { IAdminReportFormProps } from "@/src/shared/types/organisms/form.type";
 import { IReport } from "../../../../core/models/reports/reports.model";
 import { useDebouncedCallback } from "@/src/shared/hooks/useDebouncedState";
@@ -99,28 +99,16 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
   }), [dataToEdit]);
 
   const [form, setForm] = useState<IReport>(initialFormState);
-  const [hasChanges, setHasChanges] = useState(false);
-
-  useEffect(() => {
-    if (dataToEdit) {
-      setForm({
-        ...dataToEdit,
-        dateReport: dataToEdit.dateReport ?? null,
-      });
-    } else {
-      setForm(initialFormState);
-    }
-  }, [dataToEdit, initialFormState]);
-
-
-  useEffect(() => {
+  const hasChanges = useMemo(() => {
     const base = dataToEdit || initialFormState;
+
     const changedFields = Object.keys(form).filter(
       (key) => form[key as keyof IReport] !== base[key as keyof IReport]
     );
 
     const totalFields = Object.keys(base).length;
-    setHasChanges(changedFields.length > 0 && changedFields.length < totalFields);
+
+    return changedFields.length > 0 && changedFields.length < totalFields;
   }, [form, dataToEdit, initialFormState]);
 
   const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
@@ -346,7 +334,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
         <DivButton>
           <Button aria-label="Control Button" type="submit">{getButtonText()}</Button>
           <Button aria-label="Control Button" type="button" onClick={handleReset}>
-            Limpiar
+            Restaurar
           </Button>
         </DivButton>
       </Form>

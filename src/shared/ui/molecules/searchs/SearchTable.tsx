@@ -21,9 +21,19 @@ const InputContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
+  border-radius: 6px;
+  min-width: 50px;
   width: 50px;
-  height: 50px;
+  aspect-ratio: 1 / 1;
+
+  & button{
+    min-width: 50px;
+    width: 50px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
 `;
 
 const Search: React.FC<ISearchProps> = ({ placeholder, label, onSearch, onTogglePartialSearch, isPartialSearch }) => {

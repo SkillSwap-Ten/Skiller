@@ -11,11 +11,11 @@ const ANIM_DURATION = 500
 
 const SliderContainer = styled.div<{ $backgroundImage: string }>`
   position: relative;
+  overflow: hidden;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  margin: 0 auto;
-  overflow: hidden;
 
   &::before {
     content: "";
@@ -24,8 +24,8 @@ const SliderContainer = styled.div<{ $backgroundImage: string }>`
     background-image: url(${(props) => props.$backgroundImage});
     background-size: cover;
     background-position: center;
-    filter: blur(12px) brightness(0.8) grayscale();
-    transform: scale(1.1);
+    filter: blur(16px) brightness(0.6) grayscale();
+    transform: scale(1.2);
     z-index: 0;
   }
 

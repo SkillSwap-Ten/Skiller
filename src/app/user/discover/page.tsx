@@ -21,6 +21,7 @@ const DiscoverPage = styled.div`
   margin: 54px 0;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const Container = styled.div`

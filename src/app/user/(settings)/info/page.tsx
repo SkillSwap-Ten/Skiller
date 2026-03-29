@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import ModalConfirm from "@/src/shared/ui/organisms/modals/ModalConfirm";
 import CarouselMatched from "@/src/shared/ui/organisms/carousels/CarouselMatched";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
+import Loader from "@/src/shared/ui/atoms/loader/Loader";
 import { useEffect, useState } from "react";
 import { getUserById, putUserAccountState } from "../../../api/users/users";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
@@ -27,6 +28,7 @@ const PageContainer = styled.section`
   flex-direction: column;
   align-items: center;
   display: flex;
+  position: relative;
 
   & h1 {
     margin: 0;
@@ -71,13 +73,13 @@ const Container = styled.div`
 const Banner = styled.article`
   background-color: ${({ theme }) => theme.colors.bgTertiary};
   display: flex;
-  padding: 1rem;
   justify-content: space-between;
   align-items: center;
   position: relative;
   border-radius: 10px;
   width: 100%;
   min-height: 120px;
+  padding: 1rem;
 `;
 
 const BannerBody = styled.div`
@@ -114,6 +116,7 @@ const WidgetContainer = styled.article`
   justify-content: start;
   align-items: start;
   flex-direction: column;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
   gap: 4px;
@@ -179,7 +182,7 @@ const DivDeactivateAccount = styled.div`
   }
 `;
 
-const ButtonDeactivate = styled.button<({ $color: string }) >`
+const ButtonDeactivate = styled.button<{ $color: string }>`
   min-width: 100px;
   width: 30vw;
   max-width: 250px;
@@ -206,17 +209,18 @@ const ButtonDeactivate = styled.button<({ $color: string }) >`
   }
 `;
 
-const AccountStateTag = styled.div<({ $color: string }) >`
+const AccountStateTag = styled.div<{ $color: string }>`
   width: 80px;
-  text-align: center;
+  height: 26px;
   border-radius: 50px;
+  gap: 4px;
   padding: 4px;
   font-size: 12px;
-  font-weight: bold;
   color: ${(props) => props.$color};
   border: ${(props) => props.$color} 1px solid;
   display: flex;
-  gap: 4px;
+  font-weight: bold;
+  text-align: center;
   align-items: center;
   justify-content: center;
   font-style: normal;
@@ -263,7 +267,7 @@ const BarWrapper = styled.div`
 `;
 
 const SkeletonBar = styled.div<{
-  delay?: number;
+  $delay?: number;
   baseColor?: string;
   highlightColor?: string;
 }>`
@@ -283,7 +287,7 @@ const SkeletonBar = styled.div<{
   animation:
     ${barPulse} 2s ease-in-out infinite,
     ${shimmer} 3s ease-in-out infinite;
-  animation-delay: ${(p) => p.delay || 0}s;
+  animation-delay: ${(p) => p.$delay || 0}s;
 `;
 
 
@@ -307,7 +311,7 @@ const UserInfo = () => {
 
         try {
           const dataInfo = await getUserById(currentUserId);
-          setAccountState(dataInfo.nameStateUser ?? "Estado desconocido");
+          setAccountState(dataInfo.nameStateUser ?? "Desconocido");
 
           const dataMetrics = await getRequestMetricsByUserId(currentUserId);
 
@@ -433,7 +437,7 @@ const UserInfo = () => {
                       {[1, 2, 3, 4].map((b, i) => (
                         <BarWrapper key={b}>
                           <SkeletonBar baseColor="#c2c2c2"
-                            highlightColor="#e0e0e0" delay={i * 0.25} />
+                            highlightColor="#e0e0e0" $delay={i * 0.25} />
                         </BarWrapper>
                       ))}
                     </ChartContainer>
@@ -512,6 +516,7 @@ const UserInfo = () => {
               <h1>Info</h1>
             </BannerBody>
           </Banner>
+
           <PageBody>
             <DoubleDiv>
               <WidgetContainer>
@@ -523,24 +528,24 @@ const UserInfo = () => {
                 </WidgetBody>
                 <CarouselMatched userId={metricsData!.idUsuario} />
               </WidgetContainer>
+
               <WidgetContainer style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <WidgetBody>
                   <Bar data={barData} options={barOptions} />
                 </WidgetBody>
               </WidgetContainer>
             </DoubleDiv>
+
             <WidgetContainer>
               <WidgetBody>
                 <h3>Estado de cuenta</h3>
-                <P>
-                  Aquí podrás ver en que condición se encuentra tu cuenta actualmente.
-                </P>
+                <P>{error ?? "Aquí podrás ver en que condición se encuentra tu cuenta actualmente."}</P>
                 <br />
 
                 {loading ? (
-                  <p>Cargando...</p>
+                  <AccountStateTag $color={"#444444"}><Loader color={"#444444"} /></AccountStateTag>
                 ) : error ? (
-                  <p>{error}</p>
+                  <AccountStateTag $color={"#891E1E"}><GrStatusGoodSmall />!Ups!</AccountStateTag>
                 ) : (
                   <AccountStateTag $color={stateBtnColor()}><GrStatusGoodSmall />{accountState}</AccountStateTag>
                 )}
@@ -558,20 +563,17 @@ const UserInfo = () => {
                     : "Habilitar cuenta"}
                 </ButtonDeactivate>
 
-                {accountState === "Suspendido" && (
-                  <p>
-                    Tu cuenta ha sido suspendida por un administrador. No
-                    puedes cambiar el estado hasta que el administrador lo
-                    restaure.
-                  </p>
-                )}
-
                 <div>
                   <h3>Deshabilitación de cuenta</h3>
-                  <p>
-                    <strong> Atención: </strong>Al desactivar tu cuenta de SkillSwap, toda tu
-                    información permanecerá segura y no será eliminada.
-                  </p>
+                  {accountState === "Suspendido" ? (
+                    <p>
+                      <strong>Atención:</strong> Tu cuenta ha sido suspendida por un administrador. No puedes cambiar el estado hasta que el administrador la restaure.
+                    </p>
+                  ) : (
+                    <p>
+                      <strong>Atención:</strong> Al desactivar tu cuenta de SkillSwap, toda tu información permanecerá segura y no será eliminada.
+                    </p>
+                  )}
                 </div>
               </DivDeactivateAccount>
             </WidgetContainer>

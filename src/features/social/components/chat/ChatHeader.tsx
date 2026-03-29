@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { FaExclamationTriangle, FaShieldAlt } from 'react-icons/fa'
 import { isValidImageUrl } from '@/src/lib/utils/imageValidator'
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
@@ -142,9 +141,7 @@ const ReportButton = styled(ButtonFeature)`
   }
 `
 
-const ChatHeader = ({ user, isMobile = false, onBack }: IChatHeaderProps) => {
-  const router = useRouter()
-
+const ChatHeader = ({ user, onBack }: IChatHeaderProps) => {
   const [isModalReportOpen, setIsModalReportOpen] = useState(false)
   const [isModalTipsOpen, setIsModalTipsOpen] = useState(false)
 
@@ -159,25 +156,21 @@ const ChatHeader = ({ user, isMobile = false, onBack }: IChatHeaderProps) => {
   )
 
   useEffect(() => {
-    const checkImageUrl = (url: string) => {
-      const img = new Image()
-      img.src = url
+    const url = user?.urlImage;
 
-      img.onload = () => {
-        setImageUrl(url)
-      }
+    if (!url || !isValidImageUrl(url)) return;
 
-      img.onerror = () => {
-        setImageUrl('/img/default-picture-full.webp')
-      }
-    }
+    const img = new Image();
+    img.src = url;
 
-    if (user?.urlImage && isValidImageUrl(user.urlImage)) {
-      checkImageUrl(user.urlImage)
-    } else {
-      setImageUrl('/img/default-picture-full.webp')
-    }
-  }, [user?.urlImage])
+    img.onload = () => {
+      setImageUrl(url);
+    };
+
+    img.onerror = () => {
+      setImageUrl("/img/default-picture-full.webp");
+    };
+  }, [user]);
 
   return (
     <>

@@ -4,9 +4,9 @@ import styled from "styled-components";
 import FormAdminReports from "../forms/FormAdminReports";
 
 // Modal Form Component
-const ModalOverlay = styled.div<{ isOpen: boolean }>`
+const ModalOverlay = styled.div<{ $isOpen: boolean }>`
   background-color: ${({ theme }) => theme.colors.bgMainOpacity};
-  display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+  display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -225,15 +225,15 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: clamp(6rem, 10vw, 11rem);
   width: clamp(6rem, 10vw, 11rem);
-  height: clamp(6rem, 10vw, 11rem);
   aspect-ratio: 1 / 1;
   border-radius: 10px;
 `;
 
 const ModalAdminReport: React.FC<IModalReportFormProps> = ({ onUpdateData, dataToEdit, setDataToEdit, onClose, isOpen }) => {
   return (
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay $isOpen={isOpen}>
       <ModalContainer>
         <ModalHeader>
           <div>Gestionar<article>Reporte</article></div>
@@ -244,6 +244,7 @@ const ModalAdminReport: React.FC<IModalReportFormProps> = ({ onUpdateData, dataT
           <ModalContent>
             <LeftSection>
               <FormAdminReports
+                key={dataToEdit?.id}
                 onUpdateData={onUpdateData}
                 dataToEdit={dataToEdit}
                 setDataToEdit={setDataToEdit}

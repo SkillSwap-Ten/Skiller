@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { IAdminUserFormProps } from "@/src/shared/types/organisms/form.type";
 import { IUser } from "../../../../core/models/users/users.model";
 import { useDebouncedCallback } from "@/src/shared/hooks/useDebouncedState";
@@ -101,29 +101,16 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
   }), [dataToEdit]);
 
   const [form, setForm] = useState<IUser>(initialFormState);
-  const [hasChanges, setHasChanges] = useState(false);
-
-  useEffect(() => {
-    if (dataToEdit) {
-      setForm({
-        ...dataToEdit,
-        suspensionDate: dataToEdit.suspensionDate ?? null,
-        reactivationDate: dataToEdit.reactivationDate ?? null,
-      });
-    } else {
-      setForm(initialFormState);
-    }
-  }, [dataToEdit, initialFormState]);
-
-
-  useEffect(() => {
+  const hasChanges = useMemo(() => {
     const base = dataToEdit || initialFormState;
+
     const changedFields = Object.keys(form).filter(
       (key) => form[key as keyof IUser] !== base[key as keyof IUser]
     );
 
     const totalFields = Object.keys(base).length;
-    setHasChanges(changedFields.length > 0 && changedFields.length < totalFields);
+
+    return changedFields.length > 0 && changedFields.length < totalFields;
   }, [form, dataToEdit, initialFormState]);
 
   const handleChangeDebounced = useDebouncedCallback((value: string | number) => {
@@ -278,7 +265,7 @@ const FormAdminUsers: React.FC<IAdminUserFormProps> = ({ onUpdateData, dataToEdi
         <DivButton>
           <Button aria-label="Control Button" type="submit">{getButtonText()}</Button>
           <Button aria-label="Control Button" type="button" onClick={handleReset}>
-            Limpiar
+            Restaurar
           </Button>
         </DivButton>
       </Form>

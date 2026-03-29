@@ -91,8 +91,8 @@ const ProfileImage = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
+  min-width: 4rem;
   width: 4rem;
-  height: 4rem;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
@@ -183,6 +183,7 @@ const UserDescription = styled.div`
   padding-bottom: 0.5rem;
   min-height: 12rem;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
@@ -293,7 +294,7 @@ const SendButton = styled.button`
   display: flex;
   justify-content: end;
   align-items: center;
-  background-color: transparent;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   color: ${({ theme }) => theme.colors.textGrey};
   padding: 14px 24px;
   width: 100%;
@@ -322,6 +323,7 @@ const MediaContent = styled.div`
   width: 100%;
   height: 12.5rem !important;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
@@ -408,10 +410,10 @@ const SkeletonWrap = styled.div`
 `;
 
 const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userData, userDetail }) => {
+  const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
   const [isModalMatchOpen, setIsModalMatchOpen] = useState<boolean>(false);
   const [isModalReportOpen, setIsModalReportOpen] = useState<boolean>(false);
   const [isModalTipsOpen, setIsModalTipsOpen] = useState<boolean>(false);
-  const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
 
   const openModalMatch = () => setIsModalMatchOpen(true);
   const closeModalMatch = () => setIsModalMatchOpen(false);
@@ -527,6 +529,7 @@ const UserProfileNoDetail: React.FC<IDetailUserProps> = ({ loading, error, userD
           <TipsButton type={"button"} onClick={handleTipsClick} aria-label="Control Button"><FaShieldAlt /></TipsButton>
           <ReportButton type={"button"} onClick={handleReportClick} aria-label="Control Button"><FaExclamationTriangle /></ReportButton>
         </ProfileImageMobile>
+
         <Header>
           <UserInfo>
             <MainInfo>

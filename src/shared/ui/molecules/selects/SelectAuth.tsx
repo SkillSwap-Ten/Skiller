@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import { ISelectProps } from "@/src/shared/types/atoms/select.type";
-import { LuAppWindow, LuBarChart, LuCode2, LuPencil } from "react-icons/lu";
+import { LuAppWindow, LuChartNoAxesColumnIncreasing, LuCodeXml, LuPencil } from "react-icons/lu";
 import { IoChatbubblesOutline } from "react-icons/io5";
 
 const Container = styled.div`
@@ -47,13 +47,13 @@ const InfoText = styled.sub`
   border-left: 3px solid #ffffff66;
 `;
 
-const OptionButton = styled.button<{ active: boolean }>`
-  width: ${({ active }) => active ? 'clamp(2.5rem,5vw,3.25rem)' : 'clamp(1.75rem,5vw,2.5rem)'};
-  height: ${({ active }) => active ? 'clamp(2.5rem,5vw,3.25rem)' : 'clamp(1.75rem,5vw,2.5rem)'};
+const OptionButton = styled.button<{ $active: boolean }>`
+  width: ${({ $active }) => $active ? 'clamp(2.5rem,5vw,3.25rem)' : 'clamp(1.75rem,5vw,2.5rem)'};
+  height: ${({ $active }) => $active ? 'clamp(2.5rem,5vw,3.25rem)' : 'clamp(1.75rem,5vw,2.5rem)'};
   color: ${({ theme }) => theme.colors.textGrey};
   font-size: 2rem;
   cursor: pointer;
-  background: ${({ active }) => active ? '#ffffff66' : '#ffffff33'};
+  background: ${({ $active }) => $active ? '#ffffff66' : '#ffffff33'};
   transition: 0.6s ease-in-out;
   display: flex;
   align-items: center;
@@ -65,8 +65,8 @@ const OptionButton = styled.button<{ active: boolean }>`
   backdrop-filter: blur(4px);
 
   & svg {
-    width: ${({ active }) => active ? 'clamp(1.5rem,5vw,1.75rem)' : 'clamp(1rem,5vw,1.25rem)'};
-    height: ${({ active }) => active ? 'clamp(1.5rem,5vw,1.75rem)' : 'clamp(1rem,5vw,1.25rem)'};
+    width: ${({ $active }) => $active ? 'clamp(1.5rem,5vw,1.75rem)' : 'clamp(1rem,5vw,1.25rem)'};
+    height: ${({ $active }) => $active ? 'clamp(1.5rem,5vw,1.75rem)' : 'clamp(1rem,5vw,1.25rem)'};
   }
 `;
 
@@ -81,9 +81,9 @@ const SelectAuth: React.FC<ISelectProps> = ({
   autoComplete,
 }) => {
   const options = [
-    { value: "Desarrollo", text: "Aquí viven las mentes inquietas del código y amantes de los retos lógicos que transforman ideas en realidad digital.", icon: <LuCode2 /> },
+    { value: "Desarrollo", text: "Aquí viven las mentes inquietas del código y amantes de los retos lógicos que transforman ideas en realidad digital.", icon: <LuCodeXml /> },
     { value: "Diseño", text: "Estás entre artistas visuales, creadores de experiencias y amantes de lo estético. Ven la belleza donde otros no la notan.", icon: <LuPencil /> },
-    { value: "Marketing", text: "Estás rodeado de creativos y estrategas, con un olfato increíble para las tendencias. ¡Saben cómo hacer que el mundo los escuche!", icon: <LuBarChart /> },
+    { value: "Marketing", text: "Estás rodeado de creativos y estrategas, con un olfato increíble para las tendencias. ¡Saben cómo hacer que el mundo los escuche!", icon: <LuChartNoAxesColumnIncreasing /> },
     { value: "Comunicación", text: "Aquí reinan los que dominan las palabras, conectan con el mundo y saben cómo contar historias que inspiran.", icon: <IoChatbubblesOutline /> },
     { value: "Entretenimiento", text: "Aquí se vibra alto con creatividad, carisma y pasión por hacer reír, emocionar y entretener al mundo.", icon: <LuAppWindow /> },
   ];
@@ -118,7 +118,7 @@ const SelectAuth: React.FC<ISelectProps> = ({
             type={"button"}
             aria-label={opt.value}
             key={opt.value}
-            active={opt.value === selected}
+            $active={opt.value === selected}
             onClick={() => setSelected(opt.value)}
           >
             {opt.icon}

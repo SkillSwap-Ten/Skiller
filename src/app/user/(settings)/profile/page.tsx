@@ -1,12 +1,13 @@
 "use client";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
 import SkillTag from "@/src/shared/ui/atoms/tags/SkillTag";
 import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 import CarouselMatched from "@/src/shared/ui/organisms/carousels/CarouselMatched";
 import NoContentContainer from "@/src/shared/ui/organisms/containers/NoContentContainer";
+import ModalResetPassword from "@/src/shared/ui/organisms/modals/ModalResetPassword";
 import ButtonFeature from "@/src/shared/ui/atoms/buttons/ButtonFeature";
 import ModalUser from "@/src/shared/ui/organisms/modals/ModalUser";
+import { useEffect, useMemo, useState } from "react";
 import { getGitHubUser } from "@/src/lib/utils/getGitHubUser";
 import { getAuthData } from "@/src/lib/utils/getAuthData";
 import { IUser } from "../../../../core/models/users/users.model";
@@ -16,17 +17,17 @@ import { FaLinkedin, FaGithubSquare, FaBehanceSquare, FaEdit } from "react-icons
 import { getMyCommunityInfo } from "@/src/lib/utils/getStaticData";
 import { getGitHubRepos } from "@/src/app/api/github/github";
 import { GrStatusGoodSmall } from "react-icons/gr";
+import { PiPasswordFill } from "react-icons/pi";
 import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 import { toast } from "react-toastify";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { PiPasswordFill } from "react-icons/pi";
-import ModalResetPassword from "@/src/shared/ui/organisms/modals/ModalResetPassword";
 
 const Container = styled.div`
   width: 100%;
   margin: 54px 0;
+  position: relative;
 `;
 
 const PageContainer = styled.div`
@@ -170,6 +171,7 @@ const UserDescription = styled.div`
   max-width: 285px;
   padding-bottom: 0.5rem;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   display: flex;
   flex-direction: column;
@@ -219,7 +221,7 @@ const DivContent = styled.div`
     }
 `;
 
-const State = styled.span<({ $color: string }) >`
+const State = styled.span<{ $color: string }>`
   color: ${({ theme }) => theme.colors.textOrange};
   padding: 2px 10px;
   border-radius: 20px;
@@ -271,6 +273,7 @@ const MediaContent = styled.div`
   width: 100%;
   min-height: 7.5rem;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.bgPrimary};
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
 
   @media (max-width: 768px) {
@@ -380,10 +383,13 @@ const PasswordButton = styled(ButtonFeature)`
 `;
 
 const UserProfile = () => {
-  // Estado para almacenar los datos del usuario
+  // States
   const [userData, setUserData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [isModalUserOpen, setIsModalUserOpen] = useState<boolean>(false);
+  const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState<boolean>(false);
 
   const [imageUrl, setImageUrl] = useState<string>("/img/default-picture-full.webp");
   const [languages, setLanguages] = useState<string[]>([]);
@@ -392,24 +398,8 @@ const UserProfile = () => {
     langs: true,
   });
 
-  const [isModalUserOpen, setIsModalUserOpen] = useState<boolean>(false);
-  const [isModalResetPasswordOpen, setIsModalResetPasswordOpen] = useState<boolean>(false);
-
-  const handleCloseModal = () => {
-    setIsModalUserOpen(false);
-    setIsModalResetPasswordOpen(false);
-  };
-
-  const handleEditClick = () => {
-    setIsModalUserOpen(true);
-  };
-
-  const handlePasswordClick = () => {
-    setIsModalResetPasswordOpen(true);
-  };
-
-  // Fetch para obtener datos de usuario
-  const fetchUserData = async () => {
+  // Fetch user data
+  const fetchUserData = async (onSuccess?: (data: IUser) => void) => {
     const currentUserId = getAuthData('id');
 
     if (!currentUserId) {
@@ -422,21 +412,14 @@ const UserProfile = () => {
       const data = await getUserById(currentUserId);
       setUserData(data);
 
-      const checkImageUrl = (url: string) => {
-        const img = new Image();
-        img.src = url;
-        img.onerror = () => {
-          // Si la imagen da error, se usa la imagen por defecto
-          setImageUrl("/img/default-picture-full.webp");
-        };
-        img.onload = () => {
-          // Si la imagen carga correctamente, se usa la URL
-          setImageUrl(url);
-        };
-      };
+      if (onSuccess) onSuccess(data);
 
       if (data.urlImage && isValidImageUrl(data.urlImage)) {
-        checkImageUrl(data.urlImage);
+        const img = new Image();
+        img.src = data.urlImage;
+
+        img.onload = () => setImageUrl(data.urlImage!);
+        img.onerror = () => setImageUrl("/img/default-picture-full.webp");
       } else {
         setImageUrl("/img/default-picture-full.webp");
       }
@@ -449,56 +432,37 @@ const UserProfile = () => {
     }
   };
 
-  // useEffect para ejecutar el fecth de datos del usuario
   useEffect(() => {
-    if (globalThis.window !== undefined) {
-      fetchUserData();
-    }
+    let isMounted = true;
+
+    const run = async () => {
+      if (!isMounted) return;
+      await fetchUserData();
+    };
+
+    run();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // Función para actualizar usuario
-  const handleUpdateUser = async (userToUpdate: IUser) => {
-    try {
-      console.log("Datos que se están enviando:", userToUpdate);
-      const response = await putUserByUser(userToUpdate, userToUpdate.id!);
+  // Fetch for stats and languages from GitHub repos
+  const { isSuccess: isGitHub, user: usernameGitHub } = useMemo(() =>
+    getGitHubUser(userData?.urlGithub?.toString()),
+    [userData?.urlGithub]
+  );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error updating user:", errorData.details?.text || 'No se proporcionaron detalles del error');
-        toast.error("Error al actualizar el usuario.");
-        return;
-      }
-      toast.success("¡Usuario actualizado exitosamente!");
-      await fetchUserData();
-    } catch (error) {
-      console.error("Error updating user:", error);
-      toast.error("Error al actualizar el usuario.");
-    }
-  };
-
-  const stateBtnColor = (state: string) => {
-    if (state === "Activo") return "#2F966B";
-    else if (state === "Inactivo") return "#CF3B00";
-    else return "#707070";
-  }
-
-  const isGitHub = getGitHubUser(userData?.urlGithub?.toString()).isSuccess
-  const usernameGitHub = getGitHubUser(userData?.urlGithub?.toString()).user
-
-  const abilitiesArray =
-    typeof userData?.abilities === 'string'
-      ? userData.abilities.split(',').map((ability: string) => ability.trim())
-      : [];
-
-  // Fetch para verificar los lenguages en repositorios del usuario
   useEffect(() => {
     const getLanguages = async () => {
-      if (!usernameGitHub) return;
+      if (!usernameGitHub || !userData?.urlGithub) return;
 
       try {
-        const repos = await getGitHubRepos(userData!.urlGithub!);
+        const repos = await getGitHubRepos(userData.urlGithub);
         const langs = repos.reduce<string[]>((acc, repo) => {
-          if (repo.language && !acc.includes(repo.language)) acc.push(repo.language);
+          if (repo.language && !acc.includes(repo.language)) {
+            acc.push(repo.language);
+          }
           return acc;
         }, []);
         setLanguages(langs);
@@ -510,11 +474,51 @@ const UserProfile = () => {
     getLanguages();
   }, [usernameGitHub, userData]);
 
-  useEffect(() => {
-    setStatsLoaded({ main: true, langs: true });
-  }, [usernameGitHub]);
+  // Handlers and functions
+  const handleUpdateUser = async (userToUpdate: IUser) => {
+    try {
+      const response = await putUserByUser(userToUpdate, userToUpdate.id!);
 
-  // Muestra loading, error o los datos del usuario
+      if (!response.ok) {
+        toast.error("Error al actualizar el usuario.");
+        return;
+      }
+
+      toast.success("¡Usuario actualizado exitosamente!");
+      await fetchUserData();
+    } catch (error) {
+      toast.error("Error al actualizar el usuario.");
+      console.error("Error al actualizar el usuario:", error);
+    }
+  };
+
+  const handleStatsError = (type: "main" | "langs") => {
+    setStatsLoaded((prev) => {
+      if (!prev[type]) return prev;
+      return { ...prev, [type]: false };
+    });
+  };
+
+  const handleCloseModal = () => {
+    setIsModalUserOpen(false);
+    setIsModalResetPasswordOpen(false);
+  };
+
+  const handleEditClick = () => setIsModalUserOpen(true);
+  const handlePasswordClick = () => setIsModalResetPasswordOpen(true);
+
+  const stateBtnColor = (state: string) => {
+    if (state === "Activo") return "#2F966B";
+    if (state === "Inactivo") return "#CF3B00";
+    return "#707070";
+  };
+
+  const abilitiesArray =
+    typeof userData?.abilities === "string"
+      ? userData.abilities.split(",").map((a: string) => a.trim())
+      : [];
+
+  // Render loading, error or user data
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       <Container>
@@ -540,8 +544,8 @@ const UserProfile = () => {
 
             <DivContent>
               <MediaContainer style={{ minHeight: "100%" }}>
-                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }}/>
-                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }}/>
+                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }} />
+                <Skeleton height={"10vw"} borderRadius={10} style={{ minHeight: "128px" }} />
               </MediaContainer>
 
               <UserDescription style={{ border: "none", minHeight: "100%" }}>
@@ -579,8 +583,6 @@ const UserProfile = () => {
     </Container >
   );
 
-  console.log(userData)
-
   return (
     <>
       <Container>
@@ -605,6 +607,7 @@ const UserProfile = () => {
               <EditButton type={"button"} onClick={handleEditClick}><FaEdit /></EditButton>
               <PasswordButton type={"button"} onClick={handlePasswordClick}><PiPasswordFill /></PasswordButton>
             </Header>
+
             <DivUserDetails>
               <DivContent>
                 <MediaContainer>
@@ -650,12 +653,12 @@ const UserProfile = () => {
 
                     {isGitHub &&
                       (statsLoaded.main || (languages.length !== 0 && statsLoaded.langs)) && (
-                        <StatsContainer>
+                        <StatsContainer key={usernameGitHub}>
                           {statsLoaded.main && (
                             <StatsImage
                               src={`https://github-readme-stats.vercel.app/api?username=${usernameGitHub}&show_icons=true&theme=default&locale=es&hide_title=true&hide_border=true`}
                               alt={`${usernameGitHub}-stats`}
-                              onError={() => setStatsLoaded(prev => ({ ...prev, main: false }))}
+                              onError={() => handleStatsError("main")}
                             />
                           )}
 
@@ -663,21 +666,24 @@ const UserProfile = () => {
                             <StatsImage
                               src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${usernameGitHub}&theme=default&hide_border=true&hide_title=true&langs_count=6&layout=compact`}
                               alt={`${usernameGitHub}-top-langs`}
-                              onError={() => setStatsLoaded(prev => ({ ...prev, langs: false }))}
+                              onError={() => handleStatsError("langs")}
                             />
                           )}
                         </StatsContainer>
                       )}
                   </MediaContent>
+
                   <MediaContent>
                     <H3>Cultura</H3>
                     <P>{getMyCommunityInfo(userData!.category)}</P>
                   </MediaContent>
+
                   <MediaContent>
                     <H3>Conexiones</H3>
                     <CarouselMatched userId={userData!.id} />
                   </MediaContent>
                 </MediaContainer>
+
                 <UserDescription >
                   <H3>Descripción</H3>
                   <P>{userData!.description}</P>
