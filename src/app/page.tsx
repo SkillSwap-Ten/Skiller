@@ -79,9 +79,10 @@ const Rounded = styled.div`
   background: ${({ theme }) => theme.colors.bgGrey};
   border-top-right-radius: 100%;
   border-top-left-radius: 100%;
-  height: 41px;
+  height: 61px;
   width: 100%;
   top: 1px;
+  transform: scaleX(1.1);
 
   @media (max-width: 500px) {
     display: none;
@@ -530,16 +531,15 @@ const VideoContainer = styled.div`
     font-weight: 400;
     padding: 0 20px;
     width: 75%;
-    color: ${({ theme }) => theme.colors.textSecondary};
-    opacity: 0.8;
+    color: ${({ theme }) => theme.colors.textGrey};
   }
 
   & small {
     text-align: justify;
     padding: 0 20px;
     width: 75%;
-    color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 12px;
+    color: ${({ theme }) => theme.colors.textGray};
     opacity: 0.8;
   }
 
@@ -568,17 +568,16 @@ const VideoContainer = styled.div`
     }
 
     & h3 {
+      color: ${({ theme }) => theme.colors.textSecondary};
       font-size: 14px;
       font-weight: 300;
       padding: 0 10px;
       width: 80%;
-      color: ${({ theme }) => theme.colors.textSecondary};
     }
 
     & small {
       width: 80%;
       padding: 0 10px;
-      color: ${({ theme }) => theme.colors.textSecondary};
       font-size: 10px;
     }
   }

@@ -14,7 +14,7 @@ export const darkThemeLabels = ['REGISTRO'];
 // Configuramos nuestro Global Theme
 export const GlobalTheme: IGlobalTheme = {
     colors: {
-        bgNavbar: '#222222EE',
+        bgNavbar: '#222222',
         bgBanner: 'rgba(0, 0, 0, 0.1)',
         bgMainOpacity: '#00000050',
         bgBottombar: '#FFFFFFF5',
@@ -39,9 +39,9 @@ export const GlobalTheme: IGlobalTheme = {
         textTertiary: '#00000050',
         textSidebar: '#555555',
 
-        textDark: '#00000030',
+        textDark: '#00000090',
         textNeutral: '#AAAAAA',
-        textLight: '#FFFFFF50',
+        textLight: '#FFFFFF90',
 
         textBlack: '#222222',
         textWhite: '#FFFFFF',
@@ -81,7 +81,7 @@ export const GlobalTheme: IGlobalTheme = {
 
 export const GlobalDarkTheme: IGlobalTheme = {
     colors: {
-        bgNavbar: '#222222EE',
+        bgNavbar: '#222222',
         bgBanner: 'rgba(255, 255, 255, 0.05)',
         bgMainOpacity: '#00000050',
         bgBottombar: '#222222F5',
@@ -91,9 +91,9 @@ export const GlobalDarkTheme: IGlobalTheme = {
         bgSecondary: '#FEFEFE',
         bgTertiary: '#3A3A3A',
 
-        bgDark: '#00000040',
+        bgDark: '#00000090',
         bgNeutral: '#F5F5F5',
-        bgLight: '#FFFFFF50',
+        bgLight: '#FFFFFF90',
 
         bgOrange: '#3B2B1A',
         bgBlack: '#222222',

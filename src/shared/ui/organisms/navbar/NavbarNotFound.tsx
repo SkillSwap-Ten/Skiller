@@ -9,14 +9,6 @@ import { logoutUser } from "../../../../features/auth/authSlice";
 import { clearStorage } from "@/src/lib/utils/storageCleaner";
 
 // Styled components
-const Overlay = styled.div`
-    background: ${({ theme }) => theme.colors.bgGrey};
-    position: fixed;
-    width: 100vw;
-    height: 54px;
-    top: 0;
-`;
-
 const NavbarContainer = styled.nav`
     z-index: 11;
     position: fixed;
@@ -25,8 +17,6 @@ const NavbarContainer = styled.nav`
     top: 0;
     border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     background-color: ${({ theme }) => theme.colors.bgNavbar};
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
     color: ${({ theme }) => theme.colors.textWhite};
     display: flex;
     align-items: center;
@@ -84,46 +74,43 @@ export const NavbarNotFound: React.FC = () => {
     const router = useRouter();
 
     return (
-        <>
-            <Overlay />
-            <NavbarContainer>
-                <BackLink>
-                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                        e.preventDefault();
-                        router.back();
-                    }}>
-                        <small>Ir atrás</small>
-                    </NavLink>
-                </BackLink>
-                <IconsContainer>
-                    <AuthLink>
-                        <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} onClick={() => {
-                            dispatch(logoutUser());
-                            clearStorage();
-
-                            localStorage.setItem("currentPage", "AUTH");
-                            localStorage.setItem('theme', 'light');
-
-                            globalThis.dispatchEvent(new Event('storage'));
-                            globalThis.location.reload();
-                        }} href="/auth" label="AUTH" >
-                            <small>Reiniciar</small>
-                        </NavLink>
-                    </AuthLink>
-                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/legal" label="LEGAL" onClick={() => {
+        <NavbarContainer>
+            <BackLink>
+                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#" onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    router.back();
+                }}>
+                    <small>Ir atrás</small>
+                </NavLink>
+            </BackLink>
+            <IconsContainer>
+                <AuthLink>
+                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} onClick={() => {
                         dispatch(logoutUser());
                         clearStorage();
 
-                        localStorage.setItem("currentPage", "LEGAL");
+                        localStorage.setItem("currentPage", "AUTH");
                         localStorage.setItem('theme', 'light');
 
                         globalThis.dispatchEvent(new Event('storage'));
                         globalThis.location.reload();
-                    }}>
-                        <BsInfoCircle />
+                    }} href="/auth" label="AUTH" >
+                        <small>Reiniciar</small>
                     </NavLink>
-                </IconsContainer>
-            </NavbarContainer>
-        </>
+                </AuthLink>
+                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/legal" label="LEGAL" onClick={() => {
+                    dispatch(logoutUser());
+                    clearStorage();
+
+                    localStorage.setItem("currentPage", "LEGAL");
+                    localStorage.setItem('theme', 'light');
+
+                    globalThis.dispatchEvent(new Event('storage'));
+                    globalThis.location.reload();
+                }}>
+                    <BsInfoCircle />
+                </NavLink>
+            </IconsContainer>
+        </NavbarContainer>
     );
 };
