@@ -1,7 +1,6 @@
 "use client";
 import styled from 'styled-components';
 import React from "react";
-import NavLink from '../../atoms/links/NavLinks';
 import { smoothScrollToTop } from '@/src/lib/utils/scrollBehavior';
 
 // Estilos para el Bottombar Fixed a modo de pie de pagina...
@@ -10,21 +9,32 @@ const BottombarStyled = styled.div`
     bottom: 0;
     width: 100vw;
     height: 54px;
+    overflow: hidden;
     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     border-top: solid 1px ${({ theme }) => theme.colors.borderBottombar};
-    background-color: ${({ theme }) => theme.colors.bgBottombar};
-    backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
-    -webkit-backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
 
-    & a {
-        padding: 0;
-        margin: 0;
+  /* - Fallback (navegadores sin soporte) */
+    background-color: ${({ theme }) => theme.colors.bgPrimary};
+
+  /* - Solo si soporta backdrop-filter */
+    @supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+        background-color: ${({ theme }) => theme.colors.bgBottombar};
+        -webkit-backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
+        backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
     }
 
-    & h2 {
+    & button {
+        all: unset;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & span {
         margin: 0;
         font-size: 1.7em;
         background: ${({ theme }) => theme.colors.gradientSecondary};
@@ -33,6 +43,8 @@ const BottombarStyled = styled.div`
         -webkit-text-fill-color: transparent;
         display: inline-block;
         transform-origin: center;
+        font-weight: bolder;
+        will-change: transform;
         animation: wavePerspective 3.5s ease-in-out infinite;
 
         @keyframes wavePerspective {
@@ -64,16 +76,15 @@ const BottombarStyled = styled.div`
 `;
 
 export const Bottombar: React.FC = () => {
-    const handleScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault();
+    const handleScroll = (event: React.MouseEvent<HTMLButtonElement>) => {
         smoothScrollToTop(2000);
     };
 
     return (
         <BottombarStyled>
-            <NavLink onClick={handleScroll} hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="#">
-                <h2>SkillSwap</h2>
-            </NavLink>
+            <button onClick={handleScroll} aria-label="Scroll to top" title="Scroll to top" type='button'>
+                <span>SkillSwap</span>
+            </button>
         </BottombarStyled>
     );
 };

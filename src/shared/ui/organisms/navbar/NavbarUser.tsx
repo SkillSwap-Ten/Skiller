@@ -12,14 +12,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
 
 // Styled components
-const Overlay = styled.div`
-    background: ${({ theme }) => theme.colors.bgGrey};
-    position: fixed;
-    width: 100vw;
-    height: 54px;
-    top: 0;
-`;
-
 const NavbarContainer = styled.nav`
     position: fixed;
     z-index: 10;
@@ -28,8 +20,6 @@ const NavbarContainer = styled.nav`
     top: 0;
     border-bottom: 1px solid  ${({ theme }) => theme.colors.borderNavs};
     background-color: ${({ theme }) => theme.colors.bgNavbar};
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
     color: ${({ theme }) => theme.colors.textWhite};
     display: flex;
     align-items: center;
@@ -316,67 +306,63 @@ export const NavbarUser: React.FC = () => {
     };
 
     return (
-        <>
-            <Overlay />
+        <NavbarContainer>
             <UserProfileSidebar isOpen={isSidebarProfileOpen} onClose={closeSidebarProfile} />
             <SettingsFloatingSidebar isOpen={isSidebarSettingsOpen} onClose={closeSidebarSettings} />
+            <SidebarToggleContainer>
+                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Notificaciones</small></NavToggle>
+            </SidebarToggleContainer>
 
-            <NavbarContainer>
-                <SidebarToggleContainer>
-                    <NavToggle onClick={openSidebarProfile}><small><span>+</span>Notificaciones</small></NavToggle>
-                </SidebarToggleContainer>
+            <MenuToggleContainer>
+                <NavToggle onClick={toggleMenu}>
+                    {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
+                </NavToggle>
+            </MenuToggleContainer>
 
-                <MenuToggleContainer>
-                    <NavToggle onClick={toggleMenu}>
-                        {isOpenToggleMenu ? <AiOutlineClose /> : <PiList />}
+            <NavListContainer $isOpen={isOpenToggleMenu}>
+                <NavList>
+                    <NavListContent>
+                        <NavItem>
+                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/" label="INICIO" />
+                        </NavItem>
+                        <NavItem>
+                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/discover" label="DESCUBRE" />
+                        </NavItem>
+                        <NavItem>
+                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/match" label="MATCH" />
+                        </NavItem>
+                        <SettingsNavTitle>
+                            <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="#" label="AJUSTES"></NavLink>
+                        </SettingsNavTitle>
+                        <SettingsNavList>
+                            <SettingsNavItem>
+                                <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/profile" label="PERFIL" />
+                            </SettingsNavItem>
+                            <SettingsNavItem>
+                                <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/social" label="SOCIAL" />
+                            </SettingsNavItem>
+                            <SettingsNavItem>
+                                <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/info" label="INFO" />
+                            </SettingsNavItem>
+                        </SettingsNavList>
+                    </NavListContent>
+                    <BoxLogout>
+                        <LogoutButton type={'button'}>
+                            <FiLogOut />
+                        </LogoutButton>
+                    </BoxLogout>
+                </NavList>
+            </NavListContainer>
+            <IconsContainer>
+                <SettingsToggleContainer>
+                    <NavToggle onClick={openSidebarSettings}>
+                        <IoSettingsOutline />
                     </NavToggle>
-                </MenuToggleContainer>
-
-                <NavListContainer $isOpen={isOpenToggleMenu}>
-                    <NavList>
-                        <NavListContent>
-                            <NavItem>
-                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/" label="INICIO" />
-                            </NavItem>
-                            <NavItem>
-                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/discover" label="DESCUBRE" />
-                            </NavItem>
-                            <NavItem>
-                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/user/match" label="MATCH" />
-                            </NavItem>
-                            <SettingsNavTitle>
-                                <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="#" label="AJUSTES"></NavLink>
-                            </SettingsNavTitle>
-                            <SettingsNavList>
-                                <SettingsNavItem>
-                                    <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/profile" label="PERFIL" />
-                                </SettingsNavItem>
-                                <SettingsNavItem>
-                                    <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/social" label="SOCIAL" />
-                                </SettingsNavItem>
-                                <SettingsNavItem>
-                                    <NavLink hover={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', fontWeight: '700', transition: '0.4s' }} href="/user/info" label="INFO" />
-                                </SettingsNavItem>
-                            </SettingsNavList>
-                        </NavListContent>
-                        <BoxLogout>
-                            <LogoutButton type={'button'}>
-                                <FiLogOut />
-                            </LogoutButton>
-                        </BoxLogout>
-                    </NavList>
-                </NavListContainer>
-                <IconsContainer>
-                    <SettingsToggleContainer>
-                        <NavToggle onClick={openSidebarSettings}>
-                            <IoSettingsOutline />
-                        </NavToggle>
-                    </SettingsToggleContainer>
-                    <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/user/legal" label="LEGAL" >
-                        <BsInfoCircle />
-                    </NavLink>
-                </IconsContainer>
-            </NavbarContainer>
-        </>
+                </SettingsToggleContainer>
+                <NavLink hover={{ transform: 'scale(0.95)', transition: '0.4s' }} href="/user/legal" label="LEGAL" >
+                    <BsInfoCircle />
+                </NavLink>
+            </IconsContainer>
+        </NavbarContainer>
     );
 };

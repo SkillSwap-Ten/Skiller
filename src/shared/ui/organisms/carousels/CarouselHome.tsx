@@ -59,14 +59,14 @@ const Container = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colors.bgGrey};
   flex-direction: column;
-  padding-top: 70px;
-  padding-bottom: 150px;
   position: relative;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 150px;
 
   @media (max-width: 768px) {
-    padding-top: 40px;
+    padding-top: 20px;
     padding-bottom: 80px;
   }
 
