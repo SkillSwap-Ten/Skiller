@@ -1,10 +1,10 @@
 "use client";
-import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import CarouselHome from "../../shared/ui/organisms/carousels/CarouselHome";
 import ButtonTag from "@/src/shared/ui/atoms/tags/ButtonTag";
 import Image from "next/image";
 import hands_swap from "../../../public/img/hands-swap.webp";
+import { useRef, useState } from "react";
 import { FooterAdmin } from "@/src/shared/ui/organisms/footer/FooterAdmin";
 import { MdOutlineReplay } from "react-icons/md";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
@@ -315,13 +315,13 @@ const ProfileBoxEnd = styled.div`
 `;
 
 const Name = styled.h2`
-  font-size: 1.5rem;
+  font-size: 24px;
   margin-bottom: 10px;
   font-weight: normal;
   color: ${({ theme }) => theme.colors.textSecondary};
 
   @media (max-width: 768px) {
-    font-size: 1.2rem;
+    font-size: 19px;
   }
 `;
 
@@ -334,12 +334,12 @@ const Message = styled.p`
   overflow-wrap: normal;
 
   @media (max-width: 768px) {
-    font-size: 15px;
-    width: 350px;
+    font-size: 14px;
+    width: 340px;
   }
 
   @media (max-width: 600px) {
-    width: 200px;
+    width: 190px;
   }
 `;
 
@@ -394,7 +394,7 @@ const RightSection = styled.div`
 `;
 
 const SwapText = styled.h1`
-  font-size: clamp(2.5rem, 8vw, 8rem);
+  font-size: clamp(2.6rem, 8vw, 8rem);
   background: ${({ theme }) => theme.colors.gradientText};
   font-weight: bold;
   -webkit-background-clip: text;
@@ -405,7 +405,7 @@ const SwapText = styled.h1`
 `;
 
 const SubText = styled.p`
-  font-size: clamp(12px, 2vw, 2rem);
+  font-size: clamp(14px, 2vw, 2rem);
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textYellow};
   margin: 10px 0 130px;
@@ -414,7 +414,7 @@ const SubText = styled.p`
 const RightTextLine1 = styled.div`
   padding-right: 50px;
   color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: clamp(2rem, 8vw, 8rem);
+  font-size: clamp(2.1rem, 8vw, 8rem);
   font-weight: 100;
 
   @media (max-width: 768px) {
@@ -425,7 +425,7 @@ const RightTextLine1 = styled.div`
 const RightTextLine2 = styled.div`
   border-right: 4px solid ${({ theme }) => theme.colors.textSecondary};
   padding-right: 50px;
-  font-size: clamp(2rem, 8vw, 8rem);
+  font-size: clamp(2.1rem, 8vw, 8rem);
   color: ${({ theme }) => theme.colors.textSecondary};
   font-weight: 400;
 
@@ -439,7 +439,7 @@ const RightTextLine3 = styled.div`
   color: ${({ theme }) => theme.colors.textSecondary};
   border-right: 4px solid ${({ theme }) => theme.colors.textSecondary};
   padding-right: 50px;
-  font-size: clamp(2rem, 8vw, 8rem);
+  font-size: clamp(2.1rem, 8vw, 8rem);
   font-weight: 800;
 
   @media (max-width: 768px) {
@@ -568,7 +568,7 @@ const VideoContainer = styled.div`
     }
 
     & h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 300;
       padding: 0 10px;
       width: 80%;
@@ -727,7 +727,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <Imagenes src={hands_swap} alt="swap-hands"></Imagenes>
+      <Imagenes src={hands_swap} alt="swap-hands" priority></Imagenes>
       <Logo>SkillSwap</Logo>
       <MainText>
         <Slogan>

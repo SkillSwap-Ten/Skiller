@@ -16,8 +16,8 @@ const BottombarStyled = styled.div`
     align-items: center;
     border-top: solid 1px ${({ theme }) => theme.colors.borderBottombar};
     background-color: ${({ theme }) => theme.colors.bgBottombar};
-    backdrop-filter: saturate(180%) blur(16px);
-    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
+    -webkit-backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
 
     & a {
         padding: 0;
