@@ -12,11 +12,11 @@ import RegisterPage from "@/src/features/auth/components/Register";
 const TextWrapper = styled.div`
   width: max-content;
   position: absolute;
-  right: 15vw;
-  top: -75px;
   display: flex;
   flex-direction: column;
   text-align: start;
+  right: 15vw;
+  top: -76px;
   z-index: 100;
 
   & span {
@@ -33,15 +33,15 @@ const TextWrapper = styled.div`
 `;
 
 const SkillSwapText = styled(motion.h1)`
-  font-size: 4rem;
   font-weight: bold;
   background: ${({ theme }) => theme.colors.gradientText};
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
   margin: 0;
   line-height: 1.2;
-  text-transform: uppercase;
+  font-size: 4rem;
 `;
 
 // Contenedor principal
@@ -50,19 +50,21 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  width: 100%;
   height: auto;
-  margin-top: 100px;
+  width: 100%;
+  margin-top: 96px;
   min-height: 70vh;
 
   @media (max-width: 1070px) {
     margin-top: 0 !important;
+    min-height: 560px;
     flex-direction: column; 
     align-items: flex-start;
     justify-content: end;
-    min-height: 552px;
-    height: 76vh;
-    max-height: 822px;
+  }
+
+  @media (max-width: 340px) {
+    min-height: 550px;
   }
 `;
 
@@ -72,9 +74,9 @@ const MotionDiv = styled(motion.div)`
   justify-content: center;
 
   @media (max-width: 1070px) {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    width: 90%;
     justify-content: center;
     border-radius: none 
   }
@@ -83,10 +85,10 @@ const MotionDiv = styled(motion.div)`
 // Contenedor de la capa superpuesta
 const OverlayContainer = styled.div`
   position: absolute;
-  border: 5px solid ${({ theme }) => theme.colors.bgPrimary};
-  border-left: none;
   left: 50%;
   width: 50%;
+  border: 5px solid ${({ theme }) => theme.colors.bgPrimary};
+  border-left: none;
   background-color: ${({ theme }) => theme.colors.bgPrimary};
   display: flex;
   justify-content: flex-start;
@@ -102,10 +104,10 @@ const OverlayContainer = styled.div`
 
 // Panel dentro de la capa superpuesta
 const OverlayPanel = styled.div`
-  border: none;
   width: 60%;
   justify-content: start;
   align-items: center;
+  border: none;
 
   @media (max-width: 1070px) {
     width: 100%;
@@ -119,15 +121,15 @@ const Div = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderAuthRight};
   border-right: 1px solid ${({ theme }) => theme.colors.borderAuthRight};
   background: ${({ theme }) => theme.colors.bgPrimary};
+  text-align: start;
+  justify-content: center;
+  align-items: center;
   border-radius: none;
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;
   padding: 50px;
   width: 100%;
   height: 450px;
-  text-align: start;
-  justify-content: center;
-  align-items: center;
   margin: 0;
 
   @media (max-width: 1070px) {

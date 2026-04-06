@@ -15,16 +15,7 @@ const BottombarStyled = styled.div`
     justify-content: center;
     align-items: center;
     border-top: solid 1px ${({ theme }) => theme.colors.borderBottombar};
-
-  /* - Fallback (navegadores sin soporte) */
-    background-color: ${({ theme }) => theme.colors.bgPrimary};
-
-  /* - Solo si soporta backdrop-filter */
-    @supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
-        background-color: ${({ theme }) => theme.colors.bgBottombar};
-        -webkit-backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
-        backdrop-filter: saturate(300%) blur(16px) brightness(1.6);
-    }
+    background-color: ${({ theme }) => theme.colors.bgBottombar};
 
     & button {
         all: unset;
@@ -32,6 +23,12 @@ const BottombarStyled = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: 0.6s ease-in-out;
+
+        &:hover{
+            transform: scale(0.95);
+            transition: 0.6s ease-in-out;
+        }
     }
 
     & span {
@@ -76,7 +73,7 @@ const BottombarStyled = styled.div`
 `;
 
 export const Bottombar: React.FC = () => {
-    const handleScroll = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleScroll = () => {
         smoothScrollToTop(2000);
     };
 

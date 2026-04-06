@@ -17,7 +17,7 @@ export const GlobalTheme: IGlobalTheme = {
         bgNavbar: '#222222',
         bgBanner: 'rgba(0, 0, 0, 0.1)',
         bgMainOpacity: '#00000050',
-        bgBottombar: '#FFFFFFF5',
+        bgBottombar: '#FEFEFE',
         bgSidebar: '#FEFEFE',
         bgNotFound: '#F5F5F5',
         bgPrimary: '#FEFEFE',
@@ -72,7 +72,7 @@ export const GlobalTheme: IGlobalTheme = {
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(90deg, #F0AC27BB 20%,  #DC7D2FBB 80%, #D13B00BB 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC27AB 20%,  #DC7D2FAB 80%, #D13B00AB 100% )',
 
         gradientPink: 'linear-gradient(90deg, #7D93FF 0%, #F093C0 85%, #EFC7C5 100%)',
         gradientGreen: 'linear-gradient(90deg, #B6CB65 0%, #37A879 52%, #4A54AE66 100%)',
@@ -84,7 +84,7 @@ export const GlobalDarkTheme: IGlobalTheme = {
         bgNavbar: '#222222',
         bgBanner: 'rgba(255, 255, 255, 0.05)',
         bgMainOpacity: '#00000050',
-        bgBottombar: '#222222F5',
+        bgBottombar: '#222222',
         bgSidebar: '#1A1A1A',
         bgNotFound: '#0E0E0E',
         bgPrimary: '#222222',
@@ -139,7 +139,7 @@ export const GlobalDarkTheme: IGlobalTheme = {
 
         gradientText: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
         gradientPrimary: 'linear-gradient(90deg, #F0AC27 0%,  #DC7D2F 60%, #D13B00 100% )',
-        gradientSecondary: 'linear-gradient(90deg, #F0AC27BB 20%,  #DC7D2FBB 80%, #D13B00BB 100% )',
+        gradientSecondary: 'linear-gradient(90deg, #F0AC27AB 20%,  #DC7D2FAB 80%, #D13B00AB 100% )',
 
         gradientPink: 'linear-gradient(90deg, #9DAAFF 0%, #F5A3D4 85%, #FFCDD2 100%)',
         gradientGreen: 'linear-gradient(90deg, #85A84F 0%, #2C8F66 52%, #3E47A066 100%)',

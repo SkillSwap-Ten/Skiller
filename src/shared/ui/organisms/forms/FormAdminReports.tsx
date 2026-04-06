@@ -31,21 +31,23 @@ const Form = styled.form`
 `;
 
 const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  border: 1px #222 solid;
-  color: #222;
-  cursor: pointer;
   background: none;
-  padding: 5px 10px;
-  transition: 0.4s ease;
+  width: 40%;
+  min-width: 100px;
+  max-width: 130px;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid ${({ theme }) => theme.colors.textTertiary};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 800;
+  transition: 0.3s ease;
+  border-radius: 10px;
 
   &:hover {
-    transition: 0.4s ease;
-    background-color: grey;
-    color: ${({ theme }) => theme.colors.textWhite};
-    border: none
+    transform: scale(0.98);
+    transition: 0.3s ease;
   }
 `;
 
@@ -53,6 +55,14 @@ const DivButton = styled.div`
   display: flex;
   justify-content: end;
   gap: 1rem;
+
+  @media (max-width: 360px) {
+    flex-direction: column;
+
+    :nth-child(1) {
+      align-self: end;
+    }
+  }
 `;
 
 const Div = styled.div`
@@ -177,8 +187,8 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
   };
 
   const getButtonText = () => {
-    if (hasChanges) return "Actualizar";
-    return "Mantener";
+    if (hasChanges) return "ACTUALIZAR";
+    return "MANTENER";
   };
 
   return (
@@ -334,7 +344,7 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
         <DivButton>
           <Button aria-label="Control Button" type="submit">{getButtonText()}</Button>
           <Button aria-label="Control Button" type="button" onClick={handleReset}>
-            Restaurar
+            RESTAURAR
           </Button>
         </DivButton>
       </Form>

@@ -13,10 +13,6 @@ const FooterStyled = styled.footer`
     justify-content: center;
     position: relative;
     bottom: 0.5rem ;
-
-    @media (max-width: 768px) {
-        padding: 8px 0;
-    }
 `;
 
 const FooterText = styled.p`

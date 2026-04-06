@@ -5,7 +5,7 @@ import { IRequestsListProps } from '../../types/social.type'
 import { timeAgo } from '@/src/lib/utils/timeAgoFormatter'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6'
 import { IRequests } from '@/src/core/models/requests/requests.model'
-import ModalRequestViewer from '@/src/shared/ui/organisms/modals/ModalRequestViewer'
+import ModalRequest from '@/src/shared/ui/organisms/modals/ModalRequest'
 
 const appear = keyframes`
   from {
@@ -202,8 +202,16 @@ const RequestsList = ({ requests, onAccept, onReject }: IRequestsListProps) => {
     )
   }
 
-  const pendingRequests = requests.filter((r) => r.idStateRequest === 1)
-  const answeredRequests = requests.filter((r) => r.idStateRequest !== 1)
+  const sortByDateDesc = (a: IRequests, b: IRequests) =>
+    new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+
+  const pendingRequests = [...requests]
+    .filter((r) => r.idStateRequest === 1)
+    .sort(sortByDateDesc);
+
+  const answeredRequests = [...requests]
+    .filter((r) => r.idStateRequest !== 1)
+    .sort(sortByDateDesc);
 
   return (
     <Container>
@@ -259,7 +267,7 @@ const RequestsList = ({ requests, onAccept, onReject }: IRequestsListProps) => {
         </RequestItem>
       ))}
 
-      <ModalRequestViewer
+      <ModalRequest
         request={selectedRequest}
         isOpen={!!selectedRequest}
         onClose={() => setSelectedRequest(null)}

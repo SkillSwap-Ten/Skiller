@@ -40,7 +40,7 @@ export interface IRequestsListProps {
     onReject: (id: number) => void
 }
 
-export interface IModalRequestViewerProps {
+export interface IModalRequestProps {
     request: IRequests | null
     onClose: () => void
     isOpen: boolean
