@@ -163,11 +163,15 @@ const ChatList = ({ chats, selectedChatId, onSelectChat }: IChatsListProps) => {
     })
   }, [chats])
 
-  const filteredChats = chats.filter((chat) =>
-    chat.otherUserName
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
-  )
+  const filteredChats = chats
+    .filter((chat) =>
+      chat.otherUserName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) =>
+      new Date(b.lastMessageDate).getTime() - new Date(a.lastMessageDate).getTime()
+    );
 
   return (
     <>

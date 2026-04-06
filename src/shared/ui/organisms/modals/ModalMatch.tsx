@@ -177,10 +177,6 @@ const DivRequest = styled.div`
     min-height: 100px;
   }
 
-  & button{
-    border-radius: 10px;
-  }
-
   @media (max-width: 600px) {
     width: 100%;
     height: 100%;
@@ -207,8 +203,7 @@ const DivConnections = styled.div`
 `;
 
 const Connections = styled.div`
-  padding: 1rem;
-  padding-bottom: 0;
+  padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
   color: ${({ theme }) => theme.colors.textSecondary};
 
@@ -219,8 +214,7 @@ const Connections = styled.div`
 
 // Sección de rating
 const RatingSection = styled.div`
-  padding: 1rem;
-  padding-bottom: 0;
+  padding: 0.75rem 1rem;
   color: ${({ theme }) => theme.colors.textSecondary};
 
   div {

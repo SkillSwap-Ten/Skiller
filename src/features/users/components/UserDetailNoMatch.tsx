@@ -109,7 +109,8 @@ const ProfileImageMobile = styled.div<{ $urlImage: string }>`
   background-position: center;
   position: relative;
   width: 100%;
-  height: 18rem;
+  min-height: 18rem;
+  aspect-ratio: 5 / 4;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   margin-bottom: 1rem;

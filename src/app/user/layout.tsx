@@ -5,16 +5,16 @@ import { NavbarUser } from '../../shared/ui/organisms/navbar/NavbarUser';
 import { Bottombar } from '@/src/shared/ui/molecules/bottombar/Bottombar';
 
 const LayoutContainer = styled.div`  
-  display: flex;   
-  padding: 0;            
-  margin: 0;   
-  flex-direction: column;   
-  height: 100%;  
+    display: flex;   
+    flex-direction: column; 
+    height: 100%;  
+    padding: 0;            
+    margin: 0;     
 `;
 
 const ContentContainer = styled.div`  
-  flex: 1;    
-  overflow: auto;   
+    flex: 1;    
+    overflow: auto;   
 `;
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {

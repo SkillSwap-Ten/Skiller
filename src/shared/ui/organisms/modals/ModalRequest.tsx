@@ -1,10 +1,10 @@
 "use client";
 import styled from "styled-components";
+import ButtonBelow from "../../atoms/buttons/ButtonBelow";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { IModalRequestViewerProps } from "@/src/features/social/types/social.type";
+import { IModalRequestProps } from "@/src/features/social/types/social.type";
 import { timeAgo } from "@/src/lib/utils/timeAgoFormatter";
-import ButtonBelow from "../../atoms/buttons/ButtonBelow";
 import { useRouter } from "next/navigation";
 
 // Modal Form Component
@@ -199,7 +199,7 @@ const UserMainInfoContainer = styled.div`
 
   @media (max-width: 1200px) {
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: start;
     position: static;
   }
@@ -229,10 +229,10 @@ const Avatar = styled.div<{ $urlImage: string }>`
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;
-  min-width: clamp(6rem, 10vw, 11rem);
-  width: clamp(6rem, 10vw, 11rem);
+  min-width: clamp(5rem, 9vw, 11rem);
+  width: clamp(5rem, 9vw, 11rem);
   aspect-ratio: 1 / 1;
-  border-radius: 50%;
+  border-radius: 10px;
   flex-shrink: 0;
 
   @media (max-width: 1200px) {
@@ -273,7 +273,7 @@ const UserButton = styled(ButtonBelow)`
   }
 `
 
-const ModalRequestViewer: React.FC<IModalRequestViewerProps> = ({ isOpen, request, onClose }) => {
+const ModalRequest: React.FC<IModalRequestProps> = ({ isOpen, request, onClose }) => {
   const router = useRouter()
 
   // Bloquear scroll del body cuando el modal está abierto
@@ -326,4 +326,4 @@ const ModalRequestViewer: React.FC<IModalRequestViewerProps> = ({ isOpen, reques
   );
 };
 
-export default ModalRequestViewer;
+export default ModalRequest;

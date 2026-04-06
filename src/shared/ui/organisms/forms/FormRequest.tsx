@@ -31,13 +31,21 @@ const SendButton = styled.button`
   background: none;
   width: 40%;
   min-width: 100px;
+  max-width: 150px;
   border: none;
   padding: 0.3rem 0.6rem;
   border: 1px solid ${({ theme }) => theme.colors.textTertiary};
   color: ${({ theme }) => theme.colors.textSecondary};
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 800;
+  transition: 0.3s ease;
+  border-radius: 10px;
+
+  &:hover {
+    transform: scale(0.98);
+    transition: 0.3s ease;
+  }
 `;
 
 const RequestForm: React.FC<IRequestFormProps> = ({ receivingUser, onClose }) => {
