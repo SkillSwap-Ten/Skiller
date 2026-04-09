@@ -5,9 +5,9 @@ import { GrNext } from "react-icons/gr";
 import { Baskervville } from "next/font/google";
 
 const baskervville = Baskervville({
-    weight: '400',
-    subsets: ['latin'],
-    style: 'normal'
+  weight: '400',
+  subsets: ['latin'],
+  style: 'normal'
 });
 
 interface CardData {
@@ -62,16 +62,17 @@ const Container = styled.div`
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding-top: 50px;
-  padding-bottom: 150px;
+  padding-top: 45px;
+  padding-bottom: 140px;
 
   @media (max-width: 768px) {
-    padding-top: 20px;
-    padding-bottom: 80px;
+    padding-top: 25px;
+    padding-bottom: 90px;
   }
 
   @media (max-width: 500px) {
     padding-top: 70px;
+    padding-bottom: 80px;
   }
 `;
 
@@ -83,10 +84,10 @@ const Italic = styled.span`
 
 const Title = styled.h2`
   color: ${({ theme }) => theme.colors.textWhite};
-  font-size: 35px;
   font-weight: bold;
   text-align: center;
   margin: 0.67em 0;
+  font-size: 35px;
 
   @media (max-width: 768px) {
     font-size: 20px;
@@ -99,9 +100,9 @@ const Title = styled.h2`
 
 const Subtitle = styled.span`
   color: ${({ theme }) => theme.colors.textWhite};
+  text-align: center;
   font-size: 16px;
   opacity: 0.5;
-  text-align: center;
   margin-bottom: 40px;
   font-weight: 500;
 
@@ -117,6 +118,7 @@ const Subtitle = styled.span`
 const CarouselWrapper = styled.div`
   position: relative;
   width: 100vw;
+  height: 310px;
 
   & article {
     display: flex;
@@ -124,37 +126,45 @@ const CarouselWrapper = styled.div`
     align-items: center;
     width: 100%;
   }
+
+  @media (max-width: 768px) {
+    height: 260px;
+  }
+
+  @media (max-width: 480px) {
+    height: 220px;
+  }
 `;
 
 const ControlButton = styled.button`
+  color: ${({ theme }) => theme.colors.textSecondary};
+  background: ${({ theme }) => theme.colors.bgPrimary};
   position: absolute;
-  bottom: -5px;
-  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  background: ${({ theme }) => theme.colors.bgPrimary};
+  cursor: pointer;
   border: none;
   border-radius: 50%;
-  cursor: pointer;
+  bottom: -5px;
+  font-size: 1rem;
   width: 40px;
   height: 40px;
   transition: 1s;
 
   &:hover {
-    scale: 1.1;
+    transform: scale(1.1);
     transition: 1s;
   }
 `;
 
 const CardsContainer = styled.div`
-  transition: all 0.6s ease-in-out;
+  transition: all 0.7s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   overflow: hidden;
+  padding: 10px;
 
   @media (max-width: 768px) {
     justify-content: space-around;
@@ -165,26 +175,28 @@ const CardsContainer = styled.div`
   }
 `;
 
-const Card = styled.div<{ $imgSrc: string }>`
+const Card = styled.div<{ $imgSrc: string; $isExiting?: boolean; $isEntering?: boolean }>`
+  margin: 5px;
+  height: 180px;
+  width: 150px;
+  border-radius: 15px;
   overflow: hidden;
   background-color: #555;
   background-image: url(${(props) => props.$imgSrc});
   background-size: cover;
   background-position: center;
-  margin: 5px;
-  height: 180px;
-  width: 150px;
-  border-radius: 15px;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transform: ${(props) => props.$isExiting ? 'scale(0.8)' :
+    props.$isEntering ? 'scale(1)' : 'scale(1)'};
   filter: grayscale();
-  transition: all 0.6s ease-in-out !important;
 
   &.card-1 {
     width: 150px;
     height: 175px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 150px;
+      height: 130px;
       width: 100px;
     }
   }
@@ -192,10 +204,10 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-2 {
     width: 150px;
     height: 210px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 180px;
+      height: 160px;
       width: 100px;
     }
 
@@ -207,10 +219,10 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-3 {
     width: 180px;
     height: 240px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 210px;
+      height: 190px;
       width: 150px;
     }
 
@@ -222,10 +234,10 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-4 {
     width: 210px;
     height: 280px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 250px;
+      height: 230px;
       width: 200px;
     }
 
@@ -237,10 +249,10 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-5 {
     width: 180px;
     height: 240px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 210px;
+      height: 190px;
       width: 150px;
     }
 
@@ -252,10 +264,10 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-6 {
     width: 150px;
     height: 210px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 180px;
+      height: 160px;
       width: 100px;
     }
 
@@ -267,15 +279,15 @@ const Card = styled.div<{ $imgSrc: string }>`
   &.card-7 {
     width: 150px;
     height: 175px;
-    transition: all 0.6s ease-in-out;
+    transition: all 0.7s ease-in-out;
 
     @media (max-width: 768px) {
-      height: 150px;
+      height: 130px;
       width: 100px;
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     &:nth-child(1) {
       display: none;
     }
@@ -288,14 +300,26 @@ const Card = styled.div<{ $imgSrc: string }>`
 
 const CarouselHome: React.FC = () => {
   const [cards, setCards] = useState<CardData[]>(initialCards);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [exitingIndex, setExitingIndex] = useState<number | null>(null);
 
   const handleNext = () => {
-    const updated = [...cards];
-    const last = updated.pop(); // quita el último
-    if (last) {
-      updated.unshift(last); // ... y lo pone al principio
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+    setExitingIndex(0);
+
+    // Después de la animación, actualiza el array
+    setTimeout(() => {
+      const updated = [...cards];
+      const first = updated.shift();
+      if (first) {
+        updated.push(first);
+      }
       setCards(updated);
-    }
+      setExitingIndex(null);
+      setIsTransitioning(false);
+    }, 700);
   };
 
   return (
@@ -304,9 +328,9 @@ const CarouselHome: React.FC = () => {
         MATCH<Italic> con tu skill ideal</Italic>
       </Title>
       <Subtitle>
-        “A VECES NI SABEMOS QUE LO
+        &quot;A VECES NI SABEMOS QUE LO
         <br />
-        NECESITAMOS, HASTA QUE LO VEMOS.”
+        NECESITAMOS, HASTA QUE LO VEMOS.&quot;
       </Subtitle>
       <CarouselWrapper>
         <CardsContainer>
@@ -314,13 +338,14 @@ const CarouselHome: React.FC = () => {
             <Card
               key={card.id}
               $imgSrc={card.imgSrc}
+              $isExiting={index === exitingIndex}
               className={`card-${index + 1}`}
             />
           ))}
         </CardsContainer>
         <article>
-      <ControlButton aria-label="Control Button" onClick={handleNext}><GrNext /></ControlButton>
-      </article>
+          <ControlButton aria-label="Control Button" onClick={handleNext}><GrNext /></ControlButton>
+        </article>
       </CarouselWrapper>
     </Container>
   );
