@@ -64,7 +64,7 @@ const MainText = styled.div`
   align-items: end;
   position: relative;
   padding: 0 50px;
-  padding-bottom: 5vw;
+  padding-bottom: 60px;
   width: 100%;
 
   @media (max-width: 768px) {
@@ -361,7 +361,7 @@ const ContainerDiscover = styled.div`
   display: flex;
   width: 100vw;
   justify-content: space-between;
-  padding: 10vw 50px;
+  padding: 50px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -501,7 +501,7 @@ const ControlsButton = styled.button`
 
   &:hover {
     transition: 1s;
-    scale: 0.95;
+    transform: scale(0.95);
   }
 `;
 

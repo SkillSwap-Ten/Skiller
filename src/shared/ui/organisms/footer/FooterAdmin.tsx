@@ -8,16 +8,17 @@ import { VscGithubAlt } from "react-icons/vsc";
 
 // Estilos para el footer
 const FooterStyled = styled.footer`
-  width: 100%;
   background: ${({ theme }) => theme.colors.bgGrey};
   color: ${({ theme }) => theme.colors.textWhite};
   padding: 120px 40px 90px 40px;
+  margin-top: 50px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
 
   ul{
+    width: 80%;
     margin: 0;
     padding: 0;
     gap: 20px;    
@@ -25,7 +26,6 @@ const FooterStyled = styled.footer`
     text-align: start;
     list-style: none;
     justify-content: center;
-    width: 80%;
   }
 
   section {
@@ -35,14 +35,14 @@ const FooterStyled = styled.footer`
     text-align: start;
   }
 
-  @media (max-width: 679px) {
+  @media (max-width: 768px) {
     padding: 80px 40px 50px 40px;
     
     section {
       display: flex;
       flex-direction: column;
-      gap: 20px;
       text-align: center;
+      gap: 20px;
     }
 
     ul {
@@ -55,10 +55,10 @@ const FooterStyled = styled.footer`
     }
   }
 
-  a {
+  a, p {
     color: ${({ theme }) => theme.colors.textWhite};
     text-decoration: none;
-    font-size: 12px;
+    font-size: 14px;
 
     &:hover {
       color: ${({ theme }) => theme.colors.textWhite};
@@ -68,9 +68,9 @@ const FooterStyled = styled.footer`
   .social-icons {
     height: min-content;
     display: flex;
-    gap: 20px;
+    gap: 16px;
 
-    @media (max-width: 979px) {
+    @media (max-width: 768px) {
       gap: 10px;
     }
   }
@@ -79,10 +79,10 @@ const FooterStyled = styled.footer`
 const Box = styled.section`
   height: min-content;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 50px;
+  justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.colors.textWhite};
+  margin-top: 50px;
   padding-top: 30px;
   width: 80%;
 
@@ -93,15 +93,7 @@ const Box = styled.section`
     overflow-wrap: normal;
   }
 
-  a{
-    font-size: 12px;
-  }
-
-  p{
-    font-size: 13px;
-  }
-
-  @media (max-width: 679px) {
+  @media (max-width: 768px) {
     width: 95%;
 
     p{
@@ -112,17 +104,22 @@ const Box = styled.section`
 
 const FooterNavItem = styled.li`
   display: inline-block;
-  max-height: 54px;
   cursor: pointer;
   margin-top: 10px;
+  max-height: 54px;
 
   a{
-    font-size: 12px;
     padding: 0 15px;
 
     & svg{
       width: 50px;
       height: auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    a{
+      font-size: 12px;
     }
   }
 `;
