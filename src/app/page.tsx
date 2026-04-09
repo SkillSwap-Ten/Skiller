@@ -63,7 +63,7 @@ const MainText = styled.div`
   background: transparent;
   align-items: end;
   position: relative;
-  padding: 50px;
+  padding: 0 50px;
   padding-bottom: 5vw;
   width: 100%;
 
