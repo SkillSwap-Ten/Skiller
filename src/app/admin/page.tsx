@@ -58,19 +58,22 @@ const Italic = styled.span`
 // Estilos para el texto principal
 const MainText = styled.div`
   display: flex;
-  justify-content: space-around;
-  margin-top: 15vw;
   background: transparent;
-  align-items: end;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  padding: 0 50px;
-  padding-bottom: 60px;
+  flex-direction: column;
+  margin-top: 16vw;
+  padding: 20px;
+  padding-bottom: 35px;
   width: 100%;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 20px;
-    padding-bottom: 35px;
+    margin-top: 13vw;
+  }
+
+  @media (max-width: 500px) {
+    margin-top: 15vw;
   }
 `;
 
@@ -91,33 +94,13 @@ const Rounded = styled.div`
 
 // Estilos para cada cuadro de texto
 const Slogan = styled.div`
-  display: flex;
-  text-align: center;
-  align-items: end;
-  justify-content: center;
-  background: transparent;
-  background: ${({ theme }) => theme.colors.textYellow};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  border: none;
-  flex: 1;
-  width: 100%;
-  padding: 0;
-
-  & h2 {
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  @media (max-width: 768px) {
-    & h2 {
-      font-size: 20px;
-    }
-  }
+  display: none;
 
   @media (max-width: 500px) {
+    flex: 1;
+    width: 100%;
     padding: 0 20px;
+    display: flex;
     text-align: start;
     justify-content: start;
     border: 2px solid ${({ theme }) => theme.colors.textYellow};
@@ -139,6 +122,7 @@ const Slogan = styled.div`
 
     & h2 {
       font-size: 4.5vw;
+      font-weight: bold;
     }
   }
 `;
