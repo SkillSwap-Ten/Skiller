@@ -162,7 +162,7 @@ const HelpCard = styled.div`
   gap: 0.75rem;
   align-items: flex-start;
   transition: all 0.3s ease;
-  cursor: pointer;
+  cursor: help;
 
   &:hover {
     background:rgba(150, 87, 5, 0.05);
@@ -391,7 +391,7 @@ const SidebarAdmin: React.FC<ISidebarProps> = ({
                 <FiMessageSquare />
               </IconWrapper>
               <CardContent>
-                <CardTitle>POSTS</CardTitle>
+                <CardTitle>NETWORK</CardTitle>
                 <CardDescription>Interactuar con las redes sociales compartidas</CardDescription>
               </CardContent>
             </HelpCard>

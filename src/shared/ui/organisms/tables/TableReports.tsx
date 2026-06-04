@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 import PaginationTable from "../../molecules/pagination/PaginationTable";
 import TableRowReport from "./rows/TableRowReports";
@@ -7,9 +7,8 @@ import TableHeaderReport from "./head/TableHeadReports";
 import NoContentContainer from "../containers/NoContentContainer";
 import ModalAdminReport from "../modals/ModalAdminReport";
 import Search from "../../molecules/searchs/SearchTable";
+import ModalConfirm from "../modals/ModalConfirm";
 import { ITableReportsProps } from "@/src/shared/types/organisms/table.type";
-import { IReport } from "@/src/core/models/reports/reports.model";
-import { toast } from "react-toastify";
 
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -30,7 +29,6 @@ const TableContainer = styled.div`
   display: flex; 
   flex-direction: column; 
   overflow-x: auto;
-  padding: 1rem;
   background-color: ${({ theme }) => theme.colors.bgPrimary}; 
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 10px;
@@ -38,26 +36,24 @@ const TableContainer = styled.div`
 
 const TableStyle = styled.table`
   width: 100%;
+  min-width: 1000px; 
   height: auto; 
   overflow: auto;
   border: none;
   border-collapse: collapse; 
-  min-width: 1000px; 
+
+  & tr:last-child {
+    border: none;
+  }
 `;
 
 const Td = styled.td`
-  padding: 10px;
   border: none;
-  text-align: left;
-  text-transform: capitalize;
+  padding: 8px;
 `;
 
 const Tr = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
-
-  &:hover {
-    background-color: #eee;
-  }
+  background: #f0f0f0;
 `;
 
 const RowContainer = styled.div`
@@ -67,121 +63,139 @@ const RowContainer = styled.div`
   justify-content: start;
 `;
 
+const NoDataContainer = styled.div`
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 840px;
+  width: 82vw;
+  left: 5vw;
+`;
+
+const normalize = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replaceAll(/[\u0300-\u036f]/g, "");
+
 const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataToEdit, onDeleteData, onUpdateData, loading, error }) => {
-  const [filteredData, setFilteredData] = useState<IReport[]>(data);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [isPartialSearch, setIsPartialSearch] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isPartialSearch, setIsPartialSearch] = useState(false);
+
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
 
-  const handleTogglePartialSearch = () => {
-    setIsPartialSearch((prev) => !prev);
-  };
+  const [isModalConfirmOpen, setIsModalConfirmOpen] = useState(false);
+  const [reportToDelete, setReportToDelete] = useState<number | null>(null);
 
   const handleOpenModalEdit = () => setIsModalEditOpen(true);
-  const handleCloseEditModal = () => {
+  const handleCloseModalEdit = () => {
     setIsModalEditOpen(false);
     setDataToEdit(null);
   };
 
+  const handleRequestDelete = (reportId: number) => {
+    setReportToDelete(reportId);
+    setIsModalConfirmOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!reportToDelete || reportToDelete === null) return;
+
+    await onDeleteData(reportToDelete);
+
+    setReportToDelete(null);
+    setIsModalConfirmOpen(false);
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    setCurrentPage(1);
+  };
+
+  const handleTogglePartialSearch = () => {
+    setIsPartialSearch(prev => !prev);
+    setCurrentPage(1);
+  };
+
   // Búsqueda local con coincidencia parcial o exacta
-  const handleSearch = useCallback(
-    (query: string) => {
-      setIsSearching(true);
+  const filteredData = useMemo(() => {
+    const term = normalize(searchQuery).trim();
 
-      try {
-        const raw = query || "";
-        // normalizamos la query: lowercase + trim + quitar diacríticos
-        const normalize = (s: string) =>
-          s
-            .toLowerCase()
-            .normalize("NFD")
-            .replaceAll(/[\u0300-\u036f]/g, "");
+    // Sin búsqueda → mostrar data original
+    if (!term) {
+      return data;
+    }
 
-        const term = normalize(raw).trim();
+    // Búsqueda parcial: cada término debe coincidir completo, pero no es necesario que todos 
+    // los términos estén presentes
+    if (isPartialSearch) {
+      const rawTerms = term
+        .split(/\s+/)
+        .map(t => t.trim())
+        .filter(Boolean);
 
-        if (!term) {
-          setFilteredData(data);
-          return;
-        }
-
-        if (isPartialSearch) {
-          // Parcial: split en palabras; match OR entre palabras.
-          // Para términos cortos (<= 2) usamos "word boundary" para evitar 'de' -> 'defensa'
-          const rawTerms = term.split(/\s+/).map(t => t.trim()).filter(Boolean);
-          if (rawTerms.length === 0) {
-            setFilteredData(data);
-            return;
-          }
-
-          // Preparamos expresiones/funciones por término:
-          const termMatchers = rawTerms.map(t => {
-            // escapar para regex si usamos regex
-            const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-            if (t.length <= 4) {
-              // palabra corta: coincidencia de palabra completa con boundary
-              const re = new RegExp(`\\b${escapeRegExp(t)}\\b`, 'u'); // case-normalized already
-              return (fieldValueNormalized: string) => re.test(fieldValueNormalized);
-            } else {
-              // palabra larga: substring match
-              return (fieldValueNormalized: string) => fieldValueNormalized.includes(t);
-            }
-          });
-
-          const filtered = data.filter((user) => {
-            // Convertir todos los valores del user a strings normalizados una vez
-            const normalizedValues = Object.values(user)
-              .map(v => (v === null || v === undefined ? "" : normalize(String(v))));
-
-            // Si **alguno** de los términos coincide en **algún** campo => incluir registro (OR entre términos)
-            return termMatchers.some(matcher =>
-              normalizedValues.some(v => matcher(v))
-            );
-          });
-
-          setFilteredData(filtered);
-        }
-        else {
-          // Exacta: la frase completa dentro de algún campo
-          const filtered = data.filter((user) =>
-            Object.values(user).some((value) => {
-              if (value === null || value === undefined) return false;
-              const v = normalize(String(value));
-              return v.includes(term);
-            })
-          );
-          setFilteredData(filtered);
-        }
-      } catch (error) {
-        console.error("Error en la búsqueda:", error);
-        toast.error("Hubo un error al realizar la búsqueda. Por favor, intente nuevamente.");
-      } finally {
-        setIsSearching(false);
+      if (!rawTerms.length) {
+        return data;
       }
-    },
-    [data, isPartialSearch]
-  );
 
-  // Búsqueda con debounce
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      handleSearch(searchQuery);
-    }, 400);
-    return () => clearTimeout(timeoutId);
-  }, [searchQuery, handleSearch]);
+      const escapeRegExp = (value: string) =>
+        value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      const termMatchers = rawTerms.map(term => {
+        if (term.length <= 4) {
+          const regex = new RegExp(`\\b${escapeRegExp(term)}\\b`, "u");
+
+          return (fieldValue: string) => regex.test(fieldValue);
+        }
+
+        return (fieldValue: string) => fieldValue.includes(term);
+      });
+
+      return data.filter(user => {
+        const normalizedValues = Object.values(user).map(value =>
+          value === null || value === undefined
+            ? ""
+            : normalize(String(value))
+        );
+
+        return termMatchers.some(matcher =>
+          normalizedValues.some(value => matcher(value))
+        );
+      });
+    }
+
+    // Búsqueda exacta: el término debe estar incluido en algún campo (match de substring)
+    return data.filter(user =>
+      Object.values(user).some(value => {
+        if (value === null || value === undefined) return false;
+
+        return normalize(String(value)).includes(term);
+      })
+    );
+  }, [data, searchQuery, isPartialSearch]);
 
   // Lógica de paginación sobre los datos filtrados
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
   const totalItems = filteredData.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
 
   const currentData = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredData.slice(startIndex, startIndex + itemsPerPage);
+
+    return filteredData.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
   }, [filteredData, currentPage]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
 
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -199,27 +213,22 @@ const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataT
     currentPage,
   };
 
-  // Resetear la paginación al buscar
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filteredData]);
-
   // Muestra loading, error o los datos del usuario
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       <Container>
-        <RowContainer >
-          <Skeleton style={{ width: '45vw', minWidth: '240px', margin: '4px 0' }} height={40} />
+        <RowContainer>
+          <Skeleton style={{ width: '45vw', minWidth: '240px', marginTop: '4px' }} height={50} />
         </RowContainer>
-        <TableContainer  >
-          <Skeleton count={5} style={{ width: '100%', margin: '4px 0' }} height={64} />
-        </TableContainer >
+        <TableContainer style={{ border: 'none' }} >
+          <Skeleton count={4} style={{ width: '100%', margin: '4px 0' }} height={136} />
+        </TableContainer>
         <RowContainer style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '4px' }}>
           <Skeleton style={{ margin: '0 4px' }} width={40} height={32} />
           <Skeleton style={{ margin: '0 4px' }} width={120} height={40} />
           <Skeleton style={{ margin: '0 4px' }} width={40} height={32} />
         </RowContainer>
-      </Container >
+      </Container>
     </SkeletonTheme>
   );
 
@@ -233,8 +242,8 @@ const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataT
     <Container>
       <Search
         placeholder="Buscar reporte por título, usuario, estado, fecha..."
-        label="Buscar usuario"
-        onSearch={setSearchQuery}
+        label="Buscar reporte"
+        onSearch={handleSearch}
         onTogglePartialSearch={handleTogglePartialSearch}
         isPartialSearch={isPartialSearch}
       />
@@ -249,19 +258,20 @@ const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataT
                   key={report.id}
                   report={report}
                   setDataToEdit={(report) => { setDataToEdit(report); handleOpenModalEdit(); }}
-                  onDeleteData={onDeleteData}
+                  onDeleteData={handleRequestDelete}
                 />
               ))
-            ) : isSearching ? (
-              <Tr>
-                <Td colSpan={9}>Buscando...</Td>
-              </Tr>
             ) : (
               <Tr>
                 <Td colSpan={9}>
-                  {searchQuery
-                    ? "Ningún reporte coincide con la búsqueda."
-                    : "No hay datos que mostrar."}
+                  <NoDataContainer>
+                    <NoContentContainer >
+                      <p>{searchQuery
+                        ? "No encontramos resultados para tu búsqueda. Prueba con otros términos o vuelve más tarde."
+                        : "No hay datos que mostrar actualmente. Intenta de nuevo en otro momento."}
+                      </p>
+                    </NoContentContainer>
+                  </NoDataContainer>
                 </Td>
               </Tr>
             )}
@@ -282,7 +292,13 @@ const TableReports: React.FC<ITableReportsProps> = ({ data, dataToEdit, setDataT
         dataToEdit={dataToEdit}
         setDataToEdit={setDataToEdit}
         isOpen={isModalEditOpen}
-        onClose={handleCloseEditModal}
+        onClose={handleCloseModalEdit}
+      />
+
+      <ModalConfirm
+        isOpen={isModalConfirmOpen}
+        onClose={() => setIsModalConfirmOpen(false)}
+        onConfirm={() => { handleDelete() }}
       />
     </Container>
   );

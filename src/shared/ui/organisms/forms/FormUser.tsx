@@ -54,7 +54,7 @@ const Button = styled.button`
   color: ${({ theme }) => theme.colors.textSecondary};
   cursor: pointer;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   transition: 0.3s ease;
   border-radius: 10px;
 
@@ -141,14 +141,14 @@ const FormUser: React.FC<IUserFormProps> = ({ onUpdateData, dataToEdit, onClose,
       handleChangeDebounced(e.target.value);
     };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (dataToEdit) {
       const userToUpdate = { ...dataToEdit, ...form };
       if (form.password === dataToEdit.password) {
         delete userToUpdate.password; // No cambió la contraseña
       }
-      onUpdateData(userToUpdate);
+      await onUpdateData(userToUpdate);
       onClose?.();
     }
   };

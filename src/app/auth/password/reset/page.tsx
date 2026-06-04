@@ -61,7 +61,7 @@ const FormContainer = styled.div`
 `;
 
 const FormWrapper = styled.div`
-  padding: 2rem;
+  padding: 2.5rem 3rem;
   background: ${({ theme }) => theme.colors.bgWhite};
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
@@ -74,19 +74,23 @@ const FormWrapper = styled.div`
 
   @media (max-width: 450px) {
     max-width: 80%;
+    padding: 2rem 2.5rem;
 
       & label {
         font-size: 14px;
     }
   }
+
+  @media (max-width: 360px) {
+    padding: 2rem;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
   width: 100%;
   gap: 12px;
   padding: 0 0.5rem;
@@ -102,10 +106,10 @@ const Title = styled.h1`
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
-  margin-top: 0;
   display: inline-block;
   transform-origin: center;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
   animation: wavePerspective 3.5s ease-in-out infinite;
 
   @keyframes wavePerspective {
@@ -151,8 +155,8 @@ const BackLink = styled.div`
   text-decoration: none;
   gap:4px;
   margin: 0;
-  padding-top: 48px;
-  padding-bottom: 8px;
+  padding-top: 36px;
+  padding-bottom: 12px;
   max-width: 400px;
 
   a {
@@ -169,20 +173,20 @@ const BackLink = styled.div`
 `;
 
 const SubmitButton = styled.button`
-  border-radius: 20px;
-  width: 150px;
-  background-color: transparent;
-  font-size: 12px;
-  font-weight: 500;
+  border: 1px solid ${({ theme }) => theme.colors.textOrange};
+  color: ${({ theme }) => theme.colors.textOrange};
   transition: 0.5s ease-in-out;
+  background-color: transparent;
   display: flex;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   padding: 10px;
   margin-top: 8px;
-  border: 1px solid ${({ theme }) => theme.colors.textOrange};
-  color: ${({ theme }) => theme.colors.textOrange};
+  border-radius: 20px;
+  width: 150px;
+  font-size: 12px;
+  font-weight: 500;
 
   &:hover {
     transform: scale(0.95);
@@ -193,10 +197,6 @@ const SubmitButton = styled.button`
 const FooterContainer = styled.div`
   width: 100%;
   height: auto;
-
-  & div {
-    margin-top: 52px !important;
-  }
 `;
 
 function ResetPassword() {
@@ -275,20 +275,22 @@ function ResetPassword() {
           <FormWrapper>
             <Title>SkillSwap</Title>
             <Form onSubmit={handleSubmit}>
-              <label htmlFor="new-password">Crear nueva contraseña</label>
+              <label htmlFor="new-password">Contraseña nueva</label>
               <Input
                 type="password"
                 id="new-password"
                 name="new-password"
+                placeholder="Escribe tu clave nueva..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <label htmlFor="confirm-password">Confirmar nueva contraseña</label>
+              <label htmlFor="confirm-password">Confirmar contraseña</label>
               <Input
                 type="password"
                 id="confirm-password"
                 name="confirm-password"
+                placeholder="Escribe tu clave de nuevo..."
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required

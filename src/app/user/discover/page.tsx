@@ -9,11 +9,12 @@ import DiscoverUsers from "../../../features/users/components/UserDiscover";
 import CarouselNewUsers from "../../../shared/ui/organisms/carousels/CarouselNewUsers";
 import { FooterMain } from '@/src/shared/ui/organisms/footer/FooterMain';
 import { getUsersForImages } from '../../api/users/users';
-import { RiArrowGoBackFill } from "react-icons/ri";
-import { FaArrowDownAZ } from "react-icons/fa6";
-import { MdOutlineAlignHorizontalLeft } from "react-icons/md";
 import { getAuthData } from "@/src/lib/utils/getAuthData";
 import { IUserForImages } from "@/src/core/models/users/users.model";
+import { MdOutlineAlignHorizontalLeft } from "react-icons/md";
+import { LiaSearchSolid } from "react-icons/lia";
+import { RiArrowGoBackFill } from "react-icons/ri";
+import { FaArrowDownAZ } from "react-icons/fa6";
 
 const DiscoverPage = styled.div`
   width: 100% !important;
@@ -30,6 +31,32 @@ const Container = styled.div`
   display: flex;
 `;
 
+const Sidebar = styled.div`
+  padding: 1rem;
+  width: inherit;
+  height: 100%;
+  gap: 2rem;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+`;
+
+const SidebarContainer = styled.div`
+  min-width: 100px !important;
+  width: 150px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
+`;
+
 const LateralContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,7 +69,18 @@ const LateralContainer = styled.div`
   }
 `;
 
-const DivContainer = styled.div`
+const ContentContainer = styled.div`
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+  padding: 1rem;
+  padding-bottom: 0 !important;
+  overflow-x: hidden;
+`;
+
+const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 300px;
@@ -74,25 +112,32 @@ const DivContainer = styled.div`
   }
 `;
 
-const DivCarousel = styled.div`
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 85%;
   height: 100%;
 
-    & hr {
-      padding: 0;
-      margin: 0 400px !important;
-      translate: 0 15px;
-      border: none;
-      height: 4px;
-      opacity: 0.1;
-      border-radius: 500px;
-      background-color: ${({ theme }) => theme.colors.textOrange};
-    }
-
   @media (max-width: 1000px) {
     width: 100%;
+  }
+`;
+
+const DivCarousel = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  & hr {
+    padding: 0;
+    margin: 0 400px !important;
+    translate: 0 15px;
+    border: none;
+    height: 4px;
+    opacity: 0.1;
+    border-radius: 500px;
+    background-color: ${({ theme }) => theme.colors.textOrange};
   }
 `;
 
@@ -117,7 +162,6 @@ const SearchContainer = styled.div`
 
   @media (max-width: 1000px) {
     align-self: center;
-    width: 95%;
     padding-top: 0.5rem !important;
 
     & span {
@@ -143,43 +187,6 @@ const Bottombar = styled.div`
     align-items: center;
     padding: 1rem 0 !important;
     width: 100%;
-  }
-`;
-
-const Content = styled.div`
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  width: 100%;
-  height: 80%;
-  padding: 1rem;
-  padding-bottom: 0 !important;
-  overflow-x: hidden;
-`;
-
-const Sidebar = styled.div`
-  padding: 1rem;
-  width: inherit;
-  height: 100%;
-  gap: 2rem;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-`;
-
-const SidebarContainer = styled.div`
-  min-width: 100px !important;
-  width: 150px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-
-  @media (max-width: 1000px) {
-    display: none;
   }
 `;
 
@@ -270,31 +277,36 @@ const Discover = () => {
             </ButtonAside>
           </Sidebar>
         </SidebarContainer>
-        <Content>
-          <DivContainer>
-            <SearchContainer>
-              <SearchDiscover placeholder="¿Qué quieres aprender hoy...?" label="⌕" onSearch={handleSearch} />
-              <Bottombar>
-                <ButtonBelow type={"button"} label={"Default"} onClick={handleFilterReset}>
-                </ButtonBelow>
-                <ButtonBelow type={"button"} label={"Trabajos"} onClick={handleShowAlphabeticalOrder}>
-                </ButtonBelow>
-                <ButtonBelow type={"button"} label={"Top"} onClick={handleShowTopUsers}>
-                </ButtonBelow>
-              </Bottombar>
-              <span></span>
-            </SearchContainer>
-            <UsersContainer>
-              <DivCarousel>
-                <CarouselNewUsers />
-              </DivCarousel>
-              <DiscoverUsers loading={loading} error={error} users={filteredUsers} />
-            </UsersContainer>
-          </DivContainer>
+
+        <ContentContainer>
+          <MainContainer>
+            <Content>
+              <SearchContainer>
+                <SearchDiscover placeholder="¿Qué quieres aprender hoy...?" label={<LiaSearchSolid />} onSearch={handleSearch} />
+                <Bottombar>
+                  <ButtonBelow type={"button"} label={"Default"} onClick={handleFilterReset}>
+                  </ButtonBelow>
+                  <ButtonBelow type={"button"} label={"Trabajos"} onClick={handleShowAlphabeticalOrder}>
+                  </ButtonBelow>
+                  <ButtonBelow type={"button"} label={"Top"} onClick={handleShowTopUsers}>
+                  </ButtonBelow>
+                </Bottombar>
+                <span></span>
+              </SearchContainer>
+
+              <UsersContainer>
+                <DivCarousel>
+                  <CarouselNewUsers />
+                </DivCarousel>
+                <DiscoverUsers loading={loading} error={error} users={filteredUsers} />
+              </UsersContainer>
+            </Content>
+          </MainContainer>
+
           <LateralContainer>
             <CardAdsDiscover loading={loading} error={error} user={currentUserData!} />
           </LateralContainer>
-        </Content>
+        </ContentContainer>
       </Container>
       <FooterMain />
     </DiscoverPage>

@@ -5,8 +5,8 @@ import { FooterMain } from "@/src/shared/ui/organisms/footer/FooterMain";
 import styled from "styled-components";
 import NavLink from "@/src/shared/ui/atoms/links/NavLinks";
 import ModalResetPassword from "@/src/shared/ui/organisms/modals/ModalResetPassword";
-import LoginPage from "@/src/features/auth/components/Login";
-import RegisterPage from "@/src/features/auth/components/Register";
+import FormLogin from "@/src/features/auth/components/FormLogin";
+import FormRegister from "@/src/features/auth/components/FormRegister";
 
 // Texto de cambio
 const TextWrapper = styled.div`
@@ -219,12 +219,6 @@ const ResetPasswordButton = styled.button`
 const FooterContainer = styled.div`
   width: 100%;
   height: auto;
-
-  @media (max-width: 1070px) {
-    & div {
-      margin-top: 48px !important;
-    }
-  }
 `;
 
 export default function AuthPage() {
@@ -259,7 +253,7 @@ export default function AuthPage() {
             transition={{ duration: 1.2 }}
             style={isRegister ? { width: "50%", visibility: "hidden" } : { width: "50%", visibility: "visible" }}
           >
-            <LoginPage resetPasswordProp={
+            <FormLogin resetPasswordProp={
               <ResetPasswordButton aria-label="Control Button" type="button" onClick={openModalResetPassword}>
                 ¿Olvidaste tu contraseña?
               </ResetPasswordButton>
@@ -273,7 +267,7 @@ export default function AuthPage() {
             transition={{ duration: 1.2 }}
             style={isRegister ? { width: "50%", visibility: "visible" } : { width: "50%", visibility: "hidden" }}
           >
-            <RegisterPage />
+            <FormRegister />
           </MotionDiv>
         </motion.div>
 

@@ -9,7 +9,7 @@ import { handlePageTheme } from "@/src/lib/utils/themeHandler";
 import { toast } from "react-toastify";
 import { RootState } from '../../../lib/store';
 import { AppDispatch } from "@/src/lib/store";
-import { ILoginPageProps } from "@/src/features/auth/types/auth.type";
+import { IFormLoginProps } from "@/src/features/auth/types/auth.type";
 import InputAuth from "../../../shared/ui/atoms/inputs/InputAuth";
 import ButtonAuth from "../../../shared/ui/atoms/buttons/ButtonAuth";
 import Label from "../../../shared/ui/atoms/labels/LabelAuth";
@@ -81,7 +81,6 @@ const FormWrapper = styled.div`
   position: relative;
 
   @media (max-width: 1070px) {
-    border-radius: none;
     border-radius: 15px; 
     border: 0;
     width: 300px;
@@ -123,7 +122,7 @@ const DivButtonLogin = styled.div`
   }
 `;
 
-export default function LoginPage({ resetPasswordProp }: ILoginPageProps) {
+export default function FormLogin({ resetPasswordProp }: IFormLoginProps) {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const { loading } = useSelector((state: RootState) => state.auth);

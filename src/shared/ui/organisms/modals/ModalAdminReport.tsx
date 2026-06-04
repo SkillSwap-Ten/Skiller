@@ -221,7 +221,6 @@ const ReportMainInfo = styled.div`
 `;
 
 const Avatar = styled.div<{ $urlImage: string }>`
-  border: 1px solid ${({ theme }) => theme.colors.borderDark};
   background-image: url(${(props) => props.$urlImage}); 
   background-size: cover;
   background-position: center;

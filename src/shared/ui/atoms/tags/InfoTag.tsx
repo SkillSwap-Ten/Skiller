@@ -7,7 +7,7 @@ import { ITagProps } from '@/src/shared/types/atoms/tag.type';
 const StyledInfoTag = styled.div`
     align-self: start !important;
     padding: 0.2rem 0.5rem;
-    background-color: #f0f0f0;
+    background: #f0f0f0;
     border-radius: 4px;
     display: flex;
     justify-content: center;

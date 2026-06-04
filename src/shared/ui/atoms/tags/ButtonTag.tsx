@@ -5,7 +5,7 @@ import { ITagProps } from '@/src/shared/types/atoms/tag.type';
 
 // Estilos de la etiqueta
 const StyledButtonTag = styled.button`
-  background-color: transparent;
+  background: transparent;
   padding: 10px 15px;
   border: 1px solid ${({ theme }) => theme.colors.borderDark};
   border-radius: 5px;

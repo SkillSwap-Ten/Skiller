@@ -15,7 +15,7 @@ const Container = styled.div`
 const SearchInput = styled.input`
   width: 100%;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 10px;
   border: none;
   outline: none;
   background-color: ${({ theme }) => `${theme.colors.textSecondary}33`};
@@ -73,26 +73,14 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
 }) => {
   // --- Estado ---
   const [search, setSearch] = useState('');
-  const [selected, setSelected] = useState<string[]>(
+  const selectedSkills = useMemo(
+  () =>
     value
       .split(',')
-      .map(s => s.trim())
-      .filter(Boolean)
-  );
-
-  // --- Derivar selected de value para mantener sincronía sin useEffect ---
-  const derivedSelected = useMemo(() => {
-    const updated = value
-      .split(',')
-      .map(s => s.trim())
-      .filter(Boolean);
-
-    const isEqual =
-      updated.length === selected.length &&
-      updated.every((v, i) => v === selected[i]);
-
-    return isEqual ? selected : updated;
-  }, [value, selected]);
+      .map(skill => skill.trim())
+      .filter(Boolean),
+  [value]
+);
 
   // --- Evento que dispara cambio ---
   const triggerChangeEvent = (skills: string[]) => {
@@ -107,14 +95,13 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
   };
 
   // --- Toggle skill ---
-  const handleToggle = (skillName: string) => {
-    const newSelection = derivedSelected.includes(skillName)
-      ? derivedSelected.filter(s => s !== skillName)
-      : [...derivedSelected, skillName];
+const handleToggle = (skillName: string) => {
+  const newSelection = selectedSkills.includes(skillName)
+    ? selectedSkills.filter(skill => skill !== skillName)
+    : [...selectedSkills, skillName];
 
-    setSelected(newSelection);
-    triggerChangeEvent(newSelection);
-  };
+  triggerChangeEvent(newSelection);
+};
 
   // --- Normalización ---
   const normalize = (str: string) =>
@@ -163,7 +150,7 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
   // --- Unificar sin duplicados ---
   const skillMap = new Map<string, typeof allSkills[0]>();
   // 1. Seleccionados
-  derivedSelected.forEach(name => {
+  selectedSkills.forEach(name => {
     const skill = allSkills.find(s => s.name === name);
     if (skill) skillMap.set(skill.name, skill);
   });
@@ -182,8 +169,8 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
 
   // --- Lista final ordenada ---
   const finalSkills = Array.from(skillMap.values()).sort((a, b) => {
-    const aSelected = derivedSelected.includes(a.name);
-    const bSelected = derivedSelected.includes(b.name);
+    const aSelected = selectedSkills.includes(a.name);
+    const bSelected = selectedSkills.includes(b.name);
     if (aSelected !== bSelected) return aSelected ? -1 : 1;
 
     const aInFiltered = filtered.some(f => f.name === a.name);
@@ -206,7 +193,7 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
       />
       <SkillsWrapper>
         {finalSkills.map(skill => {
-          const active = derivedSelected.includes(skill.name);
+          const active = selectedSkills.includes(skill.name);
           return (
             <SkillOption
               key={skill.name}
@@ -221,10 +208,20 @@ const SelectSkills: React.FC<ISelectSkillsProps> = ({
       </SkillsWrapper>
 
       {/* select hidden para integrarse al form */}
-      <select title={title} name={name} multiple hidden>
-        {selected.map(skill => (
-          <option key={skill} value={skill} selected>
-            {skill}
+      <select
+        title={title}
+        name={name}
+        multiple
+        hidden
+        value={selectedSkills}
+        onChange={() => {}}
+      >
+        {allSkills.map(skill => (
+          <option
+            key={skill.name}
+            value={skill.name}
+          >
+            {skill.name}
           </option>
         ))}
       </select>

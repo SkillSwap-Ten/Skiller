@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Th = styled.th`
   font-weight: bold;
-  padding: 10px;
+  padding: 16px;
   border: none;
   text-align: start;
   font-size: 15px;
@@ -21,8 +21,8 @@ const TableHeaderUser: React.FC = () => {
         <Th>ID</Th>
         <Th>Usuario</Th>
         <Th>Profesión</Th>
-        <Th>Skills</Th>
         <Th>Comunidad</Th>
+        <Th>Skills</Th>
         <Th>Estado</Th>
         <Th>Fecha Suspensión</Th>
         <Th>Fecha Reactivación</Th>

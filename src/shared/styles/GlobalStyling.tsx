@@ -26,7 +26,7 @@ export const GlobalTheme: IGlobalTheme = {
 
         bgDark: '#00000020',
         bgNeutral: '#F5F5F5',
-        bgLight: '#FFFFFF50',
+        bgLight: '#FFFFFF30',
 
         bgOrange: '#F4F2EE',
         bgBlack: '#222222',
@@ -91,9 +91,9 @@ export const GlobalDarkTheme: IGlobalTheme = {
         bgSecondary: '#FEFEFE',
         bgTertiary: '#3A3A3A',
 
-        bgDark: '#00000090',
+        bgDark: '#00000020',
         bgNeutral: '#F5F5F5',
-        bgLight: '#FFFFFF90',
+        bgLight: '#FFFFFF30',
 
         bgOrange: '#3B2B1A',
         bgBlack: '#222222',
@@ -106,9 +106,9 @@ export const GlobalDarkTheme: IGlobalTheme = {
         textTertiary: '#FFFFFF60',
         textSidebar: '#DDDDDD',
 
-        textDark: '#FFFFFF30',
+        textDark: '#FFFFFF90',
         textNeutral: '#AAAAAA',
-        textLight: '#FFFFFF50',
+        textLight: '#FFFFFF90',
 
         textBlack: '#222222',
         textWhite: '#FFFFFF',
