@@ -4,7 +4,7 @@ import React from 'react';
 import { TbFaceIdError } from "react-icons/tb";
 
 const NoContent = styled.div`
-  padding: 1rem;
+  padding: 1rem !important;
   gap: 0.75rem;
   font-size: 14px;
   width: 100%;
@@ -34,9 +34,7 @@ const NoContentContainer: React.FC<{ children?: React.ReactNode, error?: string 
     <NoContent>
       <TbFaceIdError />
       <p>¡Ups! No se pudo cargar el recurso.</p>
-      {error &&
-        <p><strong>ERROR:</strong> {error}</p>
-      }
+      {error && <p><strong>ERROR:</strong> {error}</p>}
       {children}
     </NoContent>
   );

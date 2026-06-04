@@ -41,7 +41,7 @@ const Button = styled.button`
   color: ${({ theme }) => theme.colors.textSecondary};
   cursor: pointer;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   transition: 0.3s ease;
   border-radius: 10px;
 
@@ -158,12 +158,12 @@ const AdminReportForm: React.FC<IAdminReportFormProps> = ({ onUpdateData, dataTo
     handleChangeDebounced(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (dataToEdit) {
       const reportToUpdate = { id: dataToEdit.id, ...form };
-      onUpdateData(reportToUpdate);
+      await onUpdateData(reportToUpdate);
       handleReset(e);
       onClose?.();
     }

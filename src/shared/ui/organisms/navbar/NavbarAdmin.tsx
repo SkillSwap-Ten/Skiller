@@ -248,7 +248,7 @@ export const NavbarAdmin: React.FC = () => {
         <NavbarContainer>
             <AdminProfileSidebar isOpen={isSidebarProfileOpen} onClose={closeSidebarProfile} />
             <SidebarToggleContainer>
-                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Guía</small></NavToggle>
+                <NavToggle onClick={openSidebarProfile}><small><span>+</span>Guías</small></NavToggle>
             </SidebarToggleContainer>
 
             <MenuToggleContainer>

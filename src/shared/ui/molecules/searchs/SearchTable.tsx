@@ -1,7 +1,8 @@
 "use client";
 import { ISearchProps } from "@/src/shared/types/molecules/search.type";
+import { VscWholeWord } from "react-icons/vsc";
+import { BsInputCursorText } from "react-icons/bs";
 import React, { useState } from "react";
-import { VscSearch, VscWholeWord } from "react-icons/vsc";
 import styled from "styled-components";
 import ButtonAside from "../../atoms/buttons/ButtonAside";
 import InputTable from "../../atoms/inputs/InputTable";
@@ -21,15 +22,21 @@ const InputContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.bgPrimary}; 
-  border: 1px solid ${({ theme }) => theme.colors.borderDark};
-  border-radius: 6px;
+  background: ${({ theme }) => theme.colors.bgPrimary}; 
+  border-radius: 10px;
   min-width: 50px;
   width: 50px;
   aspect-ratio: 1 / 1;
 
+  :hover{
+    background: ${({ theme }) => theme.colors.bgNeutral};
+  }
+
   & button{
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
+    background: transparent;
     min-width: 50px;
+    border-radius: 10px;
     width: 50px;
     height: auto;
     aspect-ratio: 1 / 1;
@@ -59,9 +66,9 @@ const Search: React.FC<ISearchProps> = ({ placeholder, label, onSearch, onToggle
         />
       </InputContainer>
       <ButtonContainer>
-      <ButtonAside type="button" label={isPartialSearch ? "Exacta" : "Parcial"} onClick={onTogglePartialSearch}>
-        {isPartialSearch ? <VscWholeWord /> : <VscSearch />}
-      </ButtonAside>
+        <ButtonAside type="button" label={isPartialSearch ? "Exacta" : "Parcial"} onClick={onTogglePartialSearch}>
+          {isPartialSearch ? <VscWholeWord /> : <BsInputCursorText />}
+        </ButtonAside>
       </ButtonContainer>
     </SearchContainer>
   );

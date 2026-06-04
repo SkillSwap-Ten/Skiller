@@ -4,7 +4,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Td = styled.td`
-  padding: 10px;
+  padding: 16px;
   border: none;
   text-align: start;
   text-transform: capitalize;
@@ -45,7 +45,7 @@ const Tr = styled.tr`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
   
   &:hover {
-    background-color: #eee;
+    background-color: #F4F4F4;
   }
 `;
 
@@ -142,7 +142,7 @@ const TableRowReport: React.FC<ITableRowReportProps> = ({ report, setDataToEdit,
       <Td>{actionTakenElement}</Td>
       <Td>{actionDetails}</Td>
       <Td>
-        <EditButton aria-label="Control Button" onClick={() => setDataToEdit(report)}>Editar</EditButton>
+        <EditButton aria-label="Control Button" onClick={() => setDataToEdit(report)}>Gestionar</EditButton>
         <DeleteButton aria-label="Control Button" onClick={() => onDeleteData(id!)}>Eliminar</DeleteButton>
       </Td>
     </Tr>

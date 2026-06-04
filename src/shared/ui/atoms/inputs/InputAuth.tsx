@@ -5,52 +5,57 @@ import { IInputProps } from "@/src/shared/types/atoms/input.type";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const InputWrapper = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 10px;
 `;
 
-const StyledInputAuth = styled.input`
+const StyledInputAuth = styled.input<{ $isPassword: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.textWhite};
   color: ${({ theme }) => theme.colors.textWhite};
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: ${({ $isPassword }) =>
+    $isPassword ? "10px 0 0 10px" : "10px"};
+  background: transparent;
   box-sizing: border-box;
   width: 100%;
   height: 40px;
   padding: 10px;
-  background: transparent;
+  font-size: 16px;
+  transition: background 0.4s ease; 
 
   &::placeholder {
     opacity: 0.7;
-    color: ${({ theme }) => theme.colors.textWhite}!important;
+    color: ${({ theme }) => theme.colors.textWhite} !important;
+  }
+
+  &:focus {
+    outline: none;    
+    transition: background 0.4s ease; 
+    background: ${({ theme }) => theme.colors.bgLight}; 
+    border-right: ${({ $isPassword }) =>
+      $isPassword ? "none" : ""};
   }
 
   & * {
-    color: ${({ theme }) => theme.colors.textWhite}!important;
+    color: ${({ theme }) => theme.colors.textWhite} !important;
   }
 `;
 
 const ToggleButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   background: ${({ theme }) => theme.colors.bgLight};
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  height: 40px;
-  display: flex;
-  align-items: center;
   color: ${({ theme }) => theme.colors.textWhite};
-  border-left: 1px solid ${({ theme }) => theme.colors.textWhite};
+  border: 1px solid ${({ theme }) => theme.colors.textWhite};
+  border-left: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-
-  &:focus {
-    outline: none;
-  }
+  height: 40px;
+  width: 38px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
 
 const InputAuth: React.FC<IInputProps> = ({
@@ -74,6 +79,7 @@ const InputAuth: React.FC<IInputProps> = ({
   return (
     <InputWrapper>
       <StyledInputAuth
+        $isPassword={isPassword}
         type={inputType}
         id={id}
         placeholder={placeholder}

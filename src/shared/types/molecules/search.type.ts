@@ -1,5 +1,5 @@
 export interface ISearchProps {
-  label: string;
+  label: string | React.ReactNode;
   placeholder: string;
   onSearch: (query: string) => void;
   onTogglePartialSearch?: () => void;

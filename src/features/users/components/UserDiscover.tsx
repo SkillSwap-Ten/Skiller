@@ -75,7 +75,7 @@ const PaginationButton = styled.button`
   border-radius: 8px;
   font-weight: 500;
   font-size: 14px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 
   &:hover {
     font-weight: bold;
@@ -83,8 +83,9 @@ const PaginationButton = styled.button`
   }
 
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.4;
     cursor: not-allowed;
+    transition: 0.3s ease;
   }
 
   &:active {
@@ -146,16 +147,6 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
   // Función para cambiar de página
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  if (error) return (
-    <DivContainer>
-      <CardListContainer>
-        <CardContainer style={{ maxWidth: '100%', padding: '1rem' }}>
-          <NoContentContainer />
-        </CardContainer>
-      </CardListContainer>
-    </DivContainer>
-  );
-
   if (loading) return (
     <SkeletonTheme baseColor="#c2c2c2" highlightColor="#e0e0e0">
       {Array.from({ length: 5 }).map((_, index) => (
@@ -180,6 +171,28 @@ const DiscoverUsers: React.FC<IDiscoverUsersProps> = ({ users, loading, error })
         </CardContainer>
       ))}
     </SkeletonTheme>
+  );
+
+  if (error || !users) return (
+    <DivContainer>
+      <CardListContainer>
+        <CardContainer style={{ maxWidth: '100%' }}>
+          <NoContentContainer />
+        </CardContainer>
+      </CardListContainer>
+    </DivContainer>
+  );
+
+  if (users.length === 0) return (
+    <DivContainer>
+      <CardListContainer>
+        <CardContainer style={{ maxWidth: '100%' }} >
+          <NoContentContainer>
+            <p>No encontramos resultados para tu búsqueda. Prueba con otros términos o vuelve más tarde.</p>
+          </NoContentContainer>
+        </CardContainer>
+      </CardListContainer>
+    </DivContainer>
   );
 
   return (

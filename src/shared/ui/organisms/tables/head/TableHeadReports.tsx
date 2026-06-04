@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Th = styled.th`
   font-weight: bold;
-  padding: 10px;
+  padding: 16px;
   border: none;
   text-align: start;
   font-size: 15px;

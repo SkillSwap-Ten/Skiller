@@ -5,26 +5,34 @@ import { IInputProps } from '@/src/shared/types/atoms/input.type';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const InputWrapper = styled.div`
-    position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
     margin-bottom: 10px;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ $isPassword: boolean }>`
     border: 1px solid ${({ theme }) => theme.colors.borderDark};
     color: ${({ theme }) => theme.colors.textSecondary};
-    width: 100%;  
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: ${({ $isPassword }) =>
+        $isPassword ? "10px 0 0 10px" : "10px"};
     background: transparent;
+    height: 38px;
+    width: 100%;  
+    padding: 10px;
+    transition: background 0.4s ease; 
 
     &::placeholder {
         opacity: 0.7;
-        color: ${({ theme }) => theme.colors.textSecondary};
+        color: ${({ theme }) => theme.colors.textDark};
     }
 
     &:focus {
-        outline: none;          
+        outline: none;    
+        transition: background 0.4s ease; 
+        background: ${({ theme }) => theme.colors.bgNeutral}; 
+        border-right: ${({ $isPassword }) =>
+            $isPassword ? "none" : ""};
     }
     
     &:disabled {
@@ -35,23 +43,20 @@ const StyledInput = styled.input`
 `;
 
 const ToggleButton = styled.button`
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
+    background: ${({ theme }) => theme.colors.bgNeutral};
     border: none;
     cursor: pointer;
-    padding: 10px;
-    height: inherit;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: ${({ theme }) => theme.colors.textNeutral};
-    border-left: 1px solid ${({ theme }) => theme.colors.borderDark};
-
-    &:focus {
-        outline: none;
-    }
+    border: 1px solid ${({ theme }) => theme.colors.borderDark};
+    border-left: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    height: 38px;
+    width: 36px;
 `;
 
 const Input: React.FC<IInputProps> = ({
@@ -67,18 +72,19 @@ const Input: React.FC<IInputProps> = ({
     disabled = false,
     ...props
 }) => {
-    const shouldToggle =
+    const isPassword =
         type === 'password';
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const inputType = shouldToggle
+    const inputType = isPassword
         ? showPassword ? 'text' : 'password'
         : type;
 
     return (
         <InputWrapper>
             <StyledInput
+                $isPassword={isPassword}
                 className={className}
                 type={inputType}
                 placeholder={placeholder}
@@ -92,7 +98,7 @@ const Input: React.FC<IInputProps> = ({
                 {...props}
             />
 
-            {shouldToggle && (
+            {isPassword && (
                 <ToggleButton
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)}

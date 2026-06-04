@@ -4,21 +4,21 @@ import { IUser, IUserForImages } from "../../../core/models/users/users.model";
 
 export interface IAdminReportFormProps {
   dataToEdit: IReport | null;
-  onUpdateData: (report: IReport) => void;
+  onUpdateData: (report: IReport) => void | Promise<void>;
   setDataToEdit: (data: IReport | null) => void;
   onClose: () => void;
 }
 
 export interface IAdminUserFormProps {
   dataToEdit: IUser | null;
-  onUpdateData: (user: IUser) => void;
+  onUpdateData: (user: IUser) => void | Promise<void>;
   setDataToEdit: (data: IUser | null) => void;
   onClose: () => void;
 };
 
 export interface IUserFormProps {
   dataToEdit: IUser | null;
-  onUpdateData: (user: IUser) => void;
+  onUpdateData: (user: IUser) => void | Promise<void>;
   setDataToEdit: (data: IUser | null) => void;
   onClose: () => void;
 };
@@ -34,7 +34,7 @@ export interface IReportFormProps {
 };
 
 export interface IFormProps {
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void | Promise<void>;
   className?: string,
   children: ReactNode
 }

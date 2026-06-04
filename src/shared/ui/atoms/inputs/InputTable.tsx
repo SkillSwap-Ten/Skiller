@@ -8,18 +8,19 @@ const StyledInputContainer = styled.div`
     height: 100%;        
     padding: 0;        
     margin: 0;
-    border-radius: 5px;
+    border-radius: 10px;
 `;
 
 const StyledInputTable = styled.input`
-    background-color: ${({ theme }) => theme.colors.bgPrimary}; 
+    background: ${({ theme }) => theme.colors.bgPrimary}; 
     border: 1px solid ${({ theme }) => theme.colors.borderDark};
     color: ${({ theme }) => theme.colors.textSecondary};
     width: 100%;  
     height: 100%;        
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
+    transition: 0.3s ease; 
 
     &::placeholder {
         opacity: 0.7;
@@ -27,19 +28,22 @@ const StyledInputTable = styled.input`
     }
 
     &:focus {
-        outline: none;          
+        outline: none;    
+        transition: 0.3s ease; 
+        background: ${({ theme }) => theme.colors.bgNeutral};     
     }
     
     &:disabled {
-        background-color: ${({ theme }) => theme.colors.bgDisabled};
+        background: ${({ theme }) => theme.colors.bgDisabled};
         color: ${({ theme }) => theme.colors.textDisabled};
+        transition: 0.3s ease; 
         cursor: not-allowed;  
     }
 
     & p {
-        margin-top: 0.5rem;
         color: ${({ theme }) => theme.colors.textRed};
         font-size: 0.8rem;
+        margin-top: 0.5rem;
     }
 `;
 

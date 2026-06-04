@@ -2,7 +2,7 @@ import { IUserForImages } from "@/src/core/models/users/users.model";
 
 export interface ICardUserProps {
   userData: IUserForImages;
-  key?: number;
+  key: number;
 }
 
 export interface ICardProfileProps {

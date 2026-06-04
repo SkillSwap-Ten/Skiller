@@ -19,8 +19,8 @@ export interface ITableReportsProps {
   loading: boolean;
   error: string | null;
   dataToEdit: IReport | null;
-  onUpdateData: (user: IReport) => void;
-  onDeleteData: (reportId: number) => void;
+  onUpdateData: (user: IReport) => void | Promise<void>;
+  onDeleteData: (reportId: number) => void | Promise<void>;
   setDataToEdit: (data: IReport | null) => void;
 }
 
@@ -31,7 +31,7 @@ export interface ITableUsersProps {
   dataToReport: IUserForImages | null;
   dataToEdit: IUser | null;
   setDataToReport: (user: IUserForImages | null) => void;
-  onUpdateData: (user: IUser) => void;
-  onDeleteData: (userId: number) => void;
+  onUpdateData: (user: IUser) => void | Promise<void>;
+  onDeleteData: (userId: number) => void | Promise<void>;
   setDataToEdit: (data: IUser | null) => void;
 }

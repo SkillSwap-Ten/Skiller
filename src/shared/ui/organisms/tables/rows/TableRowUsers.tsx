@@ -9,7 +9,7 @@ import { FaBehanceSquare, FaGithubSquare } from "react-icons/fa";
 import { isValidImageUrl } from "@/src/lib/utils/imageValidator";
 
 const Td = styled.td`
-  padding: 10px;
+  padding: 16px;
   border: none;
   text-align: start;
   text-transform: capitalize;
@@ -40,7 +40,7 @@ const Tr = styled.tr`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderDark};
   
   &:hover {
-    background-color: #eee;
+    background-color: #F4F4F4;
   }
 `;
 
@@ -167,6 +167,7 @@ const Skills = styled.div`
 
   & p{
     color: ${({ theme }) => theme.colors.textOrange};
+    width: fit-content !important;
   }
 `;
 
@@ -238,13 +239,13 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
         </UserMainInfoContainer>
       </Td>
       <Td>{jobTitle}</Td>
+      <Td>{category}</Td>
       <Td>
         <Skills>
-          <SkillTagTinyList skillsArray={abilitiesArray.slice(0, 3)} />
+          <SkillTagTinyList skillsArray={abilitiesArray.slice(0, 2)} />
           <p>...</p>
         </Skills>
       </Td>
-      <Td>{category}</Td>
       <Td>{stateElement}</Td>
       <Td>{suspensionDate || "N/A"}</Td>
       <Td>{reactivationDate || "N/A"}</Td>
@@ -288,7 +289,7 @@ const TableRowUser: React.FC<ITableRowUserProps> = ({
         </SocialButtons>
       </Td>
       <Td>
-        <EditButton onClick={() => setDataToEdit(user)} aria-label="Control Button">Editar</EditButton>
+        <EditButton onClick={() => setDataToEdit(user)} aria-label="Control Button">Gestionar</EditButton>
         <ReportButton
           onClick={() =>
             setDataToReport({

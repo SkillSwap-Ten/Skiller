@@ -1,5 +1,5 @@
 import React from "react";
 
-export interface ILoginPageProps {
+export interface IFormLoginProps {
     resetPasswordProp: React.ReactNode;
 }

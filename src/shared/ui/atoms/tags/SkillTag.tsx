@@ -29,7 +29,7 @@ const SkillTag = styled.p`
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.9rem;
-    background: ${({ theme }) => theme.colors.bgPrimary};
+    background: transparent;
     color: ${({ theme }) => theme.colors.textOrange};
     border: 1px solid ${({ theme }) => theme.colors.textOrange};
 `;

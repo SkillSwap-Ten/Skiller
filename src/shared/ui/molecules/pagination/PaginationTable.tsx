@@ -13,6 +13,12 @@ const PaginationContainer = styled.div`
     padding: 1rem;
     padding-bottom: 0;
     font-size: 15px;
+
+    & .disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transition: 0.3s ease;
+    }
 `;
 
 const PaginationButton = styled(Button)`
@@ -23,21 +29,10 @@ const PaginationButton = styled(Button)`
     cursor: pointer;
     border-radius: 8px;
     font-weight: 500;
-    transition: 0.3s;
+    transition: 0.3s ease;
 
     &:hover {
         font-weight: bold;
-        background-color: ${({ theme }) => theme.colors.bgBanner};
-    }
-
-    &:disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-    }
-
-    &:active {
-        font-weight: bold;
-        color: ${({ theme }) => theme.colors.textSecondary};
         background-color: ${({ theme }) => theme.colors.bgBanner};
     }
 

@@ -83,7 +83,6 @@ const FormWrapper = styled.div`
   position: relative;
 
   @media (max-width: 1070px) {
-    border-radius: none;
     border-radius: 15px; 
     border: 0;
     width: 300px;
@@ -206,7 +205,7 @@ const ErrorText = styled.sub`
   font-weight: 500;
 `;
 
-export default function RegisterPage() {
+export default function FormRegister() {
   const allSkills = getAllSkills();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
