@@ -13,9 +13,10 @@ import Input from "@/src/shared/ui/atoms/inputs/Input";
 const PageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.bgNeutral};
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  height: 100dvh;
+  min-height: 100dvh;
+  height: 100%;
   width: 100%;
 `;
 
@@ -27,6 +28,9 @@ const PageSideBanner = styled.div<{ $urlImage: string }>`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
   height: 100%;
   width: 50%;
 
@@ -39,8 +43,8 @@ const PageContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
+  padding-top: 48px;
   height: 100%;
   width: 50%;
 
@@ -61,12 +65,12 @@ const FormContainer = styled.div`
 `;
 
 const FormWrapper = styled.div`
-  padding: 2.5rem 3rem;
   background: ${({ theme }) => theme.colors.bgWhite};
-  border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
   text-align: center;
+  padding: 2.5rem 3rem;
   max-width: 400px;
+  border-radius: 15px;
 
   & label {
     color: ${({ theme }) => theme.colors.textNeutral};
@@ -74,7 +78,7 @@ const FormWrapper = styled.div`
 
   @media (max-width: 450px) {
     max-width: 80%;
-    padding: 2rem 2.5rem;
+    padding: 2.5rem 3rem;
 
       & label {
         font-size: 14px;
@@ -82,7 +86,7 @@ const FormWrapper = styled.div`
   }
 
   @media (max-width: 360px) {
-    padding: 2rem;
+    padding: 2rem 2.5rem;
   }
 `;
 
@@ -131,47 +135,6 @@ const Title = styled.h1`
   }
 `;
 
-const Arrow = styled.span`
-  margin-right: 8px;
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  transform: scaleX(0.5);
-`;
-
-const BackLink = styled.div` 
-  color: ${({ theme }) => theme.colors.textNeutral};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  border: none;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  gap:4px;
-  margin: 0;
-  padding-top: 36px;
-  padding-bottom: 12px;
-  max-width: 400px;
-
-  a {
-    color: ${({ theme }) => theme.colors.textNeutral};
-    font-weight: 500;
-    padding: 0;
-    margin: 0;
-
-  }
-
-  @media (max-width: 450px) {
-    max-width: 80%;
-  }
-`;
-
 const SubmitButton = styled.button`
   border: 1px solid ${({ theme }) => theme.colors.textOrange};
   color: ${({ theme }) => theme.colors.textOrange};
@@ -194,9 +157,68 @@ const SubmitButton = styled.button`
   }
 `;
 
+const BackNote = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  padding-bottom: 0;
+  max-width: 400px;
+  gap: 6px;
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.textNeutral};
+  }
+
+  @media (max-width: 450px) {
+    max-width: 80%;
+  }
+`;
+
+const BackLink = styled.span` 
+  color: ${({ theme }) => theme.colors.textNeutral};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: fit-content;
+  text-decoration: none;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 700;
+  gap: 4px;
+
+  a {
+    color: ${({ theme }) => theme.colors.textNeutral};
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+  }
+`;
+
 const FooterContainer = styled.div`
   width: 100%;
   height: auto;
+
+  & div{
+    margin-top: 36px;
+  }
+
+  & p{
+    padding-bottom: 2rem;
+  }
+
+  * {
+    color: ${({ theme }) => theme.colors.textNeutral};
+    border-color: ${({ theme }) => theme.colors.textNeutral};
+    font-weight: 400;
+    font-size: 12px;
+  }
 `;
 
 function ResetPassword() {
@@ -269,9 +291,6 @@ function ResetPassword() {
       <PageSideBanner $urlImage="/img/bg-banner.webp" />
       <PageContent>
         <FormContainer>
-          <BackLink onClick={() => handlePageTheme("INICIAR SESIÓN")}>
-            <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s' }} href="/auth" label="AUTH"></NavLink><Arrow>&gt;</Arrow>
-          </BackLink>
           <FormWrapper>
             <Title>SkillSwap</Title>
             <Form onSubmit={handleSubmit}>
@@ -299,6 +318,14 @@ function ResetPassword() {
             </Form>
           </FormWrapper>
         </FormContainer>
+
+        <BackNote>
+          <p>Si prefieres no continuar, puedes</p>
+          <BackLink onClick={() => handlePageTheme("INICIAR SESIÓN")}>
+            VOLVER A <NavLink href="/auth" label="AUTH"></NavLink>
+          </BackLink>
+        </BackNote>
+
         <FooterContainer>
           <FooterMain />
         </FooterContainer>
