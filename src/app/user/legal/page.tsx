@@ -19,36 +19,43 @@ const LegalContainer = styled.article`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px;
-  max-width: 800px;
   margin: auto;
+  padding: 1rem;
+  max-width: 800px;
   gap: 5px;
-
-  & hr{
-    height: 2px;
-    background: ${({ theme }) => theme.colors.gradientText};
-    border: none;
-    margin: 5px;
-    opacity: 0.1;
-    border-radius: 50%;
-  }
 
   @media (max-width: 768px) {
     padding-bottom: 10px;
   }
 `;
 
+//Containers for banner
+const Banner = styled.article`
+  background-color: ${({ theme }) => theme.colors.bgTertiary};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+`;
+
+const BannerBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.h1`
+  height: min-content;
+  translate: 0 1rem;
+  font-size: 70px;
+  opacity: 0.15;
   margin: 0;
-  margin-bottom: 5px;
-  background: ${({ theme }) => theme.colors.gradientText};
-  font-size: 2.5rem;
-  text-align: center;
-  font-weight: normal;
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: 0.5;
-  -webkit-text-fill-color: transparent;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.textGrey};
 `;
 
 const Section = styled.section`
@@ -92,24 +99,34 @@ const Arrow = styled.span`
 `;
 
 const BackLink = styled.div` 
+  background-color: ${({ theme }) => theme.colors.bgTertiary};
+  color: ${({ theme }) => theme.colors.textTertiary};
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  border: none;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.textTertiary};
+  justify-content: end;
+  align-self: flex-end;
+  width: fit-content;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  border-radius: 10px;
+  font-weight: 700;
   gap:4px;
-  margin: 0;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  transition: 0.4s ease;
 
   a {
     color: ${({ theme }) => theme.colors.textTertiary};
     padding: 0;
     margin: 0;
-    font-weight: 500;
+    font-weight: 700;
+  }
+
+  &:hover {
+    transition: 0.4s ease;
+    padding-right: 1.5rem;
   }
 `;
 
@@ -117,21 +134,23 @@ const Legal = () => {
   return (
     <LegalContainer>
       <Container>
-        <Title>Legal</Title>
+        <Banner>
+          <BannerBody>
+            <Title>Legal</Title>
+          </BannerBody>
+        </Banner>
 
-        <hr />
         <BackLink onClick={() => handlePageTheme("INICIO")}>
-          <Arrow>&lt;</Arrow> VOLVER A <NavLink hover={{ fontWeight: '700', transition: '0.4s'}} href="/user" label="INICIO"></NavLink><Arrow>&gt;</Arrow>
+          <Arrow>&lt;</Arrow> VOLVER A <NavLink href="/user" label="INICIO"></NavLink>
         </BackLink>
-        <hr />
 
         <Section>
           <SectionTitle><Image src={skillswap_isotype} alt="skillswap-isotype" width={25} height={25}></Image> SkillSwap</SectionTitle>
-          <Paragraph>Looking for skill</Paragraph>
+          <Paragraph>Looking for Skill</Paragraph>
         </Section>
 
         <Section>
-          <SectionTitle>Correo de Contacto</SectionTitle>
+          <SectionTitle>Datos de Contacto</SectionTitle>
           <Paragraph><Strong>Email:</Strong> skillswapten@gmail.com</Paragraph>
         </Section>
 
