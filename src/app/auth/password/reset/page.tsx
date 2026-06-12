@@ -69,7 +69,7 @@ const FormWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderNeutral};
   text-align: center;
   padding: 2.5rem 3rem;
-  max-width: 400px;
+  max-width: 23rem;
   border-radius: 15px;
 
   & label {
